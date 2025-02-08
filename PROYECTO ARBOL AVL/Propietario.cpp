@@ -119,7 +119,7 @@ Propietario Propietario::agregarPropietario(ListaCircularDoble<Propietario> &lis
     do {
         cedula = validaciones.ingresarCedula("Ingrese la cedula del propietario: ");
         if (!validaciones.validarCedula(cedula)) {
-            cout << "Cédula inválida. Intente de nuevo." << endl;
+            cout << "Cédula invalida. Intente de nuevo." << endl;
         }
     } while (!validaciones.validarCedula(cedula));
 

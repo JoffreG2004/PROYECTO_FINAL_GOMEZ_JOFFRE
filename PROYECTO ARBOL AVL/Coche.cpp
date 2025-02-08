@@ -138,7 +138,13 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
 
     while (!propietarioEncontrado)
     {
-        cedula = validaciones.ingresarCedula("Ingrese el numero de cedula del propietario: ");
+        do {
+            cedula = validaciones.ingresarCedula("Ingrese la cedula del propietario: ");
+            if (!validaciones.validarCedula(cedula)) {
+                cout << "Cedula invalida. Intente de nuevo." << endl;
+            }
+        } while (!validaciones.validarCedula(cedula));
+    
         propietarioNodo = listaPropietarios.getPrimero();
 
         do {

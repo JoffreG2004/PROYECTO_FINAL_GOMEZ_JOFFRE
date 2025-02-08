@@ -27,7 +27,7 @@ string Placa<T>::ingresarPlaca(Nodo<T> *aux)
 
         if (provinciasValidas.count(string(1, toupper(placa[0]))) == 0)
         {
-            cout << "\nInicial de provincia no válida. Intente de nuevo." << endl;
+            cout << "\nInicial de provincia no valida. Intente de nuevo." << endl;
             continue;
         }
 

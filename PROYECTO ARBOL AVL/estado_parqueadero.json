@@ -27,7 +27,7 @@
 		},
 		{
 			"id" : 6,
-			"ocupado" : "false"
+			"ocupado" : "true"
 		},
 		{
 			"id" : 7,
@@ -47,11 +47,11 @@
 		},
 		{
 			"id" : 11,
-			"ocupado" : "true"
+			"ocupado" : "false"
 		},
 		{
 			"id" : 12,
-			"ocupado" : "false"
+			"ocupado" : "true"
 		},
 		{
 			"id" : 13,
@@ -71,7 +71,7 @@
 		},
 		{
 			"id" : 17,
-			"ocupado" : "true"
+			"ocupado" : "false"
 		},
 		{
 			"id" : 18,
@@ -79,7 +79,7 @@
 		},
 		{
 			"id" : 19,
-			"ocupado" : "false"
+			"ocupado" : "true"
 		},
 		{
 			"id" : 20,
@@ -139,7 +139,7 @@
 		},
 		{
 			"id" : 34,
-			"ocupado" : "true"
+			"ocupado" : "false"
 		},
 		{
 			"id" : 35,
@@ -251,7 +251,7 @@
 		},
 		{
 			"id" : 62,
-			"ocupado" : "false"
+			"ocupado" : "true"
 		},
 		{
 			"id" : 63,
@@ -279,7 +279,7 @@
 		},
 		{
 			"id" : 69,
-			"ocupado" : "true"
+			"ocupado" : "false"
 		},
 		{
 			"id" : 70,
@@ -303,7 +303,7 @@
 		},
 		{
 			"id" : 75,
-			"ocupado" : "false"
+			"ocupado" : "true"
 		},
 		{
 			"id" : 76,
@@ -315,7 +315,7 @@
 		},
 		{
 			"id" : 78,
-			"ocupado" : "true"
+			"ocupado" : "false"
 		},
 		{
 			"id" : 79,
