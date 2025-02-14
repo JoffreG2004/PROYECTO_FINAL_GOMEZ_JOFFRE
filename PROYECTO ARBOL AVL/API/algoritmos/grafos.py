@@ -17,15 +17,12 @@ def cargar_estado_parqueadero():
 def crear_grafo_parqueadero(estado):
     G = nx.Graph()
 
-   
     filas, columnas = 10, 12  
 
-   
     for i in range(filas):  
         for j in range(columnas - 2):  
             G.add_node((i, j), espacio="[ ]") 
 
-    
     for i in range(filas):  
         for j in range(columnas - 2): 
             congestion = random.randint(1, 10)  
@@ -35,12 +32,10 @@ def crear_grafo_parqueadero(estado):
                 congestion = random.randint(1, 10)  
                 G.add_edge((i, j), (i + 1, j), peso=congestion)  
 
-    
     for i in range(filas): 
         for j in range(10, 12):  
             G.add_node((i, j), espacio="Carretera") 
 
-    
     pos = {}
     id_secuencial = 0  
 
@@ -50,21 +45,17 @@ def crear_grafo_parqueadero(estado):
             if id_secuencial < 100: 
                 id_secuencial += 1
 
-   
     for i in range(filas):  
         for j in range(10, 12):  
             pos[(i, j)] = (j, -i)  
 
-    
     espacios = estado.get("espacios", [])
     for espacio in espacios:
         id_espacio = espacio["id"]
         ocupado = espacio["ocupado"] == "true"
         
-      
         fila = id_espacio // (columnas - 2) 
         columna = id_espacio % (columnas - 2)  
-        
         
         if (fila, columna) in G.nodes:
             if ocupado:
@@ -74,12 +65,9 @@ def crear_grafo_parqueadero(estado):
 
     return G, pos
 
-
 def visualizar_grafo(G, pos):
-
     plt.figure(figsize=(14, 12))  
 
-   
     node_colors = []
     for node in G.nodes():
         if 'espacio' in G.nodes[node]:
@@ -90,10 +78,8 @@ def visualizar_grafo(G, pos):
         else:
             node_colors.append("lightblue")  
 
-
     nx.draw(G, pos, with_labels=True, node_size=500, node_color=node_colors, edge_color="gray", font_size=8)
 
-  
     edge_labels = {}
     for (i, j) in G.edges():
         congestion = G[i][j]["peso"]
@@ -101,7 +87,6 @@ def visualizar_grafo(G, pos):
 
     nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels)
 
- 
     entrada_salida_posiciones = [
        ((0, 10), "Salida 1 "),  
          ((0, 11), "Entrada 1   "), 
@@ -113,10 +98,8 @@ def visualizar_grafo(G, pos):
         x, y = pos[posicion]
         plt.text(x, y, texto, fontsize=12, ha="center", va="center", bbox=dict(facecolor="yellow", edgecolor="black", boxstyle="round,pad=0.5"))
 
-  
     plt.grid(True)
     plt.show()
-
 
 estado = cargar_estado_parqueadero()
 G, pos = crear_grafo_parqueadero(estado)

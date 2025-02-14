@@ -84,6 +84,10 @@ void iniciarFlask() {
     system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\app.py\"");
 }
 
+void iniciarFlaskVis() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVisualization.py\"");
+}
+
 
 void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches, ListaCircularDoble<Coche> &lista) {
     Validaciones validaciones;
@@ -99,6 +103,7 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
         "Ver orden de salida de 3 coches",
         "Buscar coche por posicion",
         "Buscar Ruta",  
+        "Simulador de Ruta",
         "Volver al Menu Principal"
     };
 
@@ -180,6 +185,19 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             break;
         }
         case 4: {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "           SIMULADOR DE RUTA            " << endl;
+            cout << "========================================" << endl;
+            cout << "Realizando la busqueda de la ruta..." << endl;
+            
+           
+            std::thread flaskThread(iniciarFlaskVis);
+            flaskThread.detach(); 
+
+            break;
+        }
+        case 5: {
             cout << "Saliendo..." << endl;
             return;
         }
