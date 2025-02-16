@@ -23,4 +23,5 @@ public:
     int buscarCocheCercano(string salida);
     vector<int> obtenerTodosLosEspacios();
     void obtenerEstadoJSON();
+    int obtenerEspacioOptimo();
 };

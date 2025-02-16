@@ -1,5 +1,13 @@
+#include <curl/curl.h>
 #include "Estacionamiento.h"
 #include <json/json.h>
+#include <thread>
+#include <nlohmann/json.hpp>
+
+
+using json = nlohmann::json;
+extern void iniciarFlask();
+
 
 Estacionamiento::Estacionamiento() {
 
@@ -15,6 +23,81 @@ void Estacionamiento::ocuparEspacio(int espacio, Coche& coche) {
     espaciosOcupados[espacio] = coche;
     std::cout << "Coche asignado al espacio " << espacio << "." << std::endl;
 }
+
+
+size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* s) {
+    size_t newLength = size * nmemb;
+    try {
+        s->append((char*)contents, newLength);
+    } catch (std::bad_alloc& e) {
+        // Manejar errores de memoria
+        return 0;
+    }
+    return newLength;
+}
+
+int Estacionamiento::obtenerEspacioOptimo() {
+    // Iniciar Flask en un hilo separado
+    std::thread flaskThread(iniciarFlask);
+    flaskThread.detach();
+
+    // Esperar 2 segundos para que Flask esté listo
+    std::this_thread::sleep_for(std::chrono::seconds(2));
+
+    CURL* curl;
+    CURLcode res;
+    std::string readBuffer;
+
+    curl = curl_easy_init();
+    if (curl) {
+        std::string url = "http://127.0.0.1:5000/asignar_espacio";
+        std::cout << "[DEBUG] Solicitando espacio a: " << url << std::endl;
+
+        // Configurar opciones de libcurl
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+        // Realizar la solicitud HTTP
+        res = curl_easy_perform(curl);
+        curl_easy_cleanup(curl);
+
+        if (res != CURLE_OK) {
+            std::cerr << "[ERROR] Fallo en HTTP: " << curl_easy_strerror(res) << std::endl;
+            return -1;
+        }
+
+        std::cout << "[DEBUG] Respuesta cruda de la API: " << readBuffer << std::endl;
+
+        try {
+            // Parsear la respuesta JSON
+            json jsonResponse = json::parse(readBuffer);
+
+            // Extraer el array "espacio_asignado"
+            if (jsonResponse.contains("espacio_asignado") && jsonResponse["espacio_asignado"].is_array()) {
+                int first = jsonResponse["espacio_asignado"][0];
+                int second = jsonResponse["espacio_asignado"][1];
+
+                // Combinar los valores en un único número
+                int espacio = first * 10 + second;
+                std::cout << "[DEBUG] Espacio asignado por API: " << espacio << std::endl;
+                return espacio;
+            } else {
+                std::cerr << "[ERROR] El campo 'espacio_asignado' no es un array o no existe" << std::endl;
+            }
+        } catch (const json::parse_error& e) {
+            std::cerr << "[ERROR] Error al parsear JSON: " << e.what() << std::endl;
+        } catch (const std::exception& e) {
+            std::cerr << "[ERROR] Error inesperado: " << e.what() << std::endl;
+        }
+    }
+
+    return -1;
+}
+
+
+
 
 void Estacionamiento::liberarEspacio(const std::string& placa) {
     try {
@@ -182,25 +265,25 @@ void Estacionamiento::vaciarEstacionamiento() {
 
     void Estacionamiento::obtenerEstadoJSON() {
         Json::Value estado;
-        estado["espacios"] = Json::arrayValue;  // Creamos un array para los espacios
+        estado["espacios"] = Json::arrayValue;  
     
-        // Agregar la información de cada espacio al JSON
+       
         for (int i = 0; i < TAMANIO; ++i) {
             Json::Value espacio;
-            espacio["id"] = i;  // El ID del espacio
+            espacio["id"] = i; 
     
-            // Comprobamos si el espacio está ocupado
-            bool ocupado = espacioOcupado(i);  // Se debe implementar correctamente para que devuelva true si el espacio está ocupado
-            espacio["ocupado"] = ocupado ? "true" : "false";  // Asigna "true" o "false" como cadena
+            
+            bool ocupado = espacioOcupado(i);  
+            espacio["ocupado"] = ocupado;  
     
-            // Añadimos el objeto 'espacio' al array "espacios"
+            
             estado["espacios"].append(espacio);
         }
         
-        // Convertimos el objeto JSON a un string
+        
         std::string estado_json = estado.toStyledString();
         
-        // Escribimos el string JSON en un archivo
+        
         std::ofstream file("estado_parqueadero.json");
         if (file.is_open()) {
             file << estado_json;
@@ -209,4 +292,5 @@ void Estacionamiento::vaciarEstacionamiento() {
         } else {
             std::cerr << "Error al abrir el archivo para escribir el estado" << std::endl;
         }
-    } 
+    }
+    

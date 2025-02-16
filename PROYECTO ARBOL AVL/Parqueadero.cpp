@@ -36,29 +36,23 @@ void Parqueadero::cargarYAsignarParqueadero(ListaCircularDoble<Coche>& listaCoch
     }
 
     do {
-        Coche coche = nodoActual->getDato(); 
-
-    
+        Coche coche = nodoActual->getDato();  
         int posicionExistente = coche.getposicion();
-        
-          std::cerr << "Posición obtenida para el coche: " << posicionExistente << std::endl;
+
+        std::cerr << "Posición obtenida para el coche: " << posicionExistente << std::endl;
 
         if (posicionExistente == -1) {
-          
-            posicionExistente = estacionamiento.obtenerEspacioAleatorio();
+            // Llamar a la API de Python para obtener el mejor espacio
+            posicionExistente = estacionamiento.obtenerEspacioOptimo();
             coche.setPosicion(posicionExistente);
         }
-        
-      
+
         estacionamiento.ocuparEspacio(posicionExistente, coche);  
-
-       
         arbolCoches.agregarDistancia(posicionExistente);
-
-      
         nodoActual = nodoActual->getSiguiente();
     } while (nodoActual != listaCoches.getPrimero());  
 }
+
 
 void Parqueadero::inicializarSemilla() {
     std::srand(0);  
@@ -68,3 +62,6 @@ void Parqueadero::ObtenerEstadoJSON()
 {
     estacionamiento.obtenerEstadoJSON();
 }
+
+
+

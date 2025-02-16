@@ -15,6 +15,11 @@ using namespace std;
 
 Coche coche;
 
+void detenerFlask() {
+   
+    system("taskkill /IM python.exe /F"); 
+}
+
 template <typename T>
 void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
 {
@@ -440,7 +445,8 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
                 break;
             }
 
-            int espacioLibre = estacionamiento.obtenerEspacioAleatorio();
+            int espacioLibre = estacionamiento.obtenerEspacioOptimo();
+            detenerFlask();
             Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial, listaPropietarios,espacioLibre);
             lista.insertar(nuevoCoche);
             lista.GuardarArchivo("autos.txt");
@@ -449,6 +455,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
 
             parqueadero.agregarCoche(nuevoCoche,espacioLibre);
             parqueadero.mostrarEstadoParqueadero();
+            parqueadero.ObtenerEstadoJSON();
 
          
 

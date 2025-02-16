@@ -52,7 +52,7 @@ def crear_grafo_parqueadero(estado):
     espacios = estado.get("espacios", [])
     for espacio in espacios:
         id_espacio = espacio["id"]
-        ocupado = espacio["ocupado"] == "true"
+        ocupado = espacio["ocupado"]  
         
         fila = id_espacio // (columnas - 2) 
         columna = id_espacio % (columnas - 2)  
@@ -63,7 +63,23 @@ def crear_grafo_parqueadero(estado):
             else:
                 G.nodes[(fila, columna)]["espacio"] = "[ ]"  
 
+    for fila in range(filas):
+        if fila < 5: 
+            G.add_edge((fila, 10), (0, 10), peso=1)
+        else:  
+            G.add_edge((fila, 10), (9, 10), peso=1)
+
+    for fila in range(filas):
+       if fila < 5:
+       
+        G.add_edge((fila, 11), (0, 11), peso=1)
+    else:
+       
+        G.add_edge((fila, 11), (9, 11), peso=1)
+
     return G, pos
+
+
 
 def visualizar_grafo(G, pos):
     plt.figure(figsize=(14, 12))  

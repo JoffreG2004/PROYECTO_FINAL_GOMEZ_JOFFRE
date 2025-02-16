@@ -83,43 +83,42 @@ def draw_parking_lot(estado):
             if event.type == pygame.QUIT:
                 running = False
 
-        # Dibujar la carretera lateral
+       
         pygame.draw.rect(screen, BLUE, (road_offset_x, road_offset_y, ROAD_WIDTH, SCREEN_HEIGHT - road_offset_y - 50))
         for j in range(road_offset_y, SCREEN_HEIGHT - 50, 40):
             pygame.draw.line(screen, WHITE, (ROAD_WIDTH // 2 + road_offset_x, j), (ROAD_WIDTH // 2 + road_offset_x, j + 20), 4)
 
-        # Dibujar los espacios de parqueo
         for i in range(filas):
             for j in range(columnas):
-                x = j * (CELL_WIDTH + 20) + offset_x  # Ajuste horizontal
-                y = i * (CELL_HEIGHT + 20) + 50 + offset_y  # Ajuste vertical
+                x = j * (CELL_WIDTH + 20) + offset_x  
+                y = i * (CELL_HEIGHT + 20) + 50 + offset_y  
 
                 id_espacio = i * columnas + j
-                ocupado = any(e["id"] == id_espacio and e["ocupado"] == "true" for e in espacios)
+                ocupado = any(e["id"] == id_espacio and e["ocupado"] for e in espacios)
 
-                # Dibujar líneas amarillas alrededor de cada espacio
+               
                 pygame.draw.rect(screen, YELLOW, (x - 2, y - 2, CELL_WIDTH + 4, CELL_HEIGHT + 4), 4)
 
-                # Si está ocupado, poner la imagen del auto
+                
                 if ocupado:
                     screen.blit(car_image, (x + 5, y + 5))
 
-                # Si no está ocupado, no dibujar el fondo gris, solo el contorno amarillo
-                # Número del espacio
-                text = font.render(str(id_espacio + 1), True, BLACK)
+               
+               
+                text = font.render(str(id_espacio ), True, BLACK)
                 screen.blit(text, (x + 10, y + 10))
 
-        # Dibujar entrada y salida 1 (arriba)
-        entrance_x1 = road_offset_x + 20  # Ajustamos la posición para la entrada
-        exit_x1 = entrance_x1 + 60       # Alineamos la salida a la derecha de la entrada
-        screen.blit(entrance_image, (entrance_x1, road_offset_y + 20))  # Entrada 1
-        screen.blit(exit_image, (exit_x1, road_offset_y + 20))  # Salida 1
+       
+        entrance_x1 = road_offset_x + 20  
+        exit_x1 = entrance_x1 + 60      
+        screen.blit(entrance_image, (entrance_x1, road_offset_y + 20))  
+        screen.blit(exit_image, (exit_x1, road_offset_y + 20))  
 
-        # Dibujar entrada y salida 2 (abajo)
-        entrance_x2 = road_offset_x + 20  # Ajustamos la posición para la entrada
-        exit_x2 = entrance_x2 + 60       # Alineamos la salida a la derecha de la entrada
-        screen.blit(entrance_image, (entrance_x2, road_offset_y + 800))  # Entrada 2
-        screen.blit(exit_image, (exit_x2, road_offset_y + 800))  # Salida 2
+       
+        entrance_x2 = road_offset_x + 20  
+        exit_x2 = entrance_x2 + 60       
+        screen.blit(entrance_image, (entrance_x2, road_offset_y + 800))  
+        screen.blit(exit_image, (exit_x2, road_offset_y + 800)) 
 
         pygame.display.flip()
         clock.tick(30)

@@ -105,6 +105,7 @@ ostream &operator<<(ostream &os, const Coche &coche)
 {
     os << "Placa: " << coche.placa << "\nMarca: " << coche.marca
        << "\nModelo: " << coche.modelo << "\nColor: " << coche.color
+         << "\nPosicion: " << coche.posicion
        << "\n----------------------------------------" << endl;
 
     time_t tiempoIngreso = chrono::system_clock::to_time_t(coche.horaIngreso);

@@ -10,7 +10,7 @@
         },
         {
             "id": 2,
-            "ocupado": true
+            "ocupado": false
         },
         {
             "id": 3,
@@ -54,7 +54,7 @@
         },
         {
             "id": 13,
-            "ocupado": false
+            "ocupado": true
         },
         {
             "id": 14,

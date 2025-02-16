@@ -317,7 +317,7 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valorInicio
 template <typename T>
 void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
 {
-      srand(time(0));
+    srand(time(0));
     std::ifstream archivo(nombreArchivo);
 
     if (!archivo.is_open())
@@ -338,16 +338,27 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
     while (std::getline(archivo, linea))
     {
         std::istringstream ss(linea);
-        std::string placa, modelo, color, marca, fechaIngreso, horaSalida;
-
+        std::string placa, modelo, color, marca, fechaIngreso, horaSalida, distanciaStr;
+        int distancia;
 
         if (std::getline(ss, placa, ',') &&
             std::getline(ss, modelo, ',') &&
             std::getline(ss, color, ',') &&
             std::getline(ss, marca, ',') &&
             std::getline(ss, fechaIngreso, ',') &&
-            std::getline(ss, horaSalida, ','))
+            std::getline(ss, horaSalida, ',') &&
+            std::getline(ss, distanciaStr, ','))  // Leer la distancia
         {
+            // Convertir distancia a entero
+            try
+            {
+                distancia = std::stoi(distanciaStr);
+            }
+            catch (const std::invalid_argument& e)
+            {
+                std::cerr << "Error al convertir la distancia: " << distanciaStr << std::endl;
+                continue;
+            }
 
             placa = descifrarTexto(placa);
 
@@ -360,7 +371,6 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
                 continue;
             }
             auto horaIngreso = std::chrono::system_clock::from_time_t(std::mktime(&tm));
-
 
             std::chrono::system_clock::time_point horaSalidaParsed;
             if (horaSalida == "N/A" || horaSalida.empty())
@@ -382,19 +392,9 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
                     horaSalidaParsed = std::chrono::system_clock::from_time_t(std::mktime(&tmSalida));
                 }
             }
- 
-             int rangoMaximo = 100;  
-            int posicionAleatoria;
 
-            do {
-                posicionAleatoria = rand() % rangoMaximo;  
-            } while (posicionesOcupadas.find(posicionAleatoria) != posicionesOcupadas.end());  // Verificar que la posición no esté ocupada
-
-            posicionesOcupadas.insert(posicionAleatoria);
-
- 
-
-            T coche(placa, modelo, color, marca, horaIngreso, horaSalidaParsed, posicionAleatoria);
+           
+            T coche(placa, modelo, color, marca, horaIngreso, horaSalidaParsed, distancia);  
 
             this->insertar(coche);
         }
@@ -407,6 +407,7 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
     archivo.close();
 }
 
+
 template <typename T>
 void ListaCircularDoble<T>::GuardarArchivo(std::string nombreArchivo)
 {
@@ -414,15 +415,14 @@ void ListaCircularDoble<T>::GuardarArchivo(std::string nombreArchivo)
 
     if (!archivo.is_open())
     {
-       
         std::cerr << "Error: No se pudo abrir el archivo " << nombreArchivo << ". Creando archivo nuevo..." << std::endl;
-        std::ofstream nuevoArchivo(nombreArchivo); 
+        std::ofstream nuevoArchivo(nombreArchivo);
         if (!nuevoArchivo.is_open())
         {
             std::cerr << "Error: No se pudo crear el archivo " << nombreArchivo << std::endl;
             return;
         }
-        nuevoArchivo.close(); 
+        nuevoArchivo.close();
         return;
     }
 
@@ -452,18 +452,24 @@ void ListaCircularDoble<T>::GuardarArchivo(std::string nombreArchivo)
             horaSalidaStream << "N/A";
         }
 
+        
+        int posicion = coche.getposicion(); 
+
+       
         archivo << placaCifrada << ","
                 << coche.getModelo() << ","
                 << coche.getColor() << ","
                 << coche.getMarca() << ","
                 << std::put_time(&tmHoraIngreso, "%a %b %d %H:%M:%S %Y") << ","
-                << horaSalidaStream.str() << std::endl;
+                << horaSalidaStream.str() << ","
+                << posicion<< std::endl;  // Guardar la posicion(int)
 
         actual = actual->getSiguiente();
     } while (actual != primero);
 
     archivo.close();
 }
+
 
 template <typename T>
 string ListaCircularDoble<T>::cifrarTexto(const std::string &texto)
