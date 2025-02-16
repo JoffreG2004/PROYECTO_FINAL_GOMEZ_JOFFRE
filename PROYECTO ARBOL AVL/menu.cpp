@@ -89,8 +89,19 @@ void iniciarFlask() {
     system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\app.py\"");
 }
 
+
+void iniciarFlaskGrafico() {
+    system("start python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\app.py\"");
+}
+
 void iniciarFlaskVis() {
     system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVisualization.py\"");
+}
+
+void mostrarGrafico() {
+    iniciarFlaskGrafico(); 
+    std::this_thread::sleep_for(std::chrono::seconds(2));  
+    system("start http://localhost:5000/visualizar_grafo");
 }
 
 
@@ -184,7 +195,7 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "Realizando la busqueda de la ruta..." << endl;
             
            
-            std::thread flaskThread(iniciarFlask);
+            std::thread flaskThread(mostrarGrafico);
             flaskThread.detach(); 
 
             break;

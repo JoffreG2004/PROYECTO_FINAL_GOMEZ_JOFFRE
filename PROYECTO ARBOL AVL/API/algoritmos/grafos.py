@@ -117,6 +117,3 @@ def visualizar_grafo(G, pos):
     plt.grid(True)
     plt.show()
 
-estado = cargar_estado_parqueadero()
-G, pos = crear_grafo_parqueadero(estado)
-visualizar_grafo(G, pos)

@@ -2,7 +2,7 @@ import json
 import os
 from flask import Flask, jsonify
 import networkx as nx
-from algoritmos.grafos import cargar_estado_parqueadero, crear_grafo_parqueadero
+from algoritmos.grafos import cargar_estado_parqueadero, crear_grafo_parqueadero, visualizar_grafo
 from algoritmos.Dijkstra import dijkstra
 from algoritmos.algoritmo_voraz import encontrar_camino_minimo
 
@@ -98,10 +98,20 @@ def calcular_costo_camino(G, nodo_destino):
     costo = 0
     for vecino in G.neighbors(nodo_destino):
         if G.nodes[vecino]["espacio"] == "X":
-            costo += 5  # Penalización por cercanía a un vehículo
+            costo += 5  
         costo += G[nodo_destino][vecino].get('peso', 1)
     return costo
 
+
+@app.route('/visualizar_grafo')
+def visualizar_grafo_ruta():
+    """
+    Ruta para visualizar el grafo del parqueadero.
+    """
+    estado = cargar_estado_parqueadero()
+    G, pos = crear_grafo_parqueadero(estado)
+    visualizar_grafo(G, pos)  
+    return "Gráfico del parqueadero mostrado."
 
 @app.route('/shutdown', methods=['POST'])
 def shutdown():
