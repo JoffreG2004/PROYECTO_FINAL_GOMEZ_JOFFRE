@@ -37,11 +37,11 @@ size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* s) 
 }
 
 int Estacionamiento::obtenerEspacioOptimo() {
-    // Iniciar Flask en un hilo separado
+    
     std::thread flaskThread(iniciarFlask);
     flaskThread.detach();
 
-    // Esperar 2 segundos para que Flask esté listo
+   
     std::this_thread::sleep_for(std::chrono::seconds(2));
 
     CURL* curl;
@@ -53,13 +53,11 @@ int Estacionamiento::obtenerEspacioOptimo() {
         std::string url = "http://127.0.0.1:5000/asignar_espacio";
         std::cout << "[DEBUG] Solicitando espacio a: " << url << std::endl;
 
-        // Configurar opciones de libcurl
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
         curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
 
-        // Realizar la solicitud HTTP
         res = curl_easy_perform(curl);
         curl_easy_cleanup(curl);
 
@@ -71,17 +69,18 @@ int Estacionamiento::obtenerEspacioOptimo() {
         std::cout << "[DEBUG] Respuesta cruda de la API: " << readBuffer << std::endl;
 
         try {
-            // Parsear la respuesta JSON
+           
             json jsonResponse = json::parse(readBuffer);
 
-            // Extraer el array "espacio_asignado"
+            
             if (jsonResponse.contains("espacio_asignado") && jsonResponse["espacio_asignado"].is_array()) {
                 int first = jsonResponse["espacio_asignado"][0];
                 int second = jsonResponse["espacio_asignado"][1];
 
-                // Combinar los valores en un único número
                 int espacio = first * 10 + second;
                 std::cout << "[DEBUG] Espacio asignado por API: " << espacio << std::endl;
+
+                
                 return espacio;
             } else {
                 std::cerr << "[ERROR] El campo 'espacio_asignado' no es un array o no existe" << std::endl;
@@ -95,7 +94,6 @@ int Estacionamiento::obtenerEspacioOptimo() {
 
     return -1;
 }
-
 
 
 

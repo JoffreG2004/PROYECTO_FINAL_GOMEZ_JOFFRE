@@ -10,6 +10,7 @@
 #include "ValidacionPlaca.h"
 #include "Menu.h"
 #include "Ordenamiento.cpp"
+#include <atomic>
 
 using namespace std;
 
@@ -19,6 +20,47 @@ void detenerFlask() {
    
     system("taskkill /IM python.exe /F"); 
 }
+
+std::atomic<bool> stopFlaskServer(false);
+
+void iniciarFlask() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\app.py\"");
+}
+
+void stopFlask() {
+    stopFlaskServer = true;
+}
+
+void iniciarFlaskThread() {
+    std::thread flaskThread(iniciarFlask);
+    flaskThread.detach();
+    std::this_thread::sleep_for(std::chrono::seconds(2)); 
+}
+void stopFlaskThread() {
+    stopFlask();
+    std::this_thread::sleep_for(std::chrono::seconds(1)); 
+}
+
+
+void iniciarFlaskGrafico() {
+    system("start python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\app.py\"");
+}
+
+void iniciarFlaskVisEntrada() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVizEntrada.py\"");
+}
+
+void iniciarFlaskVis() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVisualization.py\"");
+}
+
+void mostrarGrafico() {
+    iniciarFlaskGrafico(); 
+    std::this_thread::sleep_for(std::chrono::seconds(2));  
+    system("start http://localhost:5000/visualizar_grafo");
+}
+
+
 
 template <typename T>
 void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
@@ -85,24 +127,6 @@ void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
     }
 }
 
-void iniciarFlask() {
-    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\app.py\"");
-}
-
-
-void iniciarFlaskGrafico() {
-    system("start python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\app.py\"");
-}
-
-void iniciarFlaskVis() {
-    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVisualization.py\"");
-}
-
-void mostrarGrafico() {
-    iniciarFlaskGrafico(); 
-    std::this_thread::sleep_for(std::chrono::seconds(2));  
-    system("start http://localhost:5000/visualizar_grafo");
-}
 
 
 void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches, ListaCircularDoble<Coche> &lista) {
@@ -412,9 +436,8 @@ void menuBusquedaAvanzadaPropietario(ListaCircularDoble<Propietario> &listaPropi
 void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios,  Estacionamiento &estacionamiento, Parqueadero &parqueadero, ArbolAVL &arbolCoches)
 {
     Placa<Coche> validador;
-    parqueadero.inicializarSemilla();
     parqueadero.cargarYAsignarParqueadero(lista, arbolCoches);
-     parqueadero.mostrarEstadoParqueadero();
+    parqueadero.mostrarEstadoParqueadero();
       parqueadero.ObtenerEstadoJSON();
      
 
@@ -460,6 +483,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             detenerFlask();
             Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial, listaPropietarios,espacioLibre);
             lista.insertar(nuevoCoche);
+            iniciarFlaskVisEntrada();
             lista.GuardarArchivo("autos.txt");
             listaHistorial.insertar(nuevoCoche);
             listaHistorial.GuardarArchivo("autos_historial.txt");

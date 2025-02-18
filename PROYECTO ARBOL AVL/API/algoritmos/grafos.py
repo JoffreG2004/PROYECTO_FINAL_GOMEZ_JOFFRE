@@ -48,6 +48,8 @@ def crear_grafo_parqueadero(estado):
     for i in range(filas):  
         for j in range(10, 12):  
             pos[(i, j)] = (j, -i)  
+            
+            G.add_edge((0, 11), (0, 10), peso=1)
 
     espacios = estado.get("espacios", [])
     for espacio in espacios:

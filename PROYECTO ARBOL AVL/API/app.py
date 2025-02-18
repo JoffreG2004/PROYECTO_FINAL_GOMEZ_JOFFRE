@@ -21,6 +21,18 @@ def guardar_estado_parqueadero(estado):
     except Exception as e:
         print(f"[ERROR] Error al guardar el estado del parqueadero: {e}")
 
+def guardar_ruta(ruta):
+    """
+    Guarda solo la ruta en un archivo JSON.
+    
+    :param ruta: La ruta asignada.
+    """
+    try:
+        with open('ruta.json', 'w') as archivo:
+            json.dump({"ruta_asignada": ruta}, archivo, indent=4)
+        print("[DEBUG] Ruta guardada correctamente.")
+    except Exception as e:
+        print(f"[ERROR] Error al guardar la ruta: {e}")
 
 @app.route('/')
 def index():
@@ -29,7 +41,6 @@ def index():
 
 @app.route('/asignar_espacio')
 def asignar_espacio():
-    
     print("[DEBUG] Cargando estado del parqueadero...")
     estado = cargar_estado_parqueadero()
 
@@ -41,15 +52,12 @@ def asignar_espacio():
     G, pos = crear_grafo_parqueadero(estado)
     print("[DEBUG] Grafo creado.")
 
-
     mejor_destino = None
     menor_costo = float('inf')
     filas, columnas = 10, 12  
 
-  
     for espacio in estado["espacios"]:
         id_espacio = espacio["id"]
-       
         fila = id_espacio // (columnas - 2)
         columna = id_espacio % (columnas - 2)
         nodo = (fila, columna)
@@ -62,7 +70,6 @@ def asignar_espacio():
             continue
         
         costo = calcular_costo_camino(G, nodo)
-       
         if costo < menor_costo:
             menor_costo = costo
             mejor_destino = nodo
@@ -71,19 +78,22 @@ def asignar_espacio():
         print("[DEBUG] No hay espacios disponibles.")
         return jsonify({"error": "No hay espacios disponibles."}), 404
 
-    
     nodo_asignado = mejor_destino
-  
     id_asignado = nodo_asignado[0] * (columnas - 2) + nodo_asignado[1]
-   
+    
     for espacio in estado["espacios"]:
         if espacio["id"] == id_asignado:
             espacio["ocupado"] = True
             break
 
-    guardar_estado_parqueadero(estado)
+    entrada = (0, 11)  
+    ruta = encontrar_camino_minimo(G, nodo_asignado)  
+
+    guardar_estado_parqueadero(estado)  # Guardar el estado del parqueadero
+    guardar_ruta(ruta)  # Guardar solo la ruta en el archivo JSON
     print(f"[DEBUG] Espacio asignado: {nodo_asignado}")
-    return jsonify({"espacio_asignado": nodo_asignado})
+
+    return jsonify({"espacio_asignado": nodo_asignado, "ruta": ruta})
 
 
 def calcular_costo_camino(G, nodo_destino):
