@@ -19,6 +19,8 @@ Coche coche;
 void detenerFlask() {
    
     system("taskkill /IM python.exe /F"); 
+    system("cls");
+    
 }
 
 std::atomic<bool> stopFlaskServer(false);
@@ -28,7 +30,8 @@ void iniciarFlask() {
 }
 
 void stopFlask() {
-    stopFlaskServer = true;
+    system("taskkill /IM python.exe /F"); 
+    system("cls");
 }
 
 void iniciarFlaskThread() {
@@ -40,6 +43,12 @@ void stopFlaskThread() {
     stopFlask();
     std::this_thread::sleep_for(std::chrono::seconds(1)); 
 }
+
+
+void iniciarFlaskVizSalida() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVizSalida.py\"");
+}
+
 
 
 void iniciarFlaskGrafico() {
@@ -142,12 +151,12 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
         "Iniciar simulacro de salida",
         "Ver orden de salida de 3 coches",
         "Buscar coche por posicion",
-        "Buscar Ruta",  
-        "Simulador de Ruta",
+        "Mostrar Cogestion",  
+        "Simulador de Parqueadero",
         "Volver al Menu Principal"
     };
 
-    int seleccionBinario = menuInteractivo(opcionesBinario, "Busqueda binaria");
+    int seleccionBinario = menuInteractivo(opcionesBinario, "Algoritmos Avanzados");
 
     switch (seleccionBinario) {
         case 0: {
@@ -155,7 +164,7 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "========================================" << endl;
             cout << "           SIMULACRO DE SALIDA          " << endl;
             cout << "========================================" << endl;
-            cout << "Este simulacro ayuda a organizar la salida rapida de vehiculos " << endl;
+            cout << "Este simulacro ayuda a organizar la salida rapida de vehiculos segun la posicion " << endl;
             cout << "en caso de emergencia o desastre." << endl;
             cout << "========================================" << endl;
             cout << "Ingrese la salida que desea utilizar: ( 1,2) ";
@@ -214,7 +223,7 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
         case 3: {
             system("cls");
             cout << "========================================" << endl;
-            cout << "           BUSCAR RUTA                 " << endl;
+            cout << "        MOSTRAR CONGESTION              " << endl;
             cout << "========================================" << endl;
             cout << "Realizando la busqueda de la ruta..." << endl;
             
@@ -640,7 +649,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             string placa;
             cout << "Ingrese la placa del coche que  va a  dejar el estacionamiento: ";
             cin >> placa;
-
+            arbolCoches.buscarPosicionPorPlaca(placa, lista);
             listaHistorial.salirDelParqueadero(placa);
             lista.eliminarPorPlaca(placa);
             parqueadero.inicializarSemilla();

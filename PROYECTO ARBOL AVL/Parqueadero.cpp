@@ -20,7 +20,6 @@ void Parqueadero::mostrarEstadoParqueadero() {
 
 
 void Parqueadero::mostrarCoches() {
-    std::cout << "Coches estacionados:" << std::endl;
     arbolCoches.mostrarDistancias();  
 }
 

@@ -21,7 +21,6 @@ void Estacionamiento::ocuparEspacio(int espacio, Coche& coche) {
     }
     
     espaciosOcupados[espacio] = coche;
-    std::cout << "Coche asignado al espacio " << espacio << "." << std::endl;
 }
 
 
@@ -51,7 +50,7 @@ int Estacionamiento::obtenerEspacioOptimo() {
     curl = curl_easy_init();
     if (curl) {
         std::string url = "http://127.0.0.1:5000/asignar_espacio";
-        std::cout << "[DEBUG] Solicitando espacio a: " << url << std::endl;
+        
 
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
@@ -66,8 +65,6 @@ int Estacionamiento::obtenerEspacioOptimo() {
             return -1;
         }
 
-        std::cout << "[DEBUG] Respuesta cruda de la API: " << readBuffer << std::endl;
-
         try {
            
             json jsonResponse = json::parse(readBuffer);
@@ -78,7 +75,6 @@ int Estacionamiento::obtenerEspacioOptimo() {
                 int second = jsonResponse["espacio_asignado"][1];
 
                 int espacio = first * 10 + second;
-                std::cout << "[DEBUG] Espacio asignado por API: " << espacio << std::endl;
 
                 
                 return espacio;
@@ -105,9 +101,8 @@ void Estacionamiento::liberarEspacio(const std::string& placa) {
        
         if (espacioOcupado(espacio)) {
             espaciosOcupados.erase(espacio);  
-            std::cout << "Espacio " << espacio << " liberado." << std::endl;
         } else {
-            std::cout << "Espacio no ocupado." << std::endl;
+        
         }
     } catch (const std::invalid_argument& e) {
         std::cout << e.what() << std::endl; 
@@ -116,7 +111,7 @@ void Estacionamiento::liberarEspacio(const std::string& placa) {
 
 int Estacionamiento::obtenerEspacioPorPlaca(const std::string& placa) {
    
-   std::cout << "=== DEBUG: Contenido de espaciosOcupados ===" << std::endl;
+
 if (espaciosOcupados.empty()) {
     std::cout << "El mapa está vacío, no hay coches almacenados." << std::endl;
 } else {
@@ -140,46 +135,45 @@ std::cout << "==========================================" << std::endl;
     throw std::invalid_argument("Coche no encontrado en el estacionamiento.");
 }
 
-
-
 void Estacionamiento::mostrarEstacionamiento() {
     std::cout << "Estado del Parqueadero:\n";
-    
-   std::cout << "\n";
+    std::cout << "\n";
 
-   std::cout << " _________" << std::endl;
-   std::cout << "| E1 | S1 |" << std::endl;
-   std::cout << "|    |    |_____________" << std::endl;
-   std::cout << "|    |_______________   |" << std::endl;
-   std::cout << "|__________________  |  |" << std::endl;
+   
+    std::cout << "                   _______________________" << std::endl;
+    std::cout << "                  |                       |" << std::endl;
+    std::cout << "                  |                       |" << std::endl;
+    std::cout << "                  |_______________________|_________" << std::endl;
+    std::cout << "                                          | E1 | S1 |" << std::endl;
+    std::cout << "                                          |    |    |" << std::endl;
+    std::cout << "                                          |    |    |" << std::endl;
+    std::cout << "                                          |____|____|" << std::endl;
+
+    
     for (int i = 0; i < TAMANIO; ++i) {
-       
         if (espacioOcupado(i)) {
             std::cout << "[X] ";  
         } else {
             std::cout << "[ ] ";  
-         }
+        }
+
+        if ((i + 1) % 10 == 0) {
+            std::cout << "  |    |    |" << std::endl;  
+        }
+    }
 
    
-    if ((i + 1) % 5 == 0) {
-        std::cout << "    ";  
-    }
-
-    if ((i + 1) % 10 == 0) {
-        std::cout << std::endl;  
-    }
-    }
-   std::cout << "                  |  |  |_________" << std::endl;
-   std::cout << "                  |  |_______     |" << std::endl;
-   std::cout << "                  |_____     |    |" << std::endl;
-   std::cout << "                        |    |    |" << std::endl;
-   std::cout << "                        | E2 | S2 |" << std::endl;
-   std::cout << "                        |____|____|" << std::endl;
-   
+    std::cout << "                                          |____|____|" << std::endl;
+    std::cout << "                                          |    |    |" << std::endl;
+    std::cout << "                                          |    |    |" << std::endl;
+    std::cout << "                                          | E2 | S2 |" << std::endl;
+    std::cout << "                    ______________________|____|____|" << std::endl;
+    std::cout << "                  |                       |" << std::endl;
+    std::cout << "                  |                       |" << std::endl;
+    std::cout << "                  |_______________________|" << std::endl;
 
     std::cout << std::endl;
 }
-
 int Estacionamiento::obtenerEspacioAleatorio() {
     int espacio = rand() % TAMANIO;  
     
@@ -208,7 +202,7 @@ Coche Estacionamiento::obtenerCocheEnEspacio(int espacio) {
 
 void Estacionamiento::vaciarEstacionamiento() {
     espaciosOcupados.clear();  
-    std::cout << "Estacionamiento vaciado correctamente." << std::endl;
+    
 }
 
     vector<int> Estacionamiento::obtenerTodosLosEspacios() {

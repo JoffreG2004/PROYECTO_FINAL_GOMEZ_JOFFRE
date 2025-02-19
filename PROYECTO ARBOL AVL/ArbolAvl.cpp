@@ -2,6 +2,7 @@
 #include <iostream>
 #include "Coche.h"
 #include "Validaciones.h"
+#include <json/json.h>
 
 
 ArbolAVL::ArbolAVL() : raiz(nullptr) {}
@@ -202,7 +203,7 @@ NodoAVL* ArbolAVL::obtenerRaiz() {
 
 void ArbolAVL::vaciarArbol() {
     raiz = nullptr;  
-    std::cout << "Árbol AVL vaciado correctamente." << std::endl;
+   
 }
 
 
@@ -356,4 +357,50 @@ Nodo<Coche> *ArbolAVL::buscarCochePorPosicion(int posicionBuscada, ListaCircular
 
     std::cerr << "Error: No se encontro un coche con la posicion " << posicionBuscada << "." << std::endl;
     return nullptr;
+}
+
+
+extern void iniciarFlaskVizSalida();
+
+void ArbolAVL::buscarPosicionPorPlaca(const std::string& placaBuscada, ListaCircularDoble<Coche>& listaCoches) {
+    Nodo<Coche>* nodoActual = listaCoches.getPrimero();
+    
+    if (nodoActual == nullptr) {
+        std::cerr << "La lista de coches está vacía." << std::endl;
+        return;
+    }
+
+    do {
+        Coche coche = nodoActual->getDato();
+        std::string placa = coche.getPlaca();
+
+        if (placa == placaBuscada) {
+            int posicion = coche.getposicion();
+            std::cout << "Coche con placa " << placaBuscada << " encontrado en la posición " << posicion << ": \n" << std::endl;
+
+            // Guardar la posición en un archivo JSON
+            Json::Value posicionJson;
+            posicionJson["placa"] = placaBuscada;
+            posicionJson["posicion"] = posicion;
+
+            std::string posicionJsonStr = posicionJson.toStyledString();
+
+            std::ofstream file("posicion_coche.json");
+            if (file.is_open()) {
+                file << posicionJsonStr;
+                file.close();
+                std::cout << "Posición del coche guardada en posicion_coche.json" << std::endl;
+            } else {
+                std::cerr << "Error al abrir el archivo para escribir la posición del coche" << std::endl;
+            }
+
+           
+            iniciarFlaskVizSalida();
+            return;
+        }
+
+        nodoActual = nodoActual->getSiguiente(); 
+    } while (nodoActual != listaCoches.getPrimero());
+
+    std::cerr << "Error: No se encontró un coche con la placa " << placaBuscada << "." << std::endl;
 }

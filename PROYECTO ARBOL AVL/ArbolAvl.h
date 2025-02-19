@@ -37,4 +37,5 @@ public:
     Nodo<Coche>* buscarCochePorPosicion(int posicion, ListaCircularDoble<Coche>& listaCoches);
      int obtenerAltura(NodoAVL* nodo);
     int obtenerprofundidad(NodoAVL* nodo);
+    void buscarPosicionPorPlaca(const std::string& placa, ListaCircularDoble<Coche>& listaCoches);
 };

@@ -19,11 +19,11 @@
 		},
 		{
 			"id" : 4,
-			"ocupado" : false
+			"ocupado" : true
 		},
 		{
 			"id" : 5,
-			"ocupado" : true
+			"ocupado" : false
 		},
 		{
 			"id" : 6,
@@ -39,7 +39,7 @@
 		},
 		{
 			"id" : 9,
-			"ocupado" : false
+			"ocupado" : true
 		},
 		{
 			"id" : 10,
@@ -67,7 +67,7 @@
 		},
 		{
 			"id" : 16,
-			"ocupado" : true
+			"ocupado" : false
 		},
 		{
 			"id" : 17,
@@ -183,7 +183,7 @@
 		},
 		{
 			"id" : 45,
-			"ocupado" : true
+			"ocupado" : false
 		},
 		{
 			"id" : 46,
@@ -191,7 +191,7 @@
 		},
 		{
 			"id" : 47,
-			"ocupado" : false
+			"ocupado" : true
 		},
 		{
 			"id" : 48,
@@ -247,7 +247,7 @@
 		},
 		{
 			"id" : 61,
-			"ocupado" : false
+			"ocupado" : true
 		},
 		{
 			"id" : 62,
@@ -327,7 +327,7 @@
 		},
 		{
 			"id" : 81,
-			"ocupado" : true
+			"ocupado" : false
 		},
 		{
 			"id" : 82,
