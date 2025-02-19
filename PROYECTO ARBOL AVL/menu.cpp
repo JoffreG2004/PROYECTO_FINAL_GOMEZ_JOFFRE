@@ -484,6 +484,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial, listaPropietarios,espacioLibre);
             lista.insertar(nuevoCoche);
             iniciarFlaskVisEntrada();
+            detenerFlask();
             lista.GuardarArchivo("autos.txt");
             listaHistorial.insertar(nuevoCoche);
             listaHistorial.GuardarArchivo("autos_historial.txt");

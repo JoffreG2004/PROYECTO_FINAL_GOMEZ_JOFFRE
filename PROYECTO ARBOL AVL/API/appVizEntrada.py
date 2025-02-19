@@ -16,6 +16,10 @@ def simular_movimiento_carro(screen, ruta, car_image, CELL_WIDTH, CELL_HEIGHT, o
         pygame.display.flip()
         time.sleep(1)  # Pausa para simular el movimiento
 
+    # Cerrar Pygame después de que el carro se haya estacionado
+    pygame.quit()
+    exit()
+
 def draw_parking_lot(estado, ruta):
     """Dibuja el parqueadero y simula el movimiento del carro."""
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.RESIZABLE) 
