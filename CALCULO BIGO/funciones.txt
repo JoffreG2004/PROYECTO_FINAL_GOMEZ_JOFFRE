@@ -1,0 +1,571 @@
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Estacionamiento.cpp
+FUNCTION_NAME: WriteCallback
+FUNCTION_BODY:
+size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* s) {
+    size_t newLength = size * nmemb;
+    try {
+        s->append((char*)contents, newLength);
+    } catch (std::bad_alloc& e) {
+        // Manejar errores de memoria
+        return 0;
+    }
+    return newLength;
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Lista.cpp
+FUNCTION_NAME: if
+FUNCTION_BODY:
+ else if (criterio == "Año" || criterio == "fecha") {
+    
+    std::chrono::system_clock::time_point horaIngreso = aux->getDato().getHora();
+    std::time_t tiempo = std::chrono::system_clock::to_time_t(horaIngreso);
+    std::tm* tm = std::localtime(&tiempo);
+
+    char fechaActual[11];
+    std::strftime(fechaActual, sizeof(fechaActual), "%d-%m-%Y", tm); 
+
+    
+    auto convertirFechaAFechaSistema = [](const std::string &fechaStr) -> std::chrono::system_clock::time_point {
+        std::tm tmFecha = {};
+        std::istringstream ss(fechaStr);
+        ss >> std::get_time(&tmFecha, "%d-%m-%Y"); 
+        return std::chrono::system_clock::from_time_t(std::mktime(&tmFecha)); 
+    };
+
+    std::chrono::system_clock::time_point fechaInicioConv = convertirFechaAFechaSistema(valorInicio);
+    std::chrono::system_clock::time_point fechaFinConv = convertirFechaAFechaSistema(valorFin);
+    
+   
+    auto estaEnIntervaloFecha = [&fechaInicioConv, &fechaFinConv, &fechaActual]() {
+     
+        std::tm tmFechaActual = {};
+        std::istringstream ss(fechaActual);
+        ss >> std::get_time(&tmFechaActual, "%d-%m-%Y");
+        std::chrono::system_clock::time_point fechaActualConv = std::chrono::system_clock::from_time_t(std::mktime(&tmFechaActual));
+        
+        return fechaInicioConv <= fechaActualConv && fechaActualConv <= fechaFinConv;
+    };
+
+    if (estaEnIntervaloFecha()) {
+        cout << "========================================" << endl;
+        cout << "   AUTOMOVIL REGISTRADO POR FECHA" << endl;
+        cout << "========================================" << endl;
+        cout << aux->getDato() << endl;
+        encontrado = true;
+    }
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\main.cpp
+FUNCTION_NAME: main
+FUNCTION_BODY:
+int main() {
+ListaCircularDoble<Propietario> listaPropietarios;
+ArbolAVL arbolCoches;
+listaPropietarios.CargarPropietarios("propietarios.txt");
+ListaCircularDoble<Coche> listaCochesHistorial;
+    listaCochesHistorial.CargarArchivo("autos_historial.txt");
+    Estacionamiento estacionamiento;
+    ListaCircularDoble<Coche> listaCoches;
+    listaCoches.CargarArchivo("autos.txt");
+    Parqueadero parqueadero;
+    
+
+
+    menu(listaCoches, listaCochesHistorial, listaPropietarios, estacionamiento, parqueadero, arbolCoches);
+
+    return 0;
+
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: detenerFlask
+FUNCTION_BODY:
+void detenerFlask() {
+   
+    system("taskkill /IM python.exe /F"); 
+    system("cls");
+    
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: iniciarFlask
+FUNCTION_BODY:
+void iniciarFlask() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\app.py\"");
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: stopFlask
+FUNCTION_BODY:
+void stopFlask() {
+    system("taskkill /IM python.exe /F"); 
+    system("cls");
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: iniciarFlaskThread
+FUNCTION_BODY:
+void iniciarFlaskThread() {
+    std::thread flaskThread(iniciarFlask);
+    flaskThread.detach();
+    std::this_thread::sleep_for(std::chrono::seconds(2)); 
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: stopFlaskThread
+FUNCTION_BODY:
+void stopFlaskThread() {
+    stopFlask();
+    std::this_thread::sleep_for(std::chrono::seconds(1)); 
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: iniciarFlaskVizSalida
+FUNCTION_BODY:
+void iniciarFlaskVizSalida() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVizSalida.py\"");
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: iniciarFlaskGrafico
+FUNCTION_BODY:
+void iniciarFlaskGrafico() {
+    system("start python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\app.py\"");
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: iniciarFlaskVisEntrada
+FUNCTION_BODY:
+void iniciarFlaskVisEntrada() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVizEntrada.py\"");
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: iniciarFlaskVis
+FUNCTION_BODY:
+void iniciarFlaskVis() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVisualization.py\"");
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: mostrarGrafico
+FUNCTION_BODY:
+void mostrarGrafico() {
+    iniciarFlaskGrafico(); 
+    std::this_thread::sleep_for(std::chrono::seconds(2));  
+    system("start http://localhost:5000/visualizar_grafo");
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\menu.cpp
+FUNCTION_NAME: MenuBusquedaBinaria
+FUNCTION_BODY:
+void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches, ListaCircularDoble<Coche> &lista) {
+    Validaciones validaciones;
+    system("cls");
+    cout << "========================================" << endl;
+    cout << "========================================" << endl;
+    cout << "           SIMULACRO DE SALIDA          " << endl;
+    cout << "========================================" << endl;
+    cout << "========================================" << endl;
+
+    vector<string> opcionesBinario = {
+        "Iniciar simulacro de salida",
+        "Ver orden de salida de 3 coches",
+        "Buscar coche por posicion",
+        "Mostrar Cogestion",  
+        "Simulador de Parqueadero",
+        "Volver al Menu Principal"
+    };
+
+    int seleccionBinario = menuInteractivo(opcionesBinario, "Algoritmos Avanzados");
+
+    switch (seleccionBinario) {
+        case 0: {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "           SIMULACRO DE SALIDA          " << endl;
+            cout << "========================================" << endl;
+            cout << "Este simulacro ayuda a organizar la salida rapida de vehiculos segun la posicion " << endl;
+            cout << "en caso de emergencia o desastre." << endl;
+            cout << "========================================" << endl;
+            cout << "Ingrese la salida que desea utilizar: ( 1,2) ";
+            
+            int salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
+
+            if (salida == 1 || salida == 2) {
+                Nodo<Coche>* cocheCercano  = arbolCoches.buscarCocheMasCercanoEnLista(lista, salida); 
+
+                if (cocheCercano != nullptr) {
+                    cout << "Coche mas cercano a la salida " << salida << ": " << endl;
+                    cout << cocheCercano->getDato() << endl;
+                } else {
+                    cout << "No se encontro un coche cercano para la salida " << salida << "." << endl;
+                }
+            } else {
+                cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
+            }
+            break; 
+        }
+        case 1: {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "           GESTION DE COCHES            " << endl;
+            cout << "========================================" << endl;
+            cout << "Ingrese las posiciones de los 3 coches para el simulacro de salida: " << endl;
+
+            int salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
+
+            if (salida == 1 || salida == 2) {
+                vector<int> orden = arbolCoches.determinarOrdenSalida(salida, lista);
+
+                if (orden.empty()) {
+                    cout << "Error al determinar el orden de salida." << endl;
+                    return;
+                }
+            } else {
+                cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
+            }
+            break;
+        }
+        case 2: {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "           BUSCAR COCHE POR POSICION    " << endl;
+            cout << "========================================" << endl;
+            cout << "Ingrese la posicion del coche a buscar: " << endl;
+
+            int posicionBuscada = validaciones.ingresarNumero("Ingrese la posicion del coche: ");
+
+            Nodo<Coche>* cocheEncontrado = arbolCoches.buscarCochePorPosicion(posicionBuscada, lista);
+            cout << cocheEncontrado->getDato() << endl;
+
+            break;
+        }
+        case 3: {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "        MOSTRAR CONGESTION              " << endl;
+            cout << "========================================" << endl;
+            cout << "Realizando la busqueda de la ruta..." << endl;
+            
+           
+            std::thread flaskThread(mostrarGrafico);
+            flaskThread.detach(); 
+
+            break;
+        }
+        case 4: {
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "           SIMULADOR DE RUTA            " << endl;
+            cout << "========================================" << endl;
+            cout << "Realizando la busqueda de la ruta..." << endl;
+            
+           
+            std::thread flaskThread(iniciarFlaskVis);
+            flaskThread.detach(); 
+
+            break;
+        }
+        case 5: {
+            cout << "Saliendo..." << endl;
+            return;
+        }
+    }
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: partition
+FUNCTION_BODY:
+int partition(std::vector<T>& lista, int low, int high, Comparator comp) {
+    T pivot = lista[high];
+    int i = low - 1;
+    for (int j = low; j < high; j++) {
+        if (comp(lista[j], pivot)) {
+            i++;
+            std::swap(lista[i], lista[j]);
+        }
+    }
+    std::swap(lista[i + 1], lista[high]);
+    return i + 1;
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: quickSort
+FUNCTION_BODY:
+void quickSort(std::vector<T>& lista, int low, int high, Comparator comp) {
+    if (low < high) {
+        int pi = partition(lista, low, high, comp);
+        quickSort(lista, low, pi - 1, comp);
+        quickSort(lista, pi + 1, high, comp);
+    }
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: bubbleSortPass
+FUNCTION_BODY:
+void bubbleSortPass(std::vector<T>& lista, Comparator comp, int n) {
+
+    if (n <= 1) return;
+
+    for (int j = 0; j < n - 1; j++) {
+        if (!comp(lista[j], lista[j + 1])) {
+            std::swap(lista[j], lista[j + 1]);
+        }
+    }
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: bubbleSortRecursive
+FUNCTION_BODY:
+void bubbleSortRecursive(std::vector<T>& lista, Comparator comp, int n) {
+
+    if (n <= 1) return;
+  
+    bubbleSortPass(lista, comp, n);
+    
+    bubbleSortRecursive(lista, comp, n - 1);
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: bubbleSort
+FUNCTION_BODY:
+void bubbleSort(std::vector<T>& lista, Comparator comp) {
+    bubbleSortRecursive(lista, comp, lista.size());
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: ordenarLista
+FUNCTION_BODY:
+void ordenarLista(ListaCircularDoble<T>& lista, Comparator comp) {
+    std::vector<T> elementos;
+    
+    Nodo<T>* aux = lista.getPrimero();
+    do {   
+        elementos.push_back(aux->getDato());
+        aux = aux->getSiguiente();
+    } while (aux != lista.getPrimero());
+
+    quickSort(elementos, 0, elementos.size() - 1, comp);
+
+    aux = lista.getPrimero();
+    int index = 0;
+    do {
+        aux->setDato(elementos[index++]);
+        aux = aux->getSiguiente();
+    } while (aux != lista.getPrimero());
+
+    lista.mostrar(lista.getPrimero());
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: ordenarListaBubbleSort
+FUNCTION_BODY:
+void ordenarListaBubbleSort(ListaCircularDoble<T>& lista,Comparator comp){
+    std::vector<T> elementos;
+
+    Nodo<T>* aux = lista.getPrimero();
+    do{                    
+        elementos.push_back(aux->getDato());
+        aux= aux->getSiguiente();
+    }while (aux != lista.getPrimero());
+
+    bubbleSort(elementos,comp);
+
+    aux=lista.getPrimero();
+    int index=0;
+    do{
+        aux->setDato(elementos[index++]);
+        aux=aux->getSiguiente();
+    }while (aux != lista.getPrimero());
+
+    lista.mostrar(lista.getPrimero());
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: ordenarListaShellSort
+FUNCTION_BODY:
+void ordenarListaShellSort(ListaCircularDoble<T>& lista, Comparator comp) {
+   
+    auto contarElementos = [&]() -> int {
+        int n = 0;
+        Nodo<T>* aux = lista.getPrimero();
+        if (aux != nullptr) {
+            do {
+                ++n;
+                aux = aux->getSiguiente();
+            } while (aux != lista.getPrimero());
+        }
+        return n;
+    };
+
+  
+    auto copiarListaAArreglo = [&](T* elementos, int n) {
+        Nodo<T>* aux = lista.getPrimero();
+        for (int i = 0; i < n; ++i) {
+            elementos[i] = aux->getDato();
+            aux = aux->getSiguiente();
+        }
+    };
+
+   
+    auto copiarArregloALista = [&](T* elementos, int n) {
+        Nodo<T>* aux = lista.getPrimero();
+        for (int i = 0; i < n; ++i) {
+            aux->setDato(elementos[i]);
+            aux = aux->getSiguiente();
+        }
+    };
+
+  
+    auto shellSort = [&](T* elementos, int n) {
+        int gap = n / 2;
+        while (gap > 0) {
+            for (int i = gap; i < n; ++i) {
+                T temp = elementos[i];
+                int j = i;
+                while (j >= gap && comp(temp, elementos[j - gap])) {
+                    elementos[j] = elementos[j - gap];
+                    j -= gap;
+                }
+                elementos[j] = temp;
+            }
+            gap /= 2;
+        }
+    };
+
+    // Contar elementos
+    int n = contarElementos();
+
+    // Crear un arreglo dinÃ¡mico y copiar elementos
+    T* elementos = new T[n];
+    copiarListaAArreglo(elementos, n);
+
+    // Ordenar usando ShellSort
+    shellSort(elementos, n);
+
+    // Copiar elementos ordenados de vuelta a la lista
+    copiarArregloALista(elementos, n);
+
+    // Liberar memoria dinÃ¡mica
+    delete[] elementos;
+
+    // Mostrar lista ordenada
+    lista.mostrar(lista.getPrimero());
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: radixSortByString
+FUNCTION_BODY:
+void radixSortByString(std::vector<T>& elementos, KeyExtractor getKey) {
+    int maxLength = 0;
+    for (const auto& item : elementos) {
+        int length = static_cast<int>(getKey(item).length());
+        maxLength = std::max(maxLength, length);
+    }
+
+    for (int i = maxLength - 1; i >= 0; i--) {
+        std::vector<std::vector<T>> buckets(256);
+        for (const auto& item : elementos) {
+            std::string key = getKey(item);
+            int charIndex = static_cast<int>(key.length()) - 1 - i;
+            int charValue = (charIndex >= 0) ? static_cast<int>(key[charIndex]) : 0;
+            buckets[charValue].push_back(item);
+        }
+
+        elementos.clear();
+        for (auto& bucket : buckets) {
+            for (const auto& item : bucket) {
+                elementos.push_back(item);
+            }
+        }
+    }
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: radixSortByInt
+FUNCTION_BODY:
+void radixSortByInt(std::vector<T>& elementos, KeyExtractor getKey) {
+    int maxValue = 0;
+    for (const auto& item : elementos) {
+        int value = getKey(item);
+        maxValue = std::max(maxValue, value);
+    }
+
+    for (int exp = 1; maxValue / exp > 0; exp *= 10) {
+        std::vector<std::vector<T>> buckets(10);
+        for (const auto& item : elementos) {
+            int digit = (getKey(item) / exp) % 10;
+            buckets[digit].push_back(item);
+        }
+
+        elementos.clear();
+        for (auto& bucket : buckets) {
+            for (const auto& item : bucket) {
+                elementos.push_back(item);
+            }
+        }
+    }
+}
+END_FUNCTION
+
+ARCHIVO: C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\Ordenamiento.cpp
+FUNCTION_NAME: ordenarListaPorRadix
+FUNCTION_BODY:
+void ordenarListaPorRadix(ListaCircularDoble<T>& lista, KeyExtractor getKey) {
+    std::vector<T> elementos;
+
+   
+    Nodo<T>* aux = lista.getPrimero();
+    do {
+        elementos.push_back(aux->getDato());
+        aux = aux->getSiguiente();
+    } while (aux != lista.getPrimero());
+
+   
+    using KeyType = typename std::invoke_result<KeyExtractor, T>::type;
+    if constexpr (std::is_same<KeyType, std::string>::value) {
+       
+        radixSortByString(elementos, getKey);
+    } else if constexpr (std::is_integral<KeyType>::value) {
+       
+        radixSortByInt(elementos, getKey);
+    } else {
+        static_assert(false, "El tipo de clave no es compatible con Radix Sort");
+    }
+
+ 
+    aux = lista.getPrimero();
+    int index = 0;
+    do {
+        aux->setDato(elementos[index++]);
+        aux = aux->getSiguiente();
+    } while (aux != lista.getPrimero());
+
+    lista.mostrar(lista.getPrimero());
+}
+END_FUNCTION
+
