@@ -106,6 +106,13 @@ def simular_movimiento_carro(screen, ruta, simulador_image, exit_image, CELL_WID
     De esta forma se logra que, a medida que el carro se mueve, se "quita" la imagen del frame anterior.
     """
     print(f"Ruta de salida recibida: {ruta}")  # Depuración
+    # Actualizar el estado del parqueadero para reflejar que el coche ha salido
+    if ruta:
+        fila, columna = ruta[0]
+        for espacio in estado["espacios"]:
+            if espacio["id"] == fila * columnas + columna:
+                espacio["ocupado"] = False
+
     for i, nodo in enumerate(ruta):
         # Redibujar todo el parqueadero
         draw_grid(screen, estado, font, filas, columnas, offset_x, offset_y, road_offset_x, road_offset_y, car_image)

@@ -57,16 +57,19 @@ string Validaciones::ingresarCedula(const string &msj)
     {
         c = _getch();  
 
+       
         if (isdigit(c))
         {
             cedula += c;
             cout << c;
         }
+       
         else if (c == '\b' && !cedula.empty())  
         {
             cedula.pop_back();
             cout << "\b \b";
         }
+       
         else if (c == '\r')  
         {
             if (!cedula.empty())  
@@ -75,12 +78,17 @@ string Validaciones::ingresarCedula(const string &msj)
             }
             else
             {
-                cout << "\a";  
+                cout << "\a"; 
             }
+        }
+        else if (c == 27)  
+        {
+            cout << "\nSaliendo del ingreso de cedula...\n";
+            return "";  
         }
         else
         {
-            cout << "\a";  
+            cout << "\a"; 
         }
     }
 
@@ -98,6 +106,11 @@ string Validaciones::ingresarCorreo(const string &msj)
 
 bool Validaciones::validarCedula(const string &cedula)
 {
+
+    if (cedula.empty()) {
+        return true; 
+    }
+
     if (cedula.length() != 10)
     {
         return false;

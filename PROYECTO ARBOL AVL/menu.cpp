@@ -22,6 +22,13 @@ void detenerFlask() {
     system("cls");
     
 }
+void iniciarFlaskEncript(){
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\Encript.py\"");
+}
+
+void iniciarFlaskHash(){
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\Hash.py\"");
+}
 
 std::atomic<bool> stopFlaskServer(false);
 
@@ -33,11 +40,14 @@ void stopFlask() {
     system("taskkill /IM python.exe /F"); 
     system("cls");
 }
-
 void iniciarFlaskThread() {
     std::thread flaskThread(iniciarFlask);
     flaskThread.detach();
     std::this_thread::sleep_for(std::chrono::seconds(2)); 
+}
+
+void iniciarFlaskContrasena() {
+system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\GeneradorContra.py\"");
 }
 void stopFlaskThread() {
     stopFlask();
@@ -463,6 +473,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         "Ayuda",
         "Mostrar Arbol AVL",
         "Busqueda binaria",
+        "Gestion de Informacion",
         "Salir"};
 
     string archivo = "autos.txt";
@@ -750,9 +761,23 @@ ventana.draw(texto);
             MenuBusquedaBinaria(estacionamiento, arbolCoches, lista);
             break;
         }
-        
 
         case 10:
+        {
+         
+            system("cls");
+            cout << "========================================" << endl;
+            cout << "========================================" << endl;
+            cout << "    ENCRIPTACION DE INFORMACION         " << endl;
+            cout << "========================================" << endl;
+            cout << "========================================" << endl;
+            menuGestionInformacion();
+            break;
+
+        }
+        
+
+        case 11:
         {
             cout << "Saliendo..." << endl;
             return;
@@ -1473,4 +1498,61 @@ void menuOrdenar(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
             menuOrdenarPropietarios(listaPropietarios);
         }
     }
+}
+
+void menuGestionInformacion()
+
+{
+    system("cls");
+    cout << "========================================" << endl;
+    cout << "========================================" << endl;
+    cout << "     BIENVENIDOS A LA GESTION DE INFORMACION " << endl;
+    cout << "========================================" << endl;
+    cout << "========================================" << endl;
+ 
+    vector<string> opciones = {
+        "Encriptar Informacion",
+        "Generar Contraseña",
+        "Desencriptar Informacion",
+        "Volver al Menu Principal"};
+    while (true)
+    {
+        int seleccion = menuInteractivo(opciones, "Menu de Gestion de Informacion");
+
+        switch (seleccion)
+        {
+        case 0:
+        {
+            cout << "Encriptando informacion..." << endl;
+             iniciarFlaskEncript();
+
+            break;
+        }
+        case 1:
+        {
+            cout << "Generando contrasenia..." << endl;
+            iniciarFlaskContrasena();
+            break;
+        }
+    
+        case 2:
+        {
+            cout << "Desencriptando informacion..." << endl;
+            iniciarFlaskHash();
+            break;
+        }
+        case 3:
+        {
+            cout << "Saliendo..." << endl;
+            return;
+        }
+        default:
+            cout << "Opcion invalida. Intente de nuevo." << endl;
+            break;
+        }
+
+        system("pause");
+    }
+
+
 }
