@@ -14,27 +14,40 @@ def construir_grafo(filas, columnas):
     G.add_edge((filas - 1, columnas - 1), exit2, weight=1)
     return G
 
-def obtener_mejor_ruta(start, G):
-    exit1 = (0, 10)
-    exit2 = (9, 10)
-    ruta1 = None
-    ruta2 = None
-    try:
-        ruta1 = nx.dijkstra_path(G, start, exit1)
-    except nx.NetworkXNoPath:
-        pass
-    try:
-        ruta2 = nx.dijkstra_path(G, start, exit2)
-    except nx.NetworkXNoPath:
-        pass
-    if ruta1 and ruta2:
-        return ruta1 if len(ruta1) <= len(ruta2) else ruta2
-    elif ruta1:
-        return ruta1
-    elif ruta2:
-        return ruta2
+def obtener_mejor_ruta(start, G, salida):
+    if salida == 1:
+        try:
+            ruta = nx.dijkstra_path(G, start, (0, 10))
+        except nx.NetworkXNoPath:
+            ruta = None
+        return ruta
+    elif salida == 2:
+        try:
+            ruta = nx.dijkstra_path(G, start, (9, 10))
+        except nx.NetworkXNoPath:
+            ruta = None
+        return ruta
     else:
-        return None
+        exit1 = (0, 10)
+        exit2 = (9, 10)
+        ruta1 = None
+        ruta2 = None
+        try:
+            ruta1 = nx.dijkstra_path(G, start, exit1)
+        except nx.NetworkXNoPath:
+            pass
+        try:
+            ruta2 = nx.dijkstra_path(G, start, exit2)
+        except nx.NetworkXNoPath:
+            pass
+        if ruta1 and ruta2:
+            return ruta1 if len(ruta1) <= len(ruta2) else ruta2
+        elif ruta1:
+            return ruta1
+        elif ruta2:
+            return ruta2
+        else:
+            return None
 
 def draw_grid(screen, estado, font, filas, columnas, offset_x, offset_y, road_offset_x, road_offset_y, car_image):
     if background:
@@ -66,8 +79,8 @@ def draw_grid(screen, estado, font, filas, columnas, offset_x, offset_y, road_of
     screen.blit(exit_image, (exit_x2, road_offset_y + 800))
 
 def simular_movimiento_carro(screen, ruta, simulador_image, exit_image, CELL_WIDTH, CELL_HEIGHT,
-                              offset_x, offset_y, estado, font, filas, columnas, road_offset_x, road_offset_y, car_image):
-    print(f"Ruta de salida recibida: {ruta}")
+                              offset_x, offset_y, estado, font, filas, columnas, road_offset_x, road_offset_y, car_image, salida):
+    print(f"Usando salida {salida}")
     if ruta:
         fila, columna = ruta[0]
         for espacio in estado["espacios"]:
@@ -172,6 +185,9 @@ def main():
         posiciones = [posicion_info["posicion"]]
     elif "posiciones" in posicion_info:
         posiciones = posicion_info["posiciones"]
+    salida = 1
+    if "salida" in posicion_info:
+        salida = posicion_info["salida"]
     if not posiciones:
         print("No se encontró la posición del coche en el JSON.")
         return
@@ -190,7 +206,7 @@ def main():
     for pos in posiciones:
         start = (pos // columnas, pos % columnas)
         print(f"Posición de inicio calculada para el coche en {pos}: {start}")
-        ruta = obtener_mejor_ruta(start, G)
+        ruta = obtener_mejor_ruta(start, G, salida)
         if ruta is None:
             print(f"No se encontró una ruta de salida para el coche en la posición {pos}.")
             continue
@@ -201,7 +217,8 @@ def main():
             exit_image,
             CELL_WIDTH, CELL_HEIGHT,
             offset_x, offset_y, estado, font, filas, columnas, road_offset_x, road_offset_y,
-            pygame.transform.scale(pygame.image.load(car_image_path), (CELL_WIDTH - 10, CELL_HEIGHT - 10))
+            pygame.transform.scale(pygame.image.load(car_image_path), (CELL_WIDTH - 10, CELL_HEIGHT - 10)),
+            salida
         )
         time.sleep(1)
     draw_parking_lot(estado)

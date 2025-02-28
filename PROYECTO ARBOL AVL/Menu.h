@@ -18,4 +18,3 @@ void menuGestionPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
 void menuOrdenar(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial,  ListaCircularDoble<Propietario> &listaPropietarios);
 void menuBusquedaAvanzadaPropietario(ListaCircularDoble<Propietario> &listaPropietarios);
 void menuGestionInformacion();
-void menuCedula();

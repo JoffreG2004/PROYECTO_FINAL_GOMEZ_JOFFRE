@@ -221,7 +221,7 @@ bool compararSalida1(int pos1, int pos2) {
         return decimal1 < decimal2;  
     } else {
         
-        std::vector<int> orden = {4, 5, 3, 6, 2, 7, 1, 8, 0, 9};
+        std::vector<int> orden = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
         
         auto it1 = std::find(orden.begin(), orden.end(), unidad1);
         auto it2 = std::find(orden.begin(), orden.end(), unidad2);
@@ -240,7 +240,7 @@ bool compararSalida2(int pos1, int pos2) {
         int unidad1 = pos1 % 10;
         int unidad2 = pos2 % 10;
         
-        std::vector<int> orden = {4, 5, 3, 6, 2, 7, 1, 8, 0, 9};
+        std::vector<int> orden = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
         
         auto it1 = std::find(orden.begin(), orden.end(), unidad1);
         auto it2 = std::find(orden.begin(), orden.end(), unidad2);
@@ -378,9 +378,7 @@ void ArbolAVL::buscarPosicionPorPlaca(const std::string& placaBuscada, ListaCirc
             int posicion = coche.getposicion();
             std::cout << "Coche con placa " << placaBuscada << " encontrado en la posición " << posicion << ": \n" << std::endl;
 
-            // Guardar la posición en un archivo JSON
             Json::Value posicionJson;
-            posicionJson["placa"] = placaBuscada;
             posicionJson["posicion"] = posicion;
 
             std::string posicionJsonStr = posicionJson.toStyledString();

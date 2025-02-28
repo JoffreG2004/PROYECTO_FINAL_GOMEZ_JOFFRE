@@ -22,6 +22,11 @@ void detenerFlask() {
     system("cls");
     
 }
+
+
+void iniciarFlaskVizSim() {
+    system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\API\\appVizSim.py\"");
+}
 void iniciarFlaskEncript(){
     system("python \"C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\Encript.py\"");
 }
@@ -148,6 +153,8 @@ void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
 
 
 
+
+
 void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches, ListaCircularDoble<Coche> &lista) {
     Validaciones validaciones;
     system("cls");
@@ -180,19 +187,31 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "Ingrese la salida que desea utilizar: ( 1,2) ";
             
             int salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
-
+        
             if (salida == 1 || salida == 2) {
                 Nodo<Coche>* cocheCercano  = arbolCoches.buscarCocheMasCercanoEnLista(lista, salida); 
-
+        
                 if (cocheCercano != nullptr) {
                     cout << "Coche mas cercano a la salida " << salida << ": " << endl;
                     cout << cocheCercano->getDato() << endl;
+                    ofstream file("posicion_coche.json");
+                    if (file.is_open()) {
+                        file << "{\n";
+                        file << "    \"salida\": " << salida << ",\n";
+                        file << "    \"posicion\": " << cocheCercano->getDato().getposicion() << "\n";
+                        file << "}\n";
+                        file.close();
+                    } else {
+                        cout << "No se pudo abrir el archivo para guardar la posición del coche." << endl;
+                    }
                 } else {
                     cout << "No se encontro un coche cercano para la salida " << salida << "." << endl;
                 }
             } else {
                 cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
             }
+        
+            iniciarFlaskVizSim();
             break; 
         }
         case 1: {
@@ -201,21 +220,42 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "           GESTION DE COCHES            " << endl;
             cout << "========================================" << endl;
             cout << "Ingrese las posiciones de los 3 coches para el simulacro de salida: " << endl;
-
+        
             int salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
-
+        
             if (salida == 1 || salida == 2) {
                 vector<int> orden = arbolCoches.determinarOrdenSalida(salida, lista);
-
+        
                 if (orden.empty()) {
                     cout << "Error al determinar el orden de salida." << endl;
                     return;
                 }
+        
+                ofstream file("posicion_coche.json");
+                if (file.is_open()) {
+                    file << "{\n";
+                    file << "    \"salida\": " << salida << ",\n";
+                    file << "    \"posiciones\": [\n";
+                    for (size_t i = 0; i < orden.size(); ++i) {
+                        file << "        " << orden[i];
+                        if (i < orden.size() - 1) {
+                            file << ",";
+                        }
+                        file << "\n";
+                    }
+                    file << "    ]\n";
+                    file << "}\n";
+                    file.close();
+                } else {
+                    cout << "No se pudo abrir el archivo para guardar las posiciones de los coches." << endl;
+                }
             } else {
                 cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
             }
+            iniciarFlaskVizSim();
             break;
         }
+        
         case 2: {
             system("cls");
             cout << "========================================" << endl;
@@ -237,7 +277,6 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "========================================" << endl;
             cout << "Realizando la busqueda de la ruta..." << endl;
             
-           
             std::thread flaskThread(mostrarGrafico);
             flaskThread.detach(); 
 
@@ -250,7 +289,6 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "========================================" << endl;
             cout << "Realizando la busqueda de la ruta..." << endl;
             
-           
             std::thread flaskThread(iniciarFlaskVis);
             flaskThread.detach(); 
 
@@ -258,10 +296,13 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
         }
         case 5: {
             cout << "Saliendo..." << endl;
-            return;
+            return ;
         }
     }
+
+    return ;
 }
+
 
 
 
@@ -1556,3 +1597,4 @@ void menuGestionInformacion()
 
 
 }
+

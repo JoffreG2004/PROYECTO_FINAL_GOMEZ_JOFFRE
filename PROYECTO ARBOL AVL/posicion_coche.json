@@ -1,4 +1,8 @@
 {
-	"placa" : "PBF1234",
-	"posicion" : 0
+    "salida": 2,
+    "posiciones": [
+        98,
+        56,
+        0
+    ]
 }
