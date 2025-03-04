@@ -20,6 +20,12 @@ string Validaciones::ingresarString(const string &msj)
             input += c;
             cout << c;
         }
+        else if (c == 27){
+
+            cout << "Saliendo al menu principal";
+            return "ESC";
+
+        }
         else if (c == '\b' && !input.empty())  
         {
             input.pop_back();
@@ -83,8 +89,7 @@ string Validaciones::ingresarCedula(const string &msj)
         }
         else if (c == 27)  
         {
-            cout << "\nSaliendo del ingreso de cedula...\n";
-            return "";  
+            return "xyz";  
         }
         else
         {
@@ -101,13 +106,17 @@ string Validaciones::ingresarCorreo(const string &msj)
     string correo;
     cout << msj;
     cin >> correo;
+    if (correo == "\x1B"){
+
+        return "ESC";
+    }
     return correo;
 }
 
 bool Validaciones::validarCedula(const string &cedula)
 {
 
-    if (cedula.empty()) {
+    if (cedula == "xyz") {
         return true; 
     }
 
@@ -139,6 +148,9 @@ bool Validaciones::validarCedula(const string &cedula)
 
 bool Validaciones::validarCorreo(const string &correo)
 {
+    if(correo == "ESC"){
+        return true;
+    }
     const regex pattern(R"((\w+)(\.{1}\w+)*@(\w+)(\.{1}\w+)+)");
     return regex_match(correo, pattern);
 }
@@ -168,6 +180,10 @@ int Validaciones::ingresarNumero(const string &msj)
         {
             break;  
         }
+        else if (c == 27)  
+        {
+            return -1;  
+        }
         else if (c == ' ' || c == '\n')  
         {
             continue;
@@ -184,3 +200,4 @@ int Validaciones::ingresarNumero(const string &msj)
     cout << endl;
     return numeroEntero;
 }
+

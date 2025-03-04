@@ -13,6 +13,7 @@
 #include <sstream>
 #include <iomanip>
 #include <set>
+#include "ruta.h"
 //SI METES AQUI EL MENU.H SE DAÑA TODITO 
 
 
@@ -317,8 +318,9 @@ void ListaCircularDoble<T>::BusquedaAvanzada(string criterio, string valorInicio
 template <typename T>
 void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
 {
-    srand(time(0));
-    std::ifstream archivo(nombreArchivo);
+  
+    std::string fullPath = GetAppDataPath() + nombreArchivo;
+    std::ifstream archivo(fullPath);
 
     if (!archivo.is_open())
     {
@@ -411,7 +413,8 @@ void ListaCircularDoble<T>::CargarArchivo(std::string nombreArchivo)
 template <typename T>
 void ListaCircularDoble<T>::GuardarArchivo(std::string nombreArchivo)
 {
-    std::ofstream archivo(nombreArchivo);
+    std::string fullPath = GetAppDataPath() + nombreArchivo;
+    std::ofstream archivo(fullPath);
 
     if (!archivo.is_open())
     {
@@ -574,7 +577,9 @@ void ListaCircularDoble<T>::salirDelParqueadero(const std::string &placa)
 template <typename T>
 void ListaCircularDoble<T>::GuardarPropietarios(const std::string& nombreArchivo)
 {
-    ofstream archivo(nombreArchivo);
+    std::string fullPath = GetAppDataPath() + nombreArchivo;
+    std::ofstream archivo(fullPath);
+    
     if (!archivo.is_open())
     {
         cerr << "No se pudo abrir el archivo para escritura: " << nombreArchivo << endl;
@@ -607,7 +612,9 @@ void ListaCircularDoble<T>::GuardarPropietarios(const std::string& nombreArchivo
 template <typename T>
 void ListaCircularDoble<T>::CargarPropietarios(const std::string& nombreArchivo)
 {
-    ifstream archivo(nombreArchivo);
+    std::string fullPath = GetAppDataPath() + nombreArchivo;
+    std::ifstream archivo(fullPath);
+
     if (!archivo.is_open())
     {
         cerr << "No se pudo abrir el archivo para lectura: " << nombreArchivo << endl;

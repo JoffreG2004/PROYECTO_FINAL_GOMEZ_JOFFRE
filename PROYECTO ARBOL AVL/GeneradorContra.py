@@ -25,34 +25,35 @@ ROJO = (255, 0, 0)
 # Fuente
 fuente = pygame.font.SysFont("Arial", 20)
 
-logo_path= "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\logo.png"
+logo_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\logo.png"
 logo = pygame.image.load(logo_path)  # Si tienes un logo, reemplaza 'logo.png'
 logo = pygame.transform.scale(logo, (100, 100))  # Escala el logo a un tamaño adecuado
 
-fondo_path= "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\fondo.jpg"
+fondo_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\fondo.jpg"
 fondo = pygame.image.load(fondo_path)  # Reemplaza con el nombre de tu fondo
 fondo = pygame.transform.scale(fondo, (ANCHO, ALTO))  # Ajusta el tamaño del fondo a la ventana
 
-# Ruta donde se guardarán los archivos generados
-directorio_guardado = r'C:\REPOSITORIO\PROYECTO_FINAL_GOMEZ_JOFFRE\PROYECTO ARBOL AVL\CONTRASEÑA'
 
-# Verificar si el directorio existe, si no, crearlo
-if not os.path.exists(directorio_guardado):
-    os.makedirs(directorio_guardado)
+data_dir = os.path.join(os.getenv('LOCALAPPDATA'), 'Parqueadero AVL', 'data')
+if not os.path.exists(data_dir):
+    os.makedirs(data_dir)
 
-# Función para generar una contraseña aleatoria
+
+directorio_guardado = data_dir
+
+
 def generar_contraseña_aleatoria():
     longitud = 64
     caracteres = string.ascii_letters + string.digits + string.punctuation
     contraseña = ''.join(random.choice(caracteres) for _ in range(longitud))
     return contraseña
 
-# Función para generar el hash
+
 def generar_hash(contraseña):
     hash_object = hashlib.sha256(contraseña.encode())
     return hash_object.hexdigest()
 
-# Función para generar QR
+
 def generar_qr(hash_contraseña):
     qr = qrcode.QRCode(
         version=1,
@@ -64,7 +65,7 @@ def generar_qr(hash_contraseña):
     qr.make(fit=True)
     img = qr.make_image(fill='black', back_color='white')
 
-    # Guardar el QR en el directorio especificado
+
     ruta_qr = os.path.join(directorio_guardado, "qr_contraseña.png")
     img.save(ruta_qr)
 
@@ -120,7 +121,7 @@ def interfaz_principal():
                         generar_qr(hash_contraseña)
 
                         pygame.display.update()
-                        pygame.time.wait(1500)  
+                        pygame.time.wait(1500)
                         pygame.quit()
                         quit()
                     else:
@@ -130,7 +131,7 @@ def interfaz_principal():
                         else:
                             mensaje_error = "Demasiados intentos fallidos. Cerrando..."
                             pygame.display.update()
-                            pygame.time.wait(1500) 
+                            pygame.time.wait(1500)
                             pygame.quit()
                             quit()
                     clave_maestra = "" 
@@ -140,18 +141,15 @@ def interfaz_principal():
                 else:
                     clave_maestra += event.unicode
 
-      
         clave_oculta = "*" * len(clave_maestra)
         mostrar_texto(clave_oculta, NEGRO, 50, 190)
 
-      
         pygame.draw.rect(pantalla, AZUL, (50, 180, 500, 40), 2)
 
-      
         pygame.draw.rect(pantalla, AZUL, (50, 350, 200, 40), 2)
         mostrar_texto("Generar Contraseña", AZUL, 70, 360)
 
         pygame.display.update()
 
-
-interfaz_principal()
+if __name__ == "__main__":
+    interfaz_principal()

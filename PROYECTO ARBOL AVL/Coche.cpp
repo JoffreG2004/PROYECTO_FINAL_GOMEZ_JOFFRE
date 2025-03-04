@@ -1,4 +1,5 @@
 #include <iostream>
+#include <conio.h>
 #include "Coche.h"
 #include "Menu.h"
 #include "Propietario.h"
@@ -127,7 +128,7 @@ ostream &operator<<(ostream &os, const Coche &coche)
 }
 
 
-Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios, int posicion )
+Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHistorial, ListaCircularDoble<Propietario> &listaPropietarios, int posicion)
 {
     Validaciones validaciones;
     Placa<Coche> validador;
@@ -137,10 +138,14 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
     Nodo<Propietario> *propietarioNodo = nullptr;
     bool propietarioEncontrado = false;
 
-    while (!propietarioEncontrado)
+    while (!propietarioEncontrado && cedula != "xyz")
     {
         do {
-            cedula = validaciones.ingresarCedula("Ingrese la cedula del propietario: ");
+            cedula = validaciones.ingresarCedula("Ingrese la cedula del propietario (o presione Esc para cancelar): ");
+            if (cedula == "xyz") {
+                return Coche();
+            }
+           
             if (!validaciones.validarCedula(cedula)) {
                 cout << "Cedula invalida. Intente de nuevo." << endl;
             }
@@ -156,14 +161,17 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
             propietarioNodo = propietarioNodo->getSiguiente();
         } while (propietarioNodo != listaPropietarios.getPrimero());
 
-        if (!propietarioEncontrado) {
-            cout << "No se encontro un propietario con esa cedula. Por favor, intente de nuevo." << endl;
+        if (!propietarioEncontrado && cedula != "xyz" ) {
+            cout << "No se encontro un propietario con esa cedula. Por favor, intente de nuevo. " << endl;
         }
     }
 
     while (true)
     {
         placa = validador.ingresarPlaca(lista.getPrimero());
+        if (placa == "&") {
+            return Coche(); 
+        }
         
         Nodo<Coche> *temp = lista.getPrimero();
         bool placaDuplicada = false;
@@ -190,6 +198,9 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
             break;
         }
     }
+
+    vector<string> placasPropietario = propietarioNodo->getDato().getPlacas();
+    bool placaYaAsociada = (std::find(placasPropietario.begin(), placasPropietario.end(), placa) != placasPropietario.end());
 
     Nodo<Coche> *tempHistorial = listaHistorial.getPrimero();
     if (tempHistorial != nullptr)
@@ -221,16 +232,21 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
                     cout << "Color:    " << color << endl;
                     cout << "Placa:    " << placa << endl;
 
+                    Propietario propietarioActualizado;
+                    if (placaYaAsociada) {
+                        propietarioActualizado = Propietario(propietarioNodo->getDato().getNombre(), 
+                                                             propietarioNodo->getDato().getApellido(), 
+                                                             propietarioNodo->getDato().getCedula(),
+                                                             propietarioNodo->getDato().getCorreo());
+                    } else {
+                        propietarioActualizado = Propietario(propietarioNodo->getDato().getNombre(), 
+                                                             propietarioNodo->getDato().getApellido(), 
+                                                             propietarioNodo->getDato().getCedula(),
+                                                             propietarioNodo->getDato().getCorreo(),
+                                                             propietarioNodo->getDato().getPlacas());
+                        propietarioActualizado.agregarPlaca(placa);
+                    }
 
-                    
-                    Propietario propietarioActualizado(propietarioNodo->getDato().getNombre(), 
-                                                        propietarioNodo->getDato().getApellido(), 
-                                                        propietarioNodo->getDato().getCedula(),
-                                                        propietarioNodo->getDato().getCorreo(),
-                                                        propietarioNodo->getDato().getPlacas());
-                    propietarioActualizado.agregarPlaca(placa);
-                    
-                    
                     propietarioNodo->setDato(propietarioActualizado);
 
                     listaPropietarios.GuardarPropietarios("propietarios.txt");
@@ -250,18 +266,33 @@ Coche Coche::InsertarDatos(ListaCircularDoble<Coche> &lista, ListaCircularDoble<
     }
 
     marca = validaciones.ingresarString("Ingrese la marca: ");
+    if (marca == "ESC") {
+        return Coche(); // Retornar un coche vacío para indicar cancelación
+    }
     color = validaciones.ingresarString("Ingrese el color: ");
+    if (color == "ESC") {
+        return Coche(); // Retornar un coche vacío para indicar cancelación
+    }
     modelo = validaciones.ingresarString("Ingrese el modelo: ");
+    if (modelo == "ESC") {
+        return Coche(); // Retornar un coche vacío para indicar cancelación
+    }
 
-  
-    Propietario propietarioActualizado(propietarioNodo->getDato().getNombre(), 
-                                        propietarioNodo->getDato().getApellido(), 
-                                        propietarioNodo->getDato().getCedula(),
-                                        propietarioNodo->getDato().getCorreo(),
-                                        propietarioNodo->getDato().getPlacas());
-    propietarioActualizado.agregarPlaca(placa);
+    Propietario propietarioActualizado;
+    if (placaYaAsociada) {
+        propietarioActualizado = Propietario(propietarioNodo->getDato().getNombre(), 
+                                             propietarioNodo->getDato().getApellido(), 
+                                             propietarioNodo->getDato().getCedula(),
+                                             propietarioNodo->getDato().getCorreo());
+    } else {
+        propietarioActualizado = Propietario(propietarioNodo->getDato().getNombre(), 
+                                             propietarioNodo->getDato().getApellido(), 
+                                             propietarioNodo->getDato().getCedula(),
+                                             propietarioNodo->getDato().getCorreo(),
+                                             propietarioNodo->getDato().getPlacas());
+        propietarioActualizado.agregarPlaca(placa);
+    }
 
-   
     propietarioNodo->setDato(propietarioActualizado);
 
     listaPropietarios.GuardarPropietarios("propietarios.txt");

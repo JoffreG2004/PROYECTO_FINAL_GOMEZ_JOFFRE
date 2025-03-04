@@ -94,11 +94,11 @@ void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
     system("cls");
     cout << "========================================" << endl;
     cout << "========================================" << endl;
-    cout << "    ELIMINAR PLACA DE PROPIETARIO       " << endl;
+    cout << "    ELIMINAR PLACA DE CLIENTE           " << endl;
     cout << "========================================" << endl;
     cout << "========================================" << endl;
 
-    string cedula = validaciones.ingresarCedula("Ingrese la cedula del propietario: ");
+    string cedula = validaciones.ingresarCedula("Ingrese la cedula del cliente: ");
     Nodo<T> *aux = listaPropietarios.getPrimero();
     bool encontrado = false;
 
@@ -106,14 +106,13 @@ void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
         if (aux->getDato().getCedula() == cedula) {
             encontrado = true;
             cout << "========================================" << endl;
-            cout << "   PROPIETARIO REGISTRADO" << endl;
+            cout << "          CLIENTE REGISTRADO            " << endl;
             cout << "========================================" << endl;
             cout << aux->getDato() << endl;
 
             vector<string> placas = aux->getDato().getPlacas();
-
             if (placas.empty()) {
-                cout << "Este propietario no tiene placas asociadas." << endl;
+                cout << "Este cliente no tiene placas asociadas." << endl;
                 return;
             }
             
@@ -147,7 +146,7 @@ void menuEliminarPlaca(ListaCircularDoble<Propietario> &listaPropietarios)
     } while (aux != listaPropietarios.getPrimero() && !encontrado);
 
     if (!encontrado) {
-        cout << "No se encontró un propietario con esa cédula." << endl;
+        cout << "No se encontro un cliente con esa cedula." << endl;
     }
 }
 
@@ -187,20 +186,22 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "Ingrese la salida que desea utilizar: ( 1,2) ";
             
             int salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
-        
+            
             if (salida == 1 || salida == 2) {
                 Nodo<Coche>* cocheCercano  = arbolCoches.buscarCocheMasCercanoEnLista(lista, salida); 
-        
+                
                 if (cocheCercano != nullptr) {
                     cout << "Coche mas cercano a la salida " << salida << ": " << endl;
                     cout << cocheCercano->getDato() << endl;
-                    ofstream file("posicion_coche.json");
+                    std::string fullPath = GetAppDataPath() + "posicion_coche.json";
+                    ofstream file(fullPath);
                     if (file.is_open()) {
                         file << "{\n";
                         file << "    \"salida\": " << salida << ",\n";
                         file << "    \"posicion\": " << cocheCercano->getDato().getposicion() << "\n";
                         file << "}\n";
                         file.close();
+                        iniciarFlaskVizSim();
                     } else {
                         cout << "No se pudo abrir el archivo para guardar la posición del coche." << endl;
                     }
@@ -210,8 +211,8 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             } else {
                 cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
             }
-        
-            iniciarFlaskVizSim();
+            
+            
             break; 
         }
         case 1: {
@@ -220,18 +221,19 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
             cout << "           GESTION DE COCHES            " << endl;
             cout << "========================================" << endl;
             cout << "Ingrese las posiciones de los 3 coches para el simulacro de salida: " << endl;
-        
+            
             int salida = validaciones.ingresarNumero("Ingrese el tipo de salida (1 o 2): ");
-        
+            
             if (salida == 1 || salida == 2) {
                 vector<int> orden = arbolCoches.determinarOrdenSalida(salida, lista);
-        
+            
                 if (orden.empty()) {
                     cout << "Error al determinar el orden de salida." << endl;
                     return;
                 }
-        
-                ofstream file("posicion_coche.json");
+            
+                std::string fullPath = GetAppDataPath() + "posicion_coche.json";
+                ofstream file(fullPath);
                 if (file.is_open()) {
                     file << "{\n";
                     file << "    \"salida\": " << salida << ",\n";
@@ -246,15 +248,17 @@ void MenuBusquedaBinaria(Estacionamiento &estacionamiento, ArbolAVL &arbolCoches
                     file << "    ]\n";
                     file << "}\n";
                     file.close();
+                    iniciarFlaskVizSim();
                 } else {
                     cout << "No se pudo abrir el archivo para guardar las posiciones de los coches." << endl;
                 }
             } else {
                 cout << "Entrada invalida. Solo puede ingresar 1 o 2." << endl;
             }
-            iniciarFlaskVizSim();
+            
             break;
         }
+        
         
         case 2: {
             system("cls");
@@ -366,13 +370,13 @@ void menuGestionPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
         cout << "========================================" << endl;
 
         vector<string> opcionesPropietarios = {
-            "Agregar Propietario",
-            "Mostrar Propietarios",
+            "Agregar Cliente",
+            "Mostrar Cliente",
             "Busqueda Avanzada",
-            "Eliminar Placa de Propietario",
+            "Eliminar Placa Asociada al Cliente",
             "Volver al Menu Principal"};
 
-        int seleccionPropietarios = menuInteractivo(opcionesPropietarios, "Menu de Gestion de Propietarios");
+        int seleccionPropietarios = menuInteractivo(opcionesPropietarios, "Menu de Gestion de clientes");
        
        
         switch (seleccionPropietarios)
@@ -433,7 +437,7 @@ void menuBusquedaAvanzadaPropietario(ListaCircularDoble<Propietario> &listaPropi
         {
             system("cls");
             cout << "========================================" << endl;
-            cout << "  Buscar por Cedula" << endl;
+            cout << "         Buscar por Cedula              " << endl;
             cout << "========================================" << endl;
             string cedula;
             cout << "Ingrese la cedula: ";
@@ -445,7 +449,7 @@ void menuBusquedaAvanzadaPropietario(ListaCircularDoble<Propietario> &listaPropi
         {
             system("cls");
             cout << "========================================" << endl;
-            cout << "  Buscar por Correo" << endl;
+            cout << "               Buscar por Correo        " << endl;
             cout << "========================================" << endl;
             string correo;
             cout << "Ingrese el correo: ";
@@ -457,7 +461,7 @@ void menuBusquedaAvanzadaPropietario(ListaCircularDoble<Propietario> &listaPropi
         {
             system("cls");
             cout << "========================================" << endl;
-            cout << "  Buscar por Nombre" << endl;
+            cout << "             Buscar por Nombre          " << endl;
             cout << "========================================" << endl;
             string nombre;
             cout << "Ingrese el nombre: ";
@@ -469,7 +473,7 @@ void menuBusquedaAvanzadaPropietario(ListaCircularDoble<Propietario> &listaPropi
         {
             system("cls");
             cout << "========================================" << endl;
-            cout << "  Buscar por Apellido" << endl;
+            cout << "            Buscar por Apellido         " << endl;
             cout << "========================================" << endl;
             string apellido;
             cout << "Ingrese el apellido: ";
@@ -508,7 +512,7 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
         "Mostrar Lista de Coches",
         "Busqueda de Coche Por Placa",
         "Busqueda Avanzada",
-        "Menu de Gestion de Propietarios",
+        "Menu de Gestion de Clientes",
         "Liberar el parqueadero",
         "Ordenar Lista",
         "Ayuda",
@@ -543,6 +547,10 @@ void menu(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &listaHist
             int espacioLibre = estacionamiento.obtenerEspacioOptimo();
             detenerFlask();
             Coche nuevoCoche = nuevoCoche.InsertarDatos(lista, listaHistorial, listaPropietarios,espacioLibre);
+            if (nuevoCoche.getPlaca().empty()) {
+                cout << " Regresando al menu principal..." << endl;
+                break;
+            }
             lista.insertar(nuevoCoche);
             iniciarFlaskVisEntrada();
             detenerFlask();
@@ -1082,7 +1090,7 @@ void menuOrdenarCoches(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coch
     {
         system("cls");
         cout << "========================================" << endl;
-        cout << "           Menu de Ordenamiento de Coches         " << endl;
+        cout << "   Menu de Ordenamiento de Coches       " << endl;
         cout << "========================================" << endl;
 
         vector<string> opcionesMetodo = {
@@ -1299,7 +1307,7 @@ void menuOrdenarPropietarios(ListaCircularDoble<Propietario> &listaPropietarios)
     {
         system("cls");
         cout << "========================================" << endl;
-        cout << "           Menu de Ordenamiento de Propietarios         " << endl;
+        cout << " Menu de Ordenamiento de Clientes       " << endl;
         cout << "========================================" << endl;
 
         vector<string> opcionesMetodo = {
@@ -1519,7 +1527,7 @@ void menuOrdenar(ListaCircularDoble<Coche> &lista, ListaCircularDoble<Coche> &li
 
         vector<string> opcionesTipo = {
             "Ordenar por Coche",
-            "Ordenar por Propietario",
+            "Ordenar por Cliente",
             "Volver al Menu Principal"};
 
         int seleccionTipo = menuInteractivo(opcionesTipo, "Seleccione el tipo de ordenamiento:");
@@ -1547,13 +1555,13 @@ void menuGestionInformacion()
     system("cls");
     cout << "========================================" << endl;
     cout << "========================================" << endl;
-    cout << "     BIENVENIDOS A LA GESTION DE INFORMACION " << endl;
+    cout << "BIENVENIDOS A LA GESTION DE INFORMACION " << endl;
     cout << "========================================" << endl;
     cout << "========================================" << endl;
  
     vector<string> opciones = {
         "Encriptar Informacion",
-        "Generar Contraseña",
+        "Generar Contrasenia",
         "Desencriptar Informacion",
         "Volver al Menu Principal"};
     while (true)

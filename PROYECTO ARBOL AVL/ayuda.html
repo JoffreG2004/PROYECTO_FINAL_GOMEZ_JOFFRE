@@ -3,92 +3,1433 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manual de Ayuda - Sistema de Parqueaderos</title>
+    <title>Manual Avanzado - Sistema de Parqueadero Inteligente</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; line-height: 1.6; max-width: 1200px; margin: auto; padding: 20px; }
+        .feature-box { background: #f0f4ff; border-radius: 15px; padding: 20px; margin: 20px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .code-example { background: #1e1e1e; color: #d4d4d4; padding: 15px; border-radius: 8px; margin: 10px 0; }
+        .emoji { font-size: 24px; margin-right: 10px; }
+        .grid-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .visual-simulation { background: white; padding: 15px; border: 2px solid #4CAF50; border-radius: 10px; }
+    </style>
 </head>
 <body>
-    <h1>Manual de Ayuda</h1>
+    <h1 style="color: #2c3e50; text-align: center;">🚗 Manual del Sistema de Parqueadero Inteligente 🅿️</h1>
 
-    <p>Bienvenido al manual de usuario del <strong>Sistema de Parqueaderos</strong>. Este sistema le permite gestionar la información de los coches que ingresan al parqueadero de forma sencilla y eficiente.</p>
+    <div class="feature-box">
+        <h2>🌈 Simulador de Salida Rápida</h2>
+        <div class="grid-container">
+            <div>
+                <h3>🚀 Criterios de Salida Prioritaria</h3>
+                <ul>
+                    <li>⏱️ Tiempo de permanencia ilimitado</li>
+                    <li>🎯 Ubicación cercana a salidas</li>
+                    <li>🔢 Prioridad por orden de llegada</li>
+                </ul>
+            </div>
+            <div class="visual-simulation">
+                <h3>📊 Simulación Visual</h3>
+                <pre>
+                [ 1 ] 🅿️🅿️🅿️🚗  ← Salida rápida
+                [ 2 ] 🚗🅿️🚗🅿️
+                [ 3 ] 🅿️🚗🚗🅿️
+                [ 4 ] 🚗🅿️🅿️🚗
+                </pre>
+            </div>
+        </div>
+    </div>
 
-    <h2>Funcionamiento del Sistema</h2>
-    <p>El sistema permite gestionar los datos de los coches en el parqueadero de manera sencilla. A continuación, se explica cómo funciona:</p>
+    <div class="feature-box">
+        <h2>🔐 Sistema de Encriptación Avanzada</h2>
+        <div class="grid-container">
+            <div>
+                <h3>🔑 Generación de Contraseñas</h3>
+                <ul>
+                    <li>✅ Mínimo 12 caracteres</li>
+                    <li>✅ Combinación de mayúsculas, números y símbolos</li>
+                    <li>✅ Algoritmo PBKDF2 con 10,000 iteraciones</li>
+                </ul>
+                <div class="code-example">
+                    // Ejemplo de generación
+                    Contraseña: P@rqu3ad3r0_2025!
+                    Hash: a1b2c3d4e5f6... (SHA-256)
+                </div>
+            </div>
+            <div>
+                <h3>🔓 Proceso de Desencriptación</h3>
+                <ol>
+                    <li>🔓Ingresar contraseña maestra</li>
+                    <li>🔓Generar contraseña para Desencriptación</li>
+                    <li>🔓Validar con HMAC-SHA256</li>
+                    <li>🔓Desencriptar usando AES-256</li>
+                </ol>
+              
+<img src = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\encriptar.png"
 
-    <h3>1. Insertar Datos de un Coche</h3>
-    <p>Para registrar un coche en el parqueadero, el sistema le pedirá los siguientes datos:</p>
-    <ul>
-        <li><strong>Placa:</strong> El sistema le pedirá ingresar la placa del coche. Asegúrese de escribirla correctamente, siguiendo el formato adecuado.</li>
-        <li><strong>Marca:</strong> Ingrese la marca del coche.</li>
-        <li><strong>Color:</strong> Ingrese el color del coche.</li>
-        <li><strong>Modelo:</strong> Ingrese el modelo del coche.</li>
-    </ul>
-    <p>Una vez ingresados los datos, el sistema registrará el coche en el parqueadero. Si hay algún error con la placa (por ejemplo, si está mal escrita o no es válida), el sistema le pedirá que la ingrese nuevamente.</p>
+alt="Flujo temporal"
+style="width:100%">
+            </div>
+        </div>
+    </div>
 
-    <h3>Sintaxis de la Función de Inserción de Datos:</h3>
-    <p>La función que se utiliza para registrar un coche es la siguiente:</p>
-    <pre>
-        Coche InsertarDatos() {
-            placa = validador.ingresarPlaca(); 
-            marca = validaciones.ingresarString("Ingrese la marca: ");
-            color = validaciones.ingresarString("Ingrese el color: ");
-            modelo = validaciones.ingresarString("Ingrese el modelo: ");
-            return Coche(placa, modelo, color, marca);
+
+
+
+
+
+
+    <div class="feature-box">
+        <h2 class="section-title">🛠️ Integración de Herramientas Profesionales</h2>
+        
+        <div class="tools-section">
+            <h3>📊 Suite de Análisis Principal</h3>
+            <table class="styled-table">
+                <tr>
+                    <th style="width: 25%">Herramienta</th>
+                    <th style="width: 45%">Función</th>
+                    <th style="width: 30%">Logo</th>
+                </tr>
+                <tr>
+                    <td>NetworkX</td>
+                    <td>Análisis avanzado de grafos y redes</td>
+                    <td><img src="https://networkx.org/_static/networkx_logo.svg" alt="NetworkX" style="width: 120px"></td>
+                </tr>
+                <tr>
+                    <td>Matplotlib</td>
+                    <td>Visualización científica de datos</td>
+                    <td><img src="https://matplotlib.org/_static/logo2_compressed.svg" alt="Matplotlib" style="width: 120px"></td>
+                </tr>
+                <tr>
+                    <td>MATLAB</td>
+                    <td>Computación técnica y modelado</td>
+                    <td><img src="https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png" alt="MATLAB" style="width: 120px"></td>
+                </tr>
+                <tr>
+                    <td>Pygame</td>
+                    <td>Desarrollo multimedia y de juegos</td>
+                    <td><img src="https://www.pygame.org/docs/_static/pygame_tiny.png" alt="Pygame" style="width: 120px"></td>
+                </tr>
+            </table>
+        </div>
+    
+        <div class="config-section">
+            <h3>⚙️ Configuración del Entorno MSYS2</h3>
+            <div class="code-block">
+                <pre># Actualizar e instalar paquetes
+    pacman -Syu
+    pacman -S --needed \
+    mingw-w64-x86_64-python \
+    mingw-w64-x86_64-python-pip \
+    mingw-w64-x86_64-python-networkx \
+    mingw-w64-x86_64-python-matplotlib \
+    mingw-w64-x86_64-python-pygame
+    
+    # MATLAB (requiere licencia)
+    # Descargar desde mathworks.com</pre>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+    .feature-box {
+        background: #f0f4ff;
+        border-radius: 15px;
+        padding: 25px;
+        margin: 20px 0;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .section-title {
+        color: #2c3e50;
+        border-bottom: 3px solid #3498db;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+    }
+    
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+    
+    .styled-table th {
+        background: #3498db;
+        color: white;
+        padding: 12px;
+        text-align: left;
+    }
+    
+    .styled-table td {
+        padding: 12px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .styled-table tr:nth-child(even) {
+        background: #f8f9fa;
+    }
+    
+    .code-block {
+        background: #2d3748;
+        color: #cbd5e0;
+        padding: 20px;
+        border-radius: 8px;
+        font-family: monospace;
+        margin-top: 15px;
+    }
+    
+    .code-block pre {
+        margin: 0;
+        white-space: pre-wrap;
+    }
+    
+    img {
+        vertical-align: middle;
+    }
+    </style>
+
+
+
+
+   
+
+
+
+
+<div class="feature-box">
+    <h2 class="section-title">👁️ Monitorización en Tiempo Real</h2>
+    <div class="dashboard-grid">
+        <div class="status-card">
+            <div class="card-header">
+                <h3>🔄 Estado Actual del Parqueadero</h3>
+                <div class="legend">
+                    <span class="occupied"><i class="fas fa-car"></i> Ocupado</span>
+                    <span class="available"><i class="fas fa-square-parking"></i> Libre</span>
+                </div>
+            </div>
+            <div class="parking-grid">
+                <div class="parking-level">
+                    <div class="level-header">Nivel 1 - Sector A</div>
+                    <div class="parking-row">
+                        <div class="spot occupied"><i class="fas fa-car"></i></div>
+                        <div class="spot available"><i class="fas fa-square-parking"></i></div>
+                        <div class="spot occupied"><i class="fas fa-car"></i></div>
+                    </div>
+                    <div class="parking-row">
+                        <div class="spot occupied"><i class="fas fa-car"></i></div>
+                        <div class="spot occupied"><i class="fas fa-car"></i></div>
+                        <div class="spot available"><i class="fas fa-square-parking"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-card">
+            <div class="card-header">
+                <h3>📅 Registro de Movimientos</h3>
+                <div class="time-filter">
+                    <button class="active">24H</button>
+                    <button>7D</button>
+                    <button>30D</button>
+                </div>
+            </div>
+            <div class="history-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Placa</th>
+                            <th>Modelo</th>
+                            <th>Hora Entrada</th>
+                            <th>Hora Salida</th>
+                            <th>Duración</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RTV6789</td>
+                            <td>MUSTANG</td>
+                            <td>03/02 08:02</td>
+                            <td>-</td>
+                            <td class="status active">Activo</td>
+                        </tr>
+                        <tr>
+                            <td>RVT4578</td>
+                            <td>HILUX</td>
+                            <td>18/02 20:21</td>
+                            <td>18/02 21:35</td>
+                            <td class="status completed">1h 14m</td>
+                        </tr>
+                        <tr>
+                            <td>RDH6397</td>
+                            <td>TUCSON</td>
+                            <td>18/02 21:38</td>
+                            <td>18/02 22:20</td>
+                            <td class="status completed">42m</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Estilos mejorados */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+}
+
+.status-card, .history-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.occupied { color: #e74c3c; }
+.available { color: #2ecc71; }
+
+.parking-grid {
+    display: grid;
+    gap: 1rem;
+}
+
+.parking-level {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.level-header {
+    font-weight: 600;
+    color: #3498db;
+    margin-bottom: 1rem;
+}
+
+.parking-row {
+    display: flex;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+.spot {
+    width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+}
+
+.spot.occupied { background: #f8d7da; border: 2px solid #e74c3c; }
+.spot.available { background: #d4edda; border: 2px solid #2ecc71; }
+
+.history-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.history-table th,
+.history-table td {
+    padding: 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.history-table th {
+    background: #3498db;
+    color: white;
+}
+
+.time-filter button {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+.time-filter button.active {
+    background: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.status {
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.85rem;
+}
+
+.status.active { background: #d4edda; color: #155724; }
+.status.completed { background: #fff3cd; color: #856404; }
+
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css");
+</style>
+
+
+
+
+
+
+
+
+    
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Parqueadero Inteligente</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-light: #f8f9fa;
         }
-    </pre>
-    <p>Esto significa que el sistema le pedirá cada dato uno por uno, y luego creará un registro con todos los datos del coche.</p>
 
-    <h3>2. Validación de la Placa</h3>
-    <p>La placa del coche es muy importante, por lo que el sistema valida que esté escrita correctamente. Se asegura de que la placa tenga el formato adecuado, que contenga letras y números, y que la provincia sea válida.</p>
-    <p>Si la placa no es válida, el sistema le pedirá que la ingrese nuevamente.</p>
+        .avl-dashboard {
+            background: linear-gradient(135deg, #f6f7f9 0%, #ebedf1 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            font-family: 'Segoe UI', system-ui;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
 
-    <h3>Ejemplo de Formato de Placa:</h3>
-    <p>El formato correcto de la placa es algo como: <strong>ABC1234</strong>. Las primeras letras representan la provincia, seguidas de cuatro números.</p>
+        .avl-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
 
-    <h3>3. Ingreso de Datos Adicionales</h3>
-    <p>Para ingresar otros datos, como la marca, color y modelo del coche, el sistema le permitirá escribirlos de manera sencilla, y puede borrar cualquier error utilizando la tecla de retroceso.</p>
-    <p>Una vez que todos los datos estén completos, el coche se registrará automáticamente en el parqueadero.</p>
+        .avl-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
 
-    <h3>4. Funciones Principales</h3>
-    <p>Las principales funciones del sistema son:</p>
-    <ul>
-        <li><strong>Registrar un coche:</strong> El sistema agrega un coche con la placa, marca, modelo y color proporcionados.</li>
-        <li><strong>Buscar un coche:</strong> Puede buscar un coche por su placa, y el sistema le mostrará la información del coche registrado.</li>
-        <li><strong>Eliminar un coche:</strong> Si un coche ya no está en el parqueadero, puede eliminarlo utilizando su placa.</li>
-    </ul>
+        .stat-card {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem;
+            border-radius: 15px;
+            width: 220px;
+            transition: transform 0.3s ease;
+        }
 
-    <h2>Funcionamiento de los Backups con Cobian Reflector</h2>
-    <p>Para mantener la seguridad de sus datos y prevenir la pérdida de información valiosa, el sistema realiza automáticamente copias de seguridad de los archivos relacionados con el parqueadero. Esto incluye los archivos de texto donde se almacenan los datos de los coches registrados.</p>
+        .stat-card:hover {
+            transform: translateY(-3px);
+        }
 
-    <h3>1. ¿Qué Archivos se Respaldan?</h3>
-    <p>El sistema realiza copias de seguridad de los archivos .txt que contienen la información de los coches registrados en el parqueadero. Estos archivos son vitales para mantener la integridad de los datos, por lo que se respaldan de manera periódica.</p>
+        .purple {
+            background: linear-gradient(135deg, #8A2BE2 0%, #9400D3 100%);
+            color: white;
+        }
 
-    <h3>2. Selección de los Archivos para el Backup</h3>
-    <p>Cobian Reflector está configurado para seleccionar automáticamente los archivos relevantes del sistema. Los archivos de datos del parqueadero, típicamente almacenados con la extensión <code>.txt</code>, son los que se respaldan. Estos archivos pueden estar ubicados en la carpeta principal del sistema o en una subcarpeta designada para datos.</p>
-    <p>En el caso del sistema de parqueaderos, los archivos que contienen los registros de los coches se seleccionan automáticamente para ser respaldados, asegurando que siempre tenga una copia actualizada de los datos más recientes.</p>
+        .blue {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
 
-    <h3>3. ¿Cómo se Crean los Backups?</h3>
-    <p>El proceso de creación de backups con Cobian Reflector es automático. Cuando el sistema detecta que los archivos han cambiado o cuando se ha alcanzado el horario programado, Cobian Reflector comienza el proceso de copia de seguridad. Este proceso sigue estos pasos:</p>
-    <ol>
-        <li><strong>Identificación de Archivos:</strong> Cobian Reflector identifica los archivos de datos relevantes (en este caso, los archivos <code>.txt</code> con los registros de los coches).</li>
-        <li><strong>Creación del Backup:</strong> Una vez identificados los archivos, Cobian Reflector realiza una copia exacta de estos archivos. Si los archivos ya existen en la carpeta de destino, se pueden sobrescribir o agregar una nueva versión, dependiendo de cómo esté configurado el sistema.</li>
-        <li><strong>Almacenamiento del Backup:</strong> La copia de seguridad se guarda en una ubicación segura que puede ser una carpeta en el disco duro, una unidad externa o incluso en una carpeta de red. Esto asegura que los archivos estén accesibles si se necesita restaurar la información.</li>
-        <li><strong>Notificación:</strong> En algunos casos, Cobian Reflector puede enviar una notificación indicando que el proceso de copia de seguridad se ha completado correctamente.</li>
-    </ol>
+        .stat-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+        }
 
-    <h3>4. ¿Dónde se Guardan los Backups?</h3>
-    <p>Los backups se guardan en una carpeta de destino que puede ser configurada durante la instalación del sistema. El destino más común es una carpeta local en su computadora, pero también puede configurar una unidad externa o una carpeta en red para almacenar las copias de seguridad, lo que proporciona una mayor seguridad ante fallos del sistema.</p>
+        .avl-container {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 2rem;
+        }
 
-    <h3>5. ¿Qué Hacer en Caso de Necesitar Restaurar los Datos?</h3>
-    <p>Si alguna vez necesita recuperar la información de los coches registrados, simplemente abra Cobian Reflector, seleccione la tarea de backup correspondiente y elija la opción de restauración. El sistema reemplazará los archivos actuales con los datos de la copia de seguridad, asegurando que toda la información se recupere tal como estaba.</p>
+        /* Estilos para el panel del árbol */
+        .tree-canvas {
+            background: white;
+            border-radius: 18px;
+            height: 400px;
+            position: relative;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
 
-    <h3>6. Video Tutorial sobre Cómo Hacer Copias de Seguridad en Cobian Reflector</h3>
-    <p>Para una explicación más visual de cómo hacer copias de seguridad con Cobian Reflector, puede consultar el siguiente video tutorial:</p>
-    <p><a href="https://youtu.be/yOSFdqtzyYk" target="_blank">Ver tutorial sobre Cobian Reflector</a></p>
+        .tree-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 15px;
+            background: #f8f9fa;
+        }
 
-    <h2>Conclusión</h2>
-    <p>Este manual le ayudará a gestionar su sistema de parqueadero de forma efectiva, así como a realizar backups de sus archivos .txt utilizando Cobian Reflector para garantizar la seguridad de sus datos. Si tiene alguna duda o necesita ayuda adicional, no dude en ponerse en contacto con el soporte técnico.</p>
+        /* Estilos para el panel de métricas */
+        .image-panel {
+            height: 300px;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            overflow: hidden;
+            position: relative;
+        }
 
-    <footer>
-        <p><strong>Desarrollado por:</strong> Mario Anrrango, Joffre Gomez e Iván Mantilla.</p>
-    </footer>
+        .simulador-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 18px;
+        }
+
+        /* Etiquetas y overlays */
+        .tree-labels {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 2;
+        }
+
+        .label-rotation {
+            background: rgba(255,255,255,0.95);
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e3e8ed;
+        }
+
+        .balance-indicator {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+        }
+
+        .metrics-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.95);
+            padding: 1rem 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .metric {
+            font-family: 'Courier New', monospace;
+            color: #2c3e50;
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+
+        /* Resto de estilos */
+        .avl-operations {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .avl-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .insert {
+            background: #27ae60;
+            color: white;
+        }
+
+        .delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .search-box {
+            position: relative;
+            flex-grow: 1;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .info-panel {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 18px;
+            margin-bottom: 2rem;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+        }
+
+        .spec-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .spec-item {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+        }
+
+        .spec-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .avl-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .avl-stats {
+                flex-direction: column;
+            }
+            
+            .stat-card {
+                width: 100%;
+            }
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌐Sistema AVL Inteligente🌐</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-light: #f8f9fa;
+        }
+
+        .avl-system {
+            max-width: 1200px;
+            margin: 2rem auto;
+            font-family: 'Segoe UI', system-ui;
+        }
+
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .avl-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        .tree-section, .simulator-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .tree-info {
+            margin-top: 1.5rem;
+        }
+
+        .tree-properties {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tree-properties li {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: var(--background-light);
+            border-radius: 8px;
+        }
+
+        .simulator-visual {
+            margin: 2rem 0;
+        }
+
+        .simulator-caption {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .avl-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="avl-system">
+        <div class="dashboard-header">
+            <h1>🌳 Sistema de Gestión con Árbol AVL</h1>
+            <p>Algoritmo de búsqueda y balanceo automático</p>
+        </div>
+
+        <div class="avl-grid">
+            <!-- Sección del Árbol AVL -->
+            <div class="tree-section">
+                <img src="UTILS/arbol.jpg" alt="Estructura AVL" style="width:100%; border-radius:8px;">
+                <div class="tree-info">
+                    <h3>Características del Árbol AVL</h3>
+                    <ul class="tree-properties">
+                        <li>⚖️ Autobalanceado (Factor ±1)</li>
+                        <li>⚡ Complejidad O(log n)</li>
+                        <li>🌳 Estructura jerárquica</li>
+                        <li>🔄 Rotaciones automáticas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Simulador de Salidas -->
+            <div class="simulator-section">
+                <h3>🚘 Simulador de Salidas Rápidas</h3>
+                <div class="simulator-visual">
+                    <img src="UTILS/simulador.png" alt="Simulador de salidas" 
+                         style="width:100%; border-radius:8px; border:2px solid #e0e0e0;">
+                </div>
+                
+                <div class="simulator-info">
+                    <h4>Funcionamiento del Simulador</h4>
+                    <ul class="tree-properties">
+                        <li>📏 Simulacion de salidas</li>
+                        <li>⚡ Imagen Frame a Frame</li>
+                        <li>📍 Posicion de Parqueo y ruta hacia la salida</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Parqueadero Inteligente</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: var(--primary-color);
+        }
+
+        .manual-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid #e3e8ed;
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 0.8rem;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .feature-card {
+            background: var(--background-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #cbd5e0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .step-container {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .step-item {
+            display: flex;
+            gap: 1rem;
+            align-items: start;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .step-number {
+            background: var(--secondary-color);
+            color: white;
+            min-width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .video-tutorial {
+            background: var(--background-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .video-button {
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .video-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .developer-info {
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-top: 2px solid var(--background-light);
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Completo - Sistema Inteligente de Parqueaderos</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --background-light: #f8f9fa;
+            --text-dark: #2d3748;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.8;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--text-dark);
+            background: #fdfdfd;
+        }
+
+        .manual-section {
+            background: white;
+            border-radius: 18px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e8edf3;
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            border-bottom: 4px solid var(--secondary-color);
+            padding-bottom: 1rem;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .feature-card {
+            background: var(--background-light);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            position: relative;
+            border-left: 5px solid var(--secondary-color);
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #cbd5e0;
+            padding: 1.8rem;
+            border-radius: 12px;
+            font-family: 'Fira Code', monospace;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            font-size: 0.95rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .architecture-diagram {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .workflow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .workflow-step {
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .workflow-step:hover {
+            transform: translateY(-5px);
+        }
+
+        .data-model {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: var(--background-light);
+            border-radius: 15px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.2rem;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .video-tutorial {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            margin: 4rem 0;
+            color: white;
+        }
+
+        .developer-info {
+            text-align: center;
+            padding: 4rem 0;
+            margin-top: 5rem;
+            background: var(--background-light);
+            border-radius: 15px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0 0.3rem;
+        }
+
+        .badge-primary { background: var(--secondary-color); color: white; }
+        .badge-success { background: var(--success-color); color: white; }
+        .badge-danger { background: var(--accent-color); color: white; }
+
+        .diagram-text {
+            font-family: 'Fira Code', monospace;
+            color: var(--secondary-color);
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--background-light);
+            border-radius: 8px;
+        }
+    </style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Gestión de Parqueadero</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --background-light: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px;
+            color: var(--primary-color);
+        }
+
+        .manual-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .section-title {
+            color: var(--secondary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .data-table th, .data-table td {
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            text-align: left;
+        }
+
+        .data-table th {
+            background: var(--secondary-color);
+            color: white;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-item {
+            padding: 1rem;
+            margin: 1rem 0;
+            background: var(--background-light);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="manual-section">
+    <h1 class="section-title">🚗 Registro de Vehículos</h1>
+    
+    <div class="feature-item">
+        <h3>Validación de Placas (Formato Ecuador)</h3>
+        <ul>
+            <li>Ejemplo válido: PDF4175</li>
+            <li>3 letras iniciales + 4 números</li>
+            <li>Solo caracteres alfabéticos</li>
+        </ul>
+    </div>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Campo</th>
+                <th>Tipo</th>
+                <th>Validación</th>
+                <th>Ejemplo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Placa</td>
+                <td>String</td>
+                <td>Formato ABC1234</td>
+                <td>PDF4175</td>
+            </tr>
+            <tr>
+                <td>Marca</td>
+                <td>String</td>
+                <td>Texto simple</td>
+                <td>FORD</td>
+            </tr>
+            <tr>
+                <td>Color</td>
+                <td>String</td>
+                <td>Texto simple</td>
+                <td>NEGRO</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="manual-section">
+    <h2 class="section-title">🔍 Sistema de Búsquedas</h2>
+    
+    <div class="feature-item">
+        <h3>Ejemplo de Datos Registrados</h3>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Marca</th>
+                    <th>Color</th>
+                    <th>Modelo</th>
+                    <th>Hora Entrada</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>RTI6789</td>
+                    <td>MUSTANG</td>
+                    <td>NEGRO</td>
+                    <td>FORD</td>
+                    <td>03/02 08:01</td>
+                </tr>
+                <tr>
+                    <td>RTV3457</td>
+                    <td>RANGER</td>
+                    <td>NEGRA</td>
+                    <td>FORD</td>
+                    <td>13/02 22:07</td>
+                </tr>
+                <tr>
+                    <td>RDH6397</td>
+                    <td>TUCSON</td>
+                    <td>ROJO</td>
+                    <td>HYUNDAI</td>
+                    <td>04/03 10:53</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="manual-section">
+    <h2 class="section-title">⚙️ Funciones Principales</h2>
+    
+    <div class="feature-item">
+        <h3>Atajos del Sistema</h3>
+        <ul>
+            <li>Presione ESC para volver al menú principal</li>
+        </ul>
+    </div>
+
+    <div class="feature-item">
+        <h3>Módulo de Análisis</h3>
+        <ul>
+            <li>Ordenamiento binario de posiciones</li>
+            <li>Cálculo de rutas óptimas</li>
+            <li>Simulación de congestión variable</li>
+        </ul>
+    </div>
+</div>
+
+<div class="manual-section">
+    <h2 class="section-title">📊 Reportes Generados</h2>
+    
+    <div class="feature-item">
+        <pre>
+Placa     | Marca    | Color | Posiciones en el Parqueadero
+-----------------------------------------------------
+RTI6789  | MUSTANG  | NEGRO | 98
+RTV3457  | RANGER   | NEGRA | 93
+RDH6397  | TUCSON   | ROJO  | 5
+        </pre>
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="manual-section">
+    <h2 class="section-title">💾 Sistema de Copias de Seguridad</h2>
+    
+    <div class="feature-card">
+        <h3>🛡️ Protección de Datos con Cobian Reflector</h3>
+        <div class="step-container">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <div>
+                    <h4>Archivos Resguardados</h4>
+                    <ul>
+                        <li>📄 Todos los archivos .txt del sistema</li>
+                        <li>🗃️ Registros de vehículos</li>
+                        <li>📅 Histórico de movimientos</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <div>
+                    <h4>Configuración Automática</h4>
+                    <ul>
+                        <li>⏰ Programación horaria</li>
+                        <li>🔄 Detección de cambios</li>
+                        <li>📁 Selección inteligente de archivos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-card">
+        <h3>⚙️ Flujo de Trabajo de Backups</h3>
+        <div class="workflow-steps">
+            <div class="workflow-step">
+                <div class="badge badge-primary">Paso 1</div>
+                <h4>Detección de Archivos</h4>
+                <p>Identificación de todos los .txt modificados</p>
+            </div>
+            
+            <div class="workflow-step">
+                <div class="badge badge-primary">Paso 2</div>
+                <h4>Creación de Copia</h4>
+                <p>Generación de versión comprimida (.zip)</p>
+            </div>
+            
+            <div class="workflow-step">
+                <div class="badge badge-primary">Paso 3</div>
+                <h4>Almacenamiento Seguro</h4>
+                <p>Guardado en ubicación local/remota</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="feature-card">
+        <h3>📥 Restauración de Datos</h3>
+        <div class="step-container">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <div>
+                    <p>Seleccionar backup deseado</p>
+                    <div class="code-example">
+                        C:\Backups\Parqueadero\2024-02\
+                    </div>
+                </div>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <div>
+                    <p>Reemplazar archivos actuales</p>
+                    <div class="code-example">
+                        Sistema > Restaurar > Confirmar
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="video-tutorial">
+        <h3>🎥 Tutorial Completo de Backups</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/yOSFdqtzyYk" 
+                    title="Tutorial Cobian Reflector" 
+                    allowfullscreen>
+            </iframe>
+        </div>
+        <p style="margin-top: 1rem; color: #666;">
+            Duración: 8:15 min | Actualizado: Febrero 2024
+        </p>
+    </div>
+</div>
+
+<style>
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    margin: 2rem 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.workflow-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.workflow-step {
+    padding: 1.5rem;
+    background: white;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.badge {
+    background: var(--secondary-color);
+    color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+</style>
+
+
+
+<div style="text-align: center; padding: 2rem; color: #7f8c8d;">
+    <h3>Sistema desarrollado por</h3>
+    <p style="font-size: 1.2rem; color: var(--secondary-color); margin-top: 1rem;">
+        🧑💻 Joffre Gomez
+    </p>
+    <p>Versión 3.0 | 2024</p>
+</div>
+
 </body>
 </html>

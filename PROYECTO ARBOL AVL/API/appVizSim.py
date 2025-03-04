@@ -131,8 +131,13 @@ CELL_WIDTH = 107
 CELL_HEIGHT = 60
 ROAD_WIDTH = 140
 
-estado_parqueadero_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\estado_parqueadero.json"
-posicion_coche_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\posicion_coche.json"
+# Agregamos las rutas dinámicas para los archivos JSON (similar a GetAppDataPath en C++)
+data_dir = os.path.join(os.getenv('LOCALAPPDATA'), 'Parqueadero AVL', 'data')
+if not os.path.exists(data_dir):
+    os.makedirs(data_dir)
+
+estado_parqueadero_path = os.path.join(data_dir, "estado_parqueadero.json")
+posicion_coche_path = os.path.join(data_dir, "posicion_coche.json")
 
 car_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\carro-deportivo.png"
 background_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\back.jpg"

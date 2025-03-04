@@ -27,7 +27,7 @@
 		},
 		{
 			"id" : 6,
-			"ocupado" : true
+			"ocupado" : false
 		},
 		{
 			"id" : 7,
@@ -71,7 +71,7 @@
 		},
 		{
 			"id" : 17,
-			"ocupado" : false
+			"ocupado" : true
 		},
 		{
 			"id" : 18,
@@ -83,7 +83,7 @@
 		},
 		{
 			"id" : 20,
-			"ocupado" : false
+			"ocupado" : true
 		},
 		{
 			"id" : 21,
@@ -167,7 +167,7 @@
 		},
 		{
 			"id" : 41,
-			"ocupado" : false
+			"ocupado" : true
 		},
 		{
 			"id" : 42,
@@ -255,7 +255,7 @@
 		},
 		{
 			"id" : 63,
-			"ocupado" : false
+			"ocupado" : true
 		},
 		{
 			"id" : 64,
@@ -319,7 +319,7 @@
 		},
 		{
 			"id" : 79,
-			"ocupado" : false
+			"ocupado" : true
 		},
 		{
 			"id" : 80,

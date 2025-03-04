@@ -3,6 +3,28 @@ import json
 import os
 import time
 
+# -------------------------------------------------------------------
+# Configuración de la ruta similar a C++ (GetAppDataPath())
+# -------------------------------------------------------------------
+appdata_path = os.path.join(os.getenv("LOCALAPPDATA"), "Parqueadero AVL", "data")
+if not os.path.exists(appdata_path):
+    os.makedirs(appdata_path)
+
+estado_parqueadero_path = os.path.join(appdata_path, "estado_parqueadero.json")
+ruta_path = os.path.join(appdata_path, "ruta.json")
+
+# -------------------------------------------------------------------
+# Rutas de las imágenes (se mantienen igual o ajústalas según convenga)
+# -------------------------------------------------------------------
+car_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\carro-deportivo.png"
+background_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\back.jpg"
+entrance_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\entrada.png"
+exit_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\salida.png"
+simulador_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\carro-deportivo-izquierda.png"
+
+# -------------------------------------------------------------------
+# Función para simular el movimiento del carro en la ruta
+# -------------------------------------------------------------------
 def simular_movimiento_carro(screen, ruta, simulador_image, CELL_WIDTH, CELL_HEIGHT, offset_x, offset_y):
     """
     Simula el movimiento del carro recorriendo la ruta.
@@ -26,9 +48,12 @@ def simular_movimiento_carro(screen, ruta, simulador_image, CELL_WIDTH, CELL_HEI
 
     # Esperar unos segundos en el destino antes de volver a la normalidad
     time.sleep(2)
-    # Retornamos sin salir de Pygame, de modo que la función principal pueda volver a dibujar todo normalmente
+    # Retornamos sin salir de Pygame, para que la función principal pueda volver a dibujar
     return
 
+# -------------------------------------------------------------------
+# Función para dibujar el parqueadero y ejecutar la simulación
+# -------------------------------------------------------------------
 def draw_parking_lot(estado, ruta):
     """
     Dibuja el parqueadero y, si existe una ruta, ejecuta la simulación del movimiento.
@@ -146,7 +171,9 @@ def draw_parking_lot(estado, ruta):
 
     pygame.quit()
 
-# Definición de colores
+# -------------------------------------------------------------------
+# Definición de colores y configuración de Pygame
+# -------------------------------------------------------------------
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (169, 169, 169)
@@ -162,15 +189,9 @@ CELL_WIDTH = 107
 CELL_HEIGHT = 60
 ROAD_WIDTH = 140
 
-estado_parqueadero_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\estado_parqueadero.json"
-ruta_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\ruta.json"
-
-car_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\carro-deportivo.png"
-background_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\back.jpg"
-entrance_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\entrada.png"
-exit_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\salida.png"
-simulador_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\carro-deportivo-izquierda.png"
-
+# -------------------------------------------------------------------
+# Funciones para cargar el estado del parqueadero y la ruta
+# -------------------------------------------------------------------
 def cargar_estado_parqueadero():
     """Carga el estado del parqueadero desde el archivo JSON."""
     try:
@@ -190,8 +211,10 @@ def cargar_ruta():
         print("Error al cargar la ruta:", e)
         return []
 
+# -------------------------------------------------------------------
+# Función principal para iniciar la visualización
+# -------------------------------------------------------------------
 def main():
-    """Función principal para iniciar la visualización."""
     estado = cargar_estado_parqueadero()
     ruta = cargar_ruta()
     draw_parking_lot(estado, ruta)

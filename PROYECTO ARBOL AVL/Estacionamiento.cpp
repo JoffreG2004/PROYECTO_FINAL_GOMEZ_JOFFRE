@@ -40,7 +40,6 @@ int Estacionamiento::obtenerEspacioOptimo() {
     std::thread flaskThread(iniciarFlask);
     flaskThread.detach();
 
-   
     std::this_thread::sleep_for(std::chrono::seconds(2));
 
     CURL* curl;
@@ -50,7 +49,6 @@ int Estacionamiento::obtenerEspacioOptimo() {
     curl = curl_easy_init();
     if (curl) {
         std::string url = "http://127.0.0.1:5000/asignar_espacio";
-        
 
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
@@ -66,17 +64,25 @@ int Estacionamiento::obtenerEspacioOptimo() {
         }
 
         try {
-           
             json jsonResponse = json::parse(readBuffer);
 
-            
             if (jsonResponse.contains("espacio_asignado") && jsonResponse["espacio_asignado"].is_array()) {
                 int first = jsonResponse["espacio_asignado"][0];
                 int second = jsonResponse["espacio_asignado"][1];
 
                 int espacio = first * 10 + second;
 
-                
+                std::string path = GetAppDataPath() + "espacio_optimo.json";
+
+                std::ofstream file(path);
+                if (file.is_open()) {
+                    file << jsonResponse.dump();
+                    file.close();
+                    std::cout << "Posición del coche guardada en " << path << std::endl;
+                } else {
+                    std::cerr << "[ERROR] Error al abrir el archivo para escribir la posición del coche" << std::endl;
+                }
+
                 return espacio;
             } else {
                 std::cerr << "[ERROR] El campo 'espacio_asignado' no es un array o no existe" << std::endl;
@@ -90,6 +96,7 @@ int Estacionamiento::obtenerEspacioOptimo() {
 
     return -1;
 }
+
 
 
 
@@ -259,28 +266,25 @@ void Estacionamiento::vaciarEstacionamiento() {
         Json::Value estado;
         estado["espacios"] = Json::arrayValue;  
     
-       
         for (int i = 0; i < TAMANIO; ++i) {
             Json::Value espacio;
             espacio["id"] = i; 
     
-            
             bool ocupado = espacioOcupado(i);  
             espacio["ocupado"] = ocupado;  
     
-            
             estado["espacios"].append(espacio);
         }
-        
-        
+    
         std::string estado_json = estado.toStyledString();
-        
-        
-        std::ofstream file("estado_parqueadero.json");
+    
+        std::string path = GetAppDataPath() + "estado_parqueadero.json";
+    
+        std::ofstream file(path);
         if (file.is_open()) {
             file << estado_json;
             file.close();
-            std::cout << "Estado del parqueadero guardado en estado_parqueadero.json" << std::endl;
+            std::cout << "Estado del parqueadero guardado en " << path << std::endl;
         } else {
             std::cerr << "Error al abrir el archivo para escribir el estado" << std::endl;
         }

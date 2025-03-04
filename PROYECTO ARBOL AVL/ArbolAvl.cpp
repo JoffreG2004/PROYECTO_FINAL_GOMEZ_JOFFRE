@@ -3,6 +3,7 @@
 #include "Coche.h"
 #include "Validaciones.h"
 #include <json/json.h>
+#include "ruta.h"
 
 
 ArbolAVL::ArbolAVL() : raiz(nullptr) {}
@@ -210,42 +211,36 @@ void ArbolAVL::vaciarArbol() {
 
 
 bool compararSalida1(int pos1, int pos2) {
-    int decimal1 = pos1 / 10;  
-    int unidad1 = pos1 % 10;   
+    int unidad1 = pos1 % 10;  
+    int decimal1 = pos1 / 10;   
 
-    int decimal2 = pos2 / 10;  
-    int unidad2 = pos2 % 10;   
+    int unidad2 = pos2 % 10;  
+    int decimal2 = pos2 / 10;   
 
-    
-    if (decimal1 != decimal2) {
-        return decimal1 < decimal2;  
-    } else {
-        
+    if (unidad1 != unidad2) {
         std::vector<int> orden = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-        
         auto it1 = std::find(orden.begin(), orden.end(), unidad1);
         auto it2 = std::find(orden.begin(), orden.end(), unidad2);
-        
         return it1 < it2;
+    } else {
+        return decimal1 < decimal2;  
     }
 }
 
 bool compararSalida2(int pos1, int pos2) {
-    int decima1 = pos1 / 10;
-    int decima2 = pos2 / 10;
-    
-    if (decima1 != decima2) {
-        return decima1 > decima2;  
-    } else {
-        int unidad1 = pos1 % 10;
-        int unidad2 = pos2 % 10;
-        
+    int unidad1 = pos1 % 10;  
+    int decimal1 = pos1 / 10;   
+
+    int unidad2 = pos2 % 10;  
+    int decimal2 = pos2 / 10;   
+
+    if (unidad1 != unidad2) {
         std::vector<int> orden = {9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
-        
         auto it1 = std::find(orden.begin(), orden.end(), unidad1);
         auto it2 = std::find(orden.begin(), orden.end(), unidad2);
-        
         return it1 < it2;
+    } else {
+        return decimal1 > decimal2;  
     }
 }
 
@@ -383,16 +378,17 @@ void ArbolAVL::buscarPosicionPorPlaca(const std::string& placaBuscada, ListaCirc
 
             std::string posicionJsonStr = posicionJson.toStyledString();
 
-            std::ofstream file("posicion_coche.json");
+            std::string path = GetAppDataPath() + "posicion_coche.json";
+
+            std::ofstream file(path);
             if (file.is_open()) {
                 file << posicionJsonStr;
                 file.close();
-                std::cout << "Posición del coche guardada en posicion_coche.json" << std::endl;
+                std::cout << "Posición del coche guardada en " << path << std::endl;
             } else {
                 std::cerr << "Error al abrir el archivo para escribir la posición del coche" << std::endl;
             }
 
-           
             iniciarFlaskVizSalida();
             return;
         }

@@ -2,9 +2,15 @@ import matplotlib.pyplot as plt
 import networkx as nx
 import json
 import random
+import os
 
-# Ruta del archivo JSON que contiene el estado del parqueadero
-estado_parqueadero_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\estado_parqueadero.json"
+def get_app_data_path():
+    return os.path.join(os.getenv("LOCALAPPDATA"), "Parqueadero AVL", "data")
+
+app_data_path = get_app_data_path()
+os.makedirs(app_data_path, exist_ok=True)
+
+estado_parqueadero_path = os.path.join(app_data_path, "estado_parqueadero.json")
 
 def cargar_estado_parqueadero():
     try:
@@ -48,9 +54,14 @@ def crear_grafo_parqueadero(estado):
     for i in range(filas):  
         for j in range(10, 12):  
             pos[(i, j)] = (j, -i)  
-            
-            G.add_edge((0, 10), (9, 10), peso=1)
-
+    
+    for j in range(10, 12):
+        for i in range(filas - 1):
+            G.add_edge((i, j), (i + 1, j), peso=random.randint(1, 10))
+    
+    for i in range(filas):
+        G.add_edge((i, 10), (i, 11), peso=1)
+    
     espacios = estado.get("espacios", [])
     for espacio in espacios:
         id_espacio = espacio["id"]
@@ -64,24 +75,11 @@ def crear_grafo_parqueadero(estado):
                 G.nodes[(fila, columna)]["espacio"] = "X"  
             else:
                 G.nodes[(fila, columna)]["espacio"] = "[ ]"  
-
-    for fila in range(filas):
-        if fila < 5: 
-            G.add_edge((fila, 10), (0, 10), peso=1)
-        else:  
-            G.add_edge((fila, 10), (9, 10), peso=1)
-
-    for fila in range(filas):
-       if fila < 5:
-       
-        G.add_edge((fila, 11), (0, 11), peso=1)
-    else:
-       
-        G.add_edge((fila, 11), (9, 11), peso=1)
+    
+    for j in range(10, 12):
+        G.add_edge((9, j), (9, 10), peso=random.randint(1, 10))
 
     return G, pos
-
-
 
 def visualizar_grafo(G, pos):
     plt.figure(figsize=(14, 12))  
@@ -118,4 +116,3 @@ def visualizar_grafo(G, pos):
 
     plt.grid(True)
     plt.show()
-

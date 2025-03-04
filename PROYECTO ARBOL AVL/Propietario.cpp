@@ -15,7 +15,6 @@ Propietario::Propietario(string nombre, string apellido, string cedula, string c
 Propietario::Propietario(string nombre, string apellido, string cedula, string correo, vector<string> placas)
     : nombre(nombre), apellido(apellido), cedula(cedula), correo(correo), placas(placas) {}
 
-
 void Propietario::setNombre(const string &nombre)
 {
     this->nombre = nombre;
@@ -44,7 +43,7 @@ vector<string> Propietario::eliminarPlaca(const string &placa)
         placas.erase(it);
         cout << "Placa " << placa << " eliminada correctamente." << endl;
     } else {
-        cout << "La placa no se encontró en las placas del propietario." << endl;
+        cout << "La placa no se encontró en las placas del cliente." << endl;
     }
 
     return placas;
@@ -112,14 +111,14 @@ ostream &operator<<(ostream &os, const Propietario &propietario)
 Propietario Propietario::agregarPropietario(ListaCircularDoble<Propietario> &listaPropietarios)
 {
     Validaciones validaciones;
-    string nombre = validaciones.ingresarString("Ingrese el nombre del propietario: ");
-    string apellido = validaciones.ingresarString("Ingrese el apellido del propietario: ");
+    string nombre = validaciones.ingresarString("Ingrese el nombre del cliente: ");
+    string apellido = validaciones.ingresarString("Ingrese el apellido del cliente: ");
     string cedula;
 
     do {
-        cedula = validaciones.ingresarCedula("Ingrese la cedula del propietario: ");
+        cedula = validaciones.ingresarCedula("Ingrese la cedula del cliente: ");
         if (!validaciones.validarCedula(cedula)) {
-            cout << "Cédula invalida. Intente de nuevo." << endl;
+            cout << "Cedula invalida. Intente de nuevo." << endl;
         }
     } while (!validaciones.validarCedula(cedula));
 
@@ -140,9 +139,9 @@ Propietario Propietario::agregarPropietario(ListaCircularDoble<Propietario> &lis
         } while (propietarioNodo != listaPropietarios.getPrimero());
 
         if (propietarioEncontrado) {
-            cout << "Ya existe un propietario con esa cedula. Por favor ingrese una cedula diferente." << endl;
+            cout << "Ya existe un cliente con esa cedula. Por favor ingrese una cedula diferente." << endl;
             
-            cedula = validaciones.ingresarCedula("Ingrese el numero de cedula del propietario: ");
+            cedula = validaciones.ingresarCedula("Ingrese el numero de cedula del cliente: ");
         } else {
             cout << "Cedula disponible. Puede continuar." << endl;
             break;  
@@ -152,7 +151,7 @@ Propietario Propietario::agregarPropietario(ListaCircularDoble<Propietario> &lis
   
     string correo;
     do {
-        correo = validaciones.ingresarCorreo("Ingrese el correo electronico del propietario: ");
+        correo = validaciones.ingresarCorreo("Ingrese el correo electronico del cliente: ");
         if (!validaciones.validarCorreo(correo)) {
             cout << "Correo invalido. Intente de nuevo." << endl;
         }
@@ -165,3 +164,4 @@ Propietario Propietario::agregarPropietario(ListaCircularDoble<Propietario> &lis
 
     return nuevoPropietario;
 }
+

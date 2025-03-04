@@ -27,6 +27,7 @@ public:
     void setCorreo(const string &correo);
     void setPlacas(const vector<string> &placas);
 
+
     string getNombre() const;
     string getApellido() const;
     string getCedula() const;
@@ -39,4 +40,5 @@ public:
 
     friend ostream &operator<<(ostream &os, const Propietario &propietario);
     Propietario agregarPropietario(ListaCircularDoble<Propietario> &listaPropietarios);
+    
 };

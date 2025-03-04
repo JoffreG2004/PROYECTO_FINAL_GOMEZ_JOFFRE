@@ -1,25 +1,18 @@
 import tkinter as tk
 from tkinter import messagebox, ttk
 from PIL import Image, ImageTk
-import subprocess
 import time
 import os
-
-def ejecutar_programa():
-    try:
-        subprocess.run(["cmd", "/c", "start", "cmd", "/k", "main.exe"], check=True)
-    except subprocess.CalledProcessError as e:
-        messagebox.showerror("Error", f"Error al ejecutar el programa: {e}")
 
 def salir():
     root.destroy()
 
 def cargar():
-    for i in range(100):
-        progress['value'] = i + 1
-        root.update_idletasks()
-        time.sleep(0.03)
-    ejecutar_programa()
+        for i in range(100):
+            progress['value'] = i + 1
+            root.update_idletasks()
+            time.sleep(0.03)
+        salir()
 
 root = tk.Tk()
 root.title("Bienvenido a Mi Parqueadero")
@@ -54,7 +47,6 @@ frame.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
 titulo = tk.Label(frame, text="Bienvenido a Mi Parqueadero", font=("Helvetica", 24, "bold"), bg="#000000", fg="white")
 titulo.pack(pady=20)
 
-
 descripcion = tk.Label(frame, text="El mejor lugar para estacionar su coche", font=("Helvetica", 14), bg="#000000", fg="white")
 descripcion.pack(pady=10)
 
@@ -68,9 +60,7 @@ progress.pack(pady=10)
 btn_ejecutar = tk.Button(frame, text="Iniciar Programa", font=("Helvetica", 16), bg="#3498db", fg="white", command=cargar)
 btn_ejecutar.pack(pady=10)
 
-
 btn_salir = tk.Button(frame, text="Salir", font=("Helvetica", 16), bg="#e74c3c", fg="white", command=salir)
 btn_salir.pack(pady=10)
-
 
 root.mainloop()

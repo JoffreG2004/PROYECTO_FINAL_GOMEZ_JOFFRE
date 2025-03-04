@@ -14,5 +14,7 @@ public:
     string ingresarCedula(const string &msj);
     string ingresarCorreo(const string &msj);
     int ingresarNumero(const string &msj);
+ 
+
 };
 

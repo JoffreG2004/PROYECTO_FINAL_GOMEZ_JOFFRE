@@ -33,13 +33,16 @@ fondo_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\
 fondo = pygame.image.load(fondo_path)  # Reemplaza con el nombre de tu fondo
 fondo = pygame.transform.scale(fondo, (ANCHO, ALTO))  # Ajusta el tamaño del fondo a la ventana
 
-# Ruta de la contraseña correcta
-txt_password_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\CONTRASEÑA\\contraseña_generada.txt"
-# Carpeta donde están los archivos a bloquear
-folder_to_protect = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL"
 
-# Leer la clave de cifrado
-key_file = "encryption.key"
+data_dir = os.path.join(os.getenv('LOCALAPPDATA'), 'Parqueadero AVL', 'data')
+if not os.path.exists(data_dir):
+    os.makedirs(data_dir)
+
+txt_password_path = os.path.join(data_dir, "contraseña_generada.txt")
+folder_to_protect = data_dir
+
+
+key_file = os.path.join(data_dir, "encryption.key")
 with open(key_file, "rb") as keyfile:
     key = keyfile.read()
 
@@ -107,10 +110,10 @@ def interfaz_principal():
         # Mostrar Logo
         pantalla.blit(logo, (ANCHO // 2 - 50, 30))
 
-        # Mostrar instrucciones
+     
         mostrar_texto("Ingrese la clave maestra para desbloquear los archivos:", ROJO, 50, 160)
 
-        # Mostrar mensaje de error si es necesario
+      
         if mensaje_error:
             mostrar_texto(mensaje_error, ROJO, 50, 320)
 

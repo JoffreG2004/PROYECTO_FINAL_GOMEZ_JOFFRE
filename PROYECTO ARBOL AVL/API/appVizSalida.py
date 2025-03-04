@@ -61,7 +61,7 @@ def draw_grid(screen, estado, font, filas, columnas, offset_x, offset_y, road_of
     screen.blit(entrance_image, (entrance_x1, road_offset_y + 20))
     screen.blit(exit_image, (exit_x1, road_offset_y + 20))
     entrance_x2 = road_offset_x + 20
-    exit_x2 = entrance_x2 + 60
+    exit_x2 = entrance_x1 + 60
     screen.blit(entrance_image, (entrance_x2, road_offset_y + 800))
     screen.blit(exit_image, (exit_x2, road_offset_y + 800))
 
@@ -103,6 +103,7 @@ def cargar_posicion_coche():
         print("Error al cargar la posición del coche:", e)
         return {}
 
+# Definición de colores
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (169, 169, 169)
@@ -118,9 +119,17 @@ CELL_WIDTH = 107
 CELL_HEIGHT = 60
 ROAD_WIDTH = 140
 
-estado_parqueadero_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\estado_parqueadero.json"
-posicion_coche_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\posicion_coche.json"
+# -------------------------------------------------------------------
+# Se define la ruta de datos similar a C++ (GetAppDataPath)
+# -------------------------------------------------------------------
+data_dir = os.path.join(os.getenv('LOCALAPPDATA'), 'Parqueadero AVL', 'data')
+if not os.path.exists(data_dir):
+    os.makedirs(data_dir)
 
+estado_parqueadero_path = os.path.join(data_dir, "estado_parqueadero.json")
+posicion_coche_path = os.path.join(data_dir, "posicion_coche.json")
+
+# Rutas de imágenes (ajústalas según corresponda)
 car_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\carro-deportivo.png"
 background_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\back.jpg"
 entrance_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\entrada.png"

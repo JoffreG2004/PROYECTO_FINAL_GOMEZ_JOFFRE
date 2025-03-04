@@ -1,8 +1,4 @@
 {
-    "salida": 2,
-    "posiciones": [
-        98,
-        56,
-        0
-    ]
+    "salida": 1,
+    "posicion": 9
 }

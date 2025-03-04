@@ -6,38 +6,39 @@ from algoritmos.grafos import cargar_estado_parqueadero, crear_grafo_parqueadero
 from algoritmos.Dijkstra import dijkstra
 from algoritmos.algoritmo_voraz import encontrar_camino_minimo
 
+def get_appdata_path():
+    """
+    Obtiene la ruta de AppData para almacenar los archivos de datos.
+    """
+    return os.path.join(os.getenv("LOCALAPPDATA"), "Parqueadero AVL", "data")
+
+appdata_path = get_appdata_path()
+os.makedirs(appdata_path, exist_ok=True)  # Crear la carpeta si no existe
+
+estado_parqueadero_path = os.path.join(appdata_path, "estado_parqueadero.json")
+ruta_json_path = os.path.join(appdata_path, "ruta.json")
+
 app = Flask(__name__)
 
 def guardar_estado_parqueadero(estado):
-    """
-    Guarda el estado del parqueadero en un archivo JSON.
-    
-    :param estado: El estado actual del parqueadero, incluyendo la ocupación de los espacios.
-    """
     try:
-        with open('estado_parqueadero.json', 'w') as archivo:
+        with open(estado_parqueadero_path, 'w') as archivo:
             json.dump(estado, archivo, indent=4)  
-        print("[DEBUG] Estado del parqueadero guardado correctamente.")
+        print("[DEBUG] Estado del parqueadero guardado correctamente en:", estado_parqueadero_path)
     except Exception as e:
         print(f"[ERROR] Error al guardar el estado del parqueadero: {e}")
 
 def guardar_ruta(ruta):
-    """
-    Guarda solo la ruta en un archivo JSON.
-    
-    :param ruta: La ruta asignada.
-    """
     try:
-        with open('ruta.json', 'w') as archivo:
+        with open(ruta_json_path, 'w') as archivo:
             json.dump({"ruta_asignada": ruta}, archivo, indent=4)
-        print("[DEBUG] Ruta guardada correctamente.")
+        print("[DEBUG] Ruta guardada correctamente en:", ruta_json_path)
     except Exception as e:
         print(f"[ERROR] Error al guardar la ruta: {e}")
 
 @app.route('/')
 def index():
     return "Bienvenido a la API del Parqueadero."
-
 
 @app.route('/asignar_espacio')
 def asignar_espacio():
@@ -89,35 +90,26 @@ def asignar_espacio():
     entrada = (0, 11)  
     ruta = encontrar_camino_minimo(G, nodo_asignado)  
 
-    guardar_estado_parqueadero(estado)  # Guardar el estado del parqueadero
-    guardar_ruta(ruta)  # Guardar solo la ruta en el archivo JSON
+    guardar_estado_parqueadero(estado)
+    guardar_ruta(ruta)
     print(f"[DEBUG] Espacio asignado: {nodo_asignado}")
 
     return jsonify({"espacio_asignado": nodo_asignado, "ruta": ruta})
 
-
 def calcular_costo_camino(G, nodo_destino):
-    """
-    Calcula el costo de acceder a un nodo (espacio) destino en función de la congestión
-    y la proximidad a otros vehículos (espacios ocupados).
-    """
     if nodo_destino not in G:
         print(f"[DEBUG] El nodo {nodo_destino} no está en el grafo.")
         return float('inf')
     
     costo = 0
     for vecino in G.neighbors(nodo_destino):
-        if G.nodes[vecino]["espacio"] == "X":
+        if G.nodes[vecino].get("espacio") == "X":
             costo += 5  
         costo += G[nodo_destino][vecino].get('peso', 1)
     return costo
 
-
 @app.route('/visualizar_grafo')
 def visualizar_grafo_ruta():
-    """
-    Ruta para visualizar el grafo del parqueadero.
-    """
     estado = cargar_estado_parqueadero()
     G, pos = crear_grafo_parqueadero(estado)
     visualizar_grafo(G, pos)  
@@ -125,9 +117,6 @@ def visualizar_grafo_ruta():
 
 @app.route('/shutdown', methods=['POST'])
 def shutdown():
-    """
-    Cierra el servidor Flask.
-    """
     os._exit(0)
     return 'Server shutting down...'
 

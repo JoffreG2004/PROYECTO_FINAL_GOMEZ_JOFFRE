@@ -20,7 +20,9 @@ CELL_WIDTH = 107
 CELL_HEIGHT = 60 
 ROAD_WIDTH = 140   
 
-estado_parqueadero_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\estado_parqueadero.json"
+data_dir = os.path.join(os.getenv('LOCALAPPDATA'), 'Parqueadero AVL', 'data')
+
+estado_parqueadero_path = os.path.join(data_dir, "estado_parqueadero.json")
 
 car_image_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\carro-deportivo.png"
 background_path = "C:\\REPOSITORIO\\PROYECTO_FINAL_GOMEZ_JOFFRE\\PROYECTO ARBOL AVL\\UTILS\\back.jpg"
@@ -32,8 +34,14 @@ def cargar_estado_parqueadero():
     try:
         with open(estado_parqueadero_path, "r") as file:
             return json.load(file)
+    except FileNotFoundError:
+        print("El archivo de estado no existe. Creando uno nuevo...")
+        return {"espacios": []}
+    except json.JSONDecodeError:
+        print("Error: El archivo de estado está corrupto o mal formateado.")
+        return {"espacios": []}
     except Exception as e:
-        print("Error al cargar el estado del parqueadero:", e)
+        print("Error inesperado al cargar el estado del parqueadero:", e)
         return {"espacios": []}
 
 def draw_parking_lot(estado):
