@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Red Social</title>
+  <link rel="stylesheet" href="PUBLIC/bootstrap-5.3.5-dist/css/bootstrap.min.css">
+</head>
+<style>
+    .btn-get-started {
+      font-family: "Poppins", sans-serif;
+     
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 1px;
+      display: inline-block;
+      padding: 8px 28px;
+      border-radius: 50px;
+      transition: 0.5s;
+      margin: 10px;
+      border: 2px solid #fff;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .bg-col{
+      background-image: url("public/img/foto-25.jpeg"); 
+      background-size: cover;
+
+    }
+
+    .btn-get-started:hover {
+      background: #2dc997;
+      border: 2px solid #2dc997;
+    }
+
+   
+    .bg-start {
+      background-image: url("public/img/fondo_bg.jpg");
+      background-size: cover;
+      background-position: center;
+      min-height: 100vh;
+      width: 100%;
+      color: white;
+      text-align: center;
+      background-attachment: fixed;
+      
+      padding-bottom: 50px;
+
+        display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+  .quote {
+    font-size: 25px; 
+    font-style: italic; 
+    color: #000000; 
+    text-align: center; 
+    margin-top: 20px; 
+    margin-bottom: 20px;
+    line-height: 1.5; 
+  }
+    
+ .title {
+  font-family: "Poppins", sans-serif; 
+  font-style: italic; 
+  font-weight: bold; 
+  font-size: 25px; 
+  text-transform: uppercase; 
+  letter-spacing: 2px; 
+  color: #17a023; 
+  text-align: center; 
+  width: 100%;
+  padding: 20px;
+}
+</style>
+
+<body>
+
+
+   <!-- NAVBAR -->
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">
+        <div class="title">MI ESPE</div>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNav" aria-controls="menuNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuNav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="#" onclick="mostrar('Inicio')">Inicio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="mostrar('amigos')">Registro</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="mostrar('Musica')">Login</a></li>
+          <li class="nav-item"><a class="nav-link" href="#" onclick="mostrar('logros')">Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CONTENIDO -->
+  <div id="Inicio" class="seccion">
+    <div class="bg-start">
+      <section class="rounded bg-success text-center ">
+        <img src="PUBLIC/img/ESPE.jpeg" alt="logo espe" class="img-fluid mb-3 rounded-circle " style="height: 400px; width: 600px;">
+        <div class="quote">BIENVENIDO AL MENU PRINCIPAL DE INGRESO A LA ESPE</div>
+      </section>
+    </div>
+  </div>
+
+  <!-- REGISTRO -->
+  <div id="amigos" class="seccion d-none">
+    <h2 class="text-center mb-4">Formulario de Registro</h2>
+    <form>
+      <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre Completo</label>
+        <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre completo" required>
+      </div>
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo Electrónico</label>
+        <input type="email" class="form-control" id="email" placeholder="Ingrese su correo electrónico" required>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input type="password" class="form-control" id="password" placeholder="Ingrese su contraseña" required>
+      </div>
+      <div class="mb-3">
+        <label for="confirmar-password" class="form-label">Confirmar Contraseña</label>
+        <input type="password" class="form-control" id="confirmar-password" placeholder="Confirme su contraseña" required>
+      </div>
+      <div class="mb-3 form-check">
+        <input type="checkbox" class="form-check-input" id="terminos">
+        <label class="form-check-label" for="terminos">Acepto los términos y condiciones</label>
+      </div>
+      <button type="submit" class="btn btn-primary w-100">Registrar</button>
+    </form>
+  </div>
+
+  <!-- MUSICA -->
+  <div id="Musica" class="seccion d-none">
+    <h2 class="text-center">CANCIONES FAVORITAS</h2>
+  </div>
+
+  <!-- LOGROS -->
+  <div id="logros" class="seccion d-none">
+    <h2 class="text-center mb-4">Logros en Mi Vida</h2>
+  </div>
+
+  <script src="PUBLIC/bootstrap-5.3.5-dist/js/bootstrap.min.js"></script>
+  <script src="PUBLIC/bootstrap-5.3.5-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
