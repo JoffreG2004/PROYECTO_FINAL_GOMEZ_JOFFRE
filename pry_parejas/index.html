@@ -26,8 +26,9 @@
     .bg-col{
       background-image: url("public/img/foto-25.jpeg"); 
       background-size: cover;
-
     }
+
+    
 
     .btn-get-started:hover {
       background: #2dc997;
@@ -53,15 +54,17 @@
   align-items: center;
 }
 
-  .quote {
-    font-size: 25px; 
-    font-style: italic; 
-    color: #000000; 
-    text-align: center; 
-    margin-top: 20px; 
-    margin-bottom: 20px;
-    line-height: 1.5; 
-  }
+.quote {
+  font-size: 25px;
+  font-style: italic;
+  font-family: "Cinzel", serif;
+  color: #000000;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
     
  .title {
   font-family: "Poppins", sans-serif; 
@@ -114,6 +117,7 @@
   </div>
 
   <!-- REGISTRO -->
+   <div class="bg-col">
   <div id="amigos" class="seccion d-none">
     <h2 class="text-center mb-4">Formulario de Registro</h2>
     <form>
@@ -138,18 +142,113 @@
         <label class="form-check-label" for="terminos">Acepto los términos y condiciones</label>
       </div>
       <button type="submit" class="btn btn-primary w-100">Registrar</button>
+      <div class="bg-start">
+        <img src="PUBLIC/img/ESPE.jpeg" alt="logo espe" class="img-fluid mb-3 rounded-circle " style="height: 400px; width: 600px;">
+        <br>
+         <p class="quote">BIENVENIDO A LA ESPE</p>
+         <p class="quote">¡Gracias por registrarte!</p>
+          <p class="quote">¡Estamos emocionados de tenerte aquí!</p>
+       <a href="index.html" class="btn-get-started ">Volver</a>
     </form>
   </div>
+  </div>
 
-  <!-- MUSICA -->
+ 
+  <div class="bg-col">
   <div id="Musica" class="seccion d-none">
-    <h2 class="text-center">CANCIONES FAVORITAS</h2>
+    <h2 class="text-center mb-4">Iniciar Sesión</h2>
+    <form>
+  <div class="mb-3">
+    <label for="login-email" class="form-label">Correo Electrónico</label>
+    <input type="email" class="form-control" id="login-email" placeholder="Ingrese su correo electrónico" required>
+  </div>
+  <div class="mb-3">
+    <label for="login-password" class="form-label">Contraseña</label>
+    <input type="password" class="form-control" id="login-password" placeholder="Ingrese su contraseña" required>
+  </div>
+  <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" id="recordar">
+    <label class="form-check-label" for="recordar">Recordarme</label>
+  </div>
+  <button type="submit" class="btn btn-success w-100">Iniciar Sesión</button>
+
+  <div class="bg-start">
+  <section class="rounded bg-success text-center ">
+        <img src="PUBLIC/img/ESPE.jpeg" alt="logo espe" class="img-fluid mb-3 rounded-circle " style="height: 400px; width: 600px;">
+        <br>
+        </section>
+        <p class="quote">BIENVENIDO A LA ESPE</p>
+        <p class="quote">¡Gracias por iniciar sesión!</p>
+        <p class="quote">¡Estamos emocionados de tenerte aquí!</p>
+
+         <a href="index.html" class="btn-get-started">Volver</a>
+        </div>
+      
+</form>
+</div>
   </div>
 
-  <!-- LOGROS -->
-  <div id="logros" class="seccion d-none">
-    <h2 class="text-center mb-4">Logros en Mi Vida</h2>
+
+<!-- LOGROS / DASHBOARD -->
+<div id="logros" class="seccion d-none p-4 bg-col">
+
+  <!-- Usuario y contraseña -->
+  <div class="text-center mb-5 text-black">
+    <h2 class="mb-3">Bienvenido, <strong>Usuario123</strong></h2>
+    <p><strong>Correo:</strong> usuario123@espe.edu.ec</p>
+    <p><strong>Contraseña:</strong> ******** <a href="#" class="text-decoration-none text-white">(mostrar)</a></p>
   </div>
+
+  <!-- Materias -->
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-5">
+    <div class="col">
+      <div class="card h-100 text-white" style="background: url('public/img/fondo-materia1.jpg') center/cover;">
+        <div class="card-body">
+          <p class="mb-1">17% completado</p>
+          <h5 class="card-title">20888 - CÁLCULO VECTORIAL</h5>
+          <p class="card-text">Análisis</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100 text-white" style="background: url('public/img/fondo-materia2.jpg') center/cover;">
+        <div class="card-body">
+          <p class="mb-1">30% completado</p>
+          <h5 class="card-title">23254 - COMPUTACIÓN PARALELA</h5>
+          <p class="card-text">Programación</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100 text-white" style="background: url('public/img/fondo-materia3.jpg') center/cover;">
+        <div class="card-body">
+          <p class="mb-1">50% completado</p>
+          <h5 class="card-title">22394 - PROGRAMACIÓN WEB</h5>
+          <p class="card-text">Desarrollo</p>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card h-100 text-white" style="background: url('public/img/fondo-materia4.jpg') center/cover;">
+        <div class="card-body">
+          <p class="mb-1">17% completado</p>
+          <h5 class="card-title">22110 - ESTADÍSTICA</h5>
+          <p class="card-text">Estadística</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje final -->
+ <section class="rounded background-size text-center text-black">
+    <img src="PUBLIC/img/ESPE.jpeg" alt="logo espe" class="img-fluid mb-3 rounded-circle" style="height: 300px; width: 400px;">
+    <p class="quote">BIENVENIDO A LA ESPE</p>
+    <p class="quote">¡ESTAS SON TUS CLASES!</p>
+    <p class="quote">¡Estamos emocionados de tenerte aquí!</p>
+    <a href="index.html" class="btn-get-started">Volver</a>
+  </div>
+
+</div>
 
   <script src="PUBLIC/bootstrap-5.3.5-dist/js/bootstrap.min.js"></script>
   <script src="PUBLIC/bootstrap-5.3.5-dist/js/bootstrap.bundle.min.js"></script>
