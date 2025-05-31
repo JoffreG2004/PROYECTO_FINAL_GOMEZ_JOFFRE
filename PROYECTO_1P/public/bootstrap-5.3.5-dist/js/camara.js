@@ -1,21 +1,29 @@
 let contenido_camara = null;
 
-navigator.mediaDevices.getUserMedia({ video: true })
-.then(res => {
-    contenido_camara = res;
-    document.getElementById("my_video").srcObject = contenido_camara;
-})
-.catch(error => {
-    console.error("Error al acceder a la cámara:", error);
-});
+function accederCamara() {
+  const video = document.getElementById("my_video");
+  const contenedor = document.getElementById("video-container");
+  const errorMsg = document.getElementById("errorCamara");
 
-function fnc_TomarFoto() {
-    const my_video = document.getElementById("my_video");
-    const my_foto = document.getElementById("foto");
-    const ctx = my_foto.getContext("2d");
-    // Ajustar tamaño del canvas a video
-    my_foto.width = my_video.videoWidth;
-    my_foto.height = my_video.videoHeight;
-    ctx.drawImage(my_video, 0, 0, my_foto.width, my_foto.height);
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(res => {
+      contenido_camara = res;
+      video.srcObject = contenido_camara;
+      contenedor.style.display = 'block';
+    })
+    .catch(error => {
+      console.error("Error al acceder a la cámara:", error);
+      errorMsg.classList.remove("d-none");
+      contenedor.style.display = 'none';
+    });
 }
 
+function fnc_TomarFoto() {
+  const video = document.getElementById("my_video");
+  const foto = document.getElementById("foto");
+  const ctx = foto.getContext("2d");
+  foto.width = video.videoWidth;
+  foto.height = video.videoHeight;
+  ctx.drawImage(video, 0, 0, foto.width, foto.height);
+  foto.classList.remove("d-none"); // Mostrar la imagen capturada
+}

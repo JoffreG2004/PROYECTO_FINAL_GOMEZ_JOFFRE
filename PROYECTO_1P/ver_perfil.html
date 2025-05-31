@@ -4,238 +4,217 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ver Perfil</title>
-
   <link rel="stylesheet" href="public/bootstrap-5.3.5-dist/css/bootstrap.min.css" />
-  <!-- Leaflet CSS -->
-  <link
-    rel="stylesheet"
-    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-    crossorigin=""
-  />
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <style>
-    body, html {
+    body.light-theme {
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+    body.dark-theme {
       background-color: #121212;
       color: #eee;
-      min-height: 100vh;
-      margin: 0;
-      padding: 40px 20px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
-    .perfil-container {
-      max-width: 700px;
-      margin: auto;
-      background: #1e1e1e;
-      border-radius: 12px;
-      padding: 30px;
-      box-shadow: 0 8px 25px rgba(45, 201, 151, 0.4);
+    .modal-content.light-theme {
+      background-color: #fff;
+      color: #212529;
     }
-    .foto-perfil {
-      display: block;
-      margin: 0 auto 25px auto;
-      width: 220px;
-      height: 220px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid #2dc997;
-      box-shadow: 0 4px 15px rgba(45, 201, 151, 0.7);
-      background-color: #222;
-      transition: transform 0.3s ease;
+    .modal-content.dark-theme {
+      background-color: #1e1e1e;
+      color: #eee;
     }
-    .foto-perfil:hover {
-      transform: scale(1.05);
-      box-shadow: 0 6px 25px rgba(45, 201, 151, 0.9);
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #2dc997;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-    table {
-      width: 90%;
-      max-width: 800px;
-      margin: 0 auto 30px auto;
-      font-size: 1.1rem;
-      border-collapse: separate;
-      border-spacing: 0 12px;
-    }
-    th {
-      text-align: left;
-      color: #2dc997;
-      font-weight: 600;
-      padding-left: 10px;
-      font-size: 1.1rem;
-      vertical-align: middle;
-    }
-    td {
-      background: #2c2c2c;
-      padding: 12px 20px;
-      border-radius: 8px;
-      vertical-align: middle;
-      font-size: 1.1rem;
-      color: #ccc;
-      box-shadow: inset 0 1px 3px rgba(0,0,0,0.6);
-    }
-    .btn-group {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-top: 35px;
-    }
-    .btn-danger, .btn-warning {
-      padding: 12px 28px;
-      font-weight: 600;
-      font-size: 1rem;
-      border-radius: 40px;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 12px rgba(220, 53, 69, 0.6);
-      cursor: pointer;
-    }
-    .btn-danger:hover {
-      background-color: #e55353;
-      box-shadow: 0 5px 20px rgba(229, 83, 83, 0.9);
+    .btn-get-started {
+      background-color: #098860;
       color: #fff;
-      text-decoration: none;
+      border-radius: 30px;
+      padding: 10px 20px;
+      font-weight: bold;
+      transition: background 0.3s;
     }
-    .btn-warning {
-      background-color: #ffc107;
-      color: #333;
-      box-shadow: 0 3px 12px rgba(255, 193, 7, 0.7);
+    .btn-get-started:hover {
+      background-color: #06694d;
     }
-    .btn-warning:hover {
-      background-color: #ffcd39;
-      box-shadow: 0 5px 20px rgba(255, 205, 57, 1);
-      color: #222;
+    .theme-toggle-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
     }
-
-    #mapa {
-      width: 90%;
-      max-width: 700px;
-      height: 350px;
-      margin: 0 auto 30px auto;
-      border-radius: 12px;
-      box-shadow: 0 6px 20px rgba(45, 201, 151, 0.7);
+    .profile-avatar {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 5px solid #2dc997;
+      object-fit: cover;
+      background-color: #f5f5f5;
     }
   </style>
 </head>
-<body>
+<body class="dark-theme">
 
-  <div class="perfil-container">
-    <h1>Perfil del Usuario</h1>
+<button id="themeToggle" class="btn btn-outline-light theme-toggle-btn">
+  <i class="bi bi-moon-stars-fill"></i>
+</button>
 
-    <img id="fotoPerfil" class="foto-perfil" src="" alt="Foto del perfil" />
-
-    <table>
-      <tbody>
-        <tr>
-          <th>Nombre</th>
-          <td id="tdNombre"></td>
-        </tr>
-        <tr>
-          <th>Apellido</th>
-          <td id="tdApellido"></td>
-        </tr>
-        <tr>
-          <th>Edad</th>
-          <td id="tdEdad"></td>
-        </tr>
-        <tr>
-          <th>Departamento</th>
-          <td id="tdDepartamento"></td>
-        </tr>
-        <tr>
-          <th>Latitud</th>
-          <td id="tdLatitud"></td>
-        </tr>
-        <tr>
-          <th>Longitud</th>
-          <td id="tdLongitud"></td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div id="mapa"></div>
-
-    <div class="btn-group">
-      <a href="index.html" class="btn btn-danger">Cancelar</a>
-      <button id="btnBorrar" class="btn btn-warning">Borrar Datos</button>
+<div class="modal fade" id="loginModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content p-4 position-relative dark-theme" id="modalContent">
+      <a href="index.html" class="btn btn-outline-danger position-absolute top-0 start-0 m-3">X</a>
+      <button id="themeToggleModal" class="btn btn-outline-secondary btn-sm position-absolute top-0 end-0 m-3">
+        <i class="bi bi-moon-stars-fill"></i>
+      </button>
+      <div class="modal-header border-0 d-flex flex-column align-items-center text-center">
+        <img src="public/img/faceapp.png" alt="Logo FACEAPP" class="rounded-circle shadow-sm mb-2" style="width: 60px; height: 60px;">
+        <h5 class="modal-title fw-bold fs-4" style="font-family: 'Poppins', sans-serif; color: #098860;">
+          Ingreso al Perfil - FACEAPP
+        </h5>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="login_usuario" class="form-label">Usuario</label>
+          <input type="text" id="login_usuario" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="login_contrasena" class="form-label">Contraseña</label>
+          <input type="password" id="login_contrasena" class="form-control">
+        </div>
+        <div class="text-center">
+          <button class="btn-get-started" onclick="buscarPerfil()">Ingresar al Perfil</button>
+        </div>
+      </div>
     </div>
   </div>
+</div>
 
-  <script
-    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    crossorigin=""
-  ></script>
+<div class="container mt-5 d-none" id="perfilResultado">
+  <section class="row">
+    <div class="col-lg-8">
+      <div class="text-center mb-5">
+        <img src="public/img/faceapp.png" alt="Logo FACEAPP" width="100" class="rounded-circle shadow-sm mb-2">
+        <h2 class="fw-bold">Mi Perfil</h2>
+      </div>
+      <div class="text-center mb-4">
+        <img id="perfil_foto" class="profile-avatar shadow" src="" alt="Foto de perfil" />
+        <h3 id="perfil_nombre" class="fw-bold mt-3"></h3>
+        <p id="perfil_departamento" class="text-muted mb-0"></p>
+      </div>
+      <ul class="list-group list-group-flush mb-4">
+        <li class="list-group-item bg-dark text-white"><strong>Apellido:</strong> <span id="perfil_apellido"></span></li>
+        <li class="list-group-item bg-dark text-white"><strong>Edad:</strong> <span id="perfil_edad"></span></li>
+        <li class="list-group-item bg-dark text-white"><strong>Correo:</strong> <span id="perfil_correo"></span></li>
+        <li class="list-group-item bg-dark text-white"><strong>Latitud:</strong> <span id="perfil_lat"></span></li>
+        <li class="list-group-item bg-dark text-white"><strong>Longitud:</strong> <span id="perfil_lon"></span></li>
+        <li class="list-group-item bg-dark text-white"><strong>Usuario:</strong> <span id="perfil_usuario"></span></li>
+      </ul>
+      <div id="mapa" class="rounded shadow" style="height: 300px;"></div>
+    </div>
+    <div class="col-lg-4">
+      <h5 class="text-success">🎉 Cumpleaños del Mes</h5>
+      <ul id="listaCumpleanios" class="list-group mb-4"></ul>
 
-  <script>
-    let map;
+      <h5 class="text-info">👥 También están en <span id="nombreDepto"></span></h5>
+      <ul id="listaDepto" class="list-group"></ul>
+    </div>
+  </section>
+</div>
 
-    function cargarDatos() {
-      const datosStr = localStorage.getItem('datosUsuario');
-      if (!datosStr) {
-        alert('No hay datos guardados.');
-        return;
-      }
-      const datos = JSON.parse(datosStr);
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+function buscarPerfil() {
+  const usuario = document.getElementById("login_usuario").value.trim();
+  const contrasena = document.getElementById("login_contrasena").value.trim();
 
-      document.getElementById('fotoPerfil').src = datos.foto || '';
-
-      document.getElementById('tdNombre').textContent = datos.nombre || '';
-      document.getElementById('tdApellido').textContent = datos.apellido || '';
-      document.getElementById('tdEdad').textContent = datos.edad !== undefined ? datos.edad + ' años' : '';
-      document.getElementById('tdDepartamento').textContent = datos.departamento || '';
-      document.getElementById('tdLatitud').textContent = datos.latitud || '';
-      document.getElementById('tdLongitud').textContent = datos.longitud || '';
-
-  
-
-      if (
-        datos.latitud !== undefined && datos.latitud !== null && datos.latitud !== '' &&
-        datos.longitud !== undefined && datos.longitud !== null && datos.longitud !== ''
-      ) {
-        inicializarMapa(datos.latitud, datos.longitud);
-      } else {
-        const mapaDiv = document.getElementById('mapa');
-        mapaDiv.textContent = "No hay coordenadas disponibles para mostrar el mapa.";
-        mapaDiv.style.color = '#bbb';
-        mapaDiv.style.textAlign = 'center';
-        mapaDiv.style.paddingTop = '150px';
-      }
-    }
-
-    function inicializarMapa(lat, lon) {
-      const latNum = parseFloat(lat);
-      const lonNum = parseFloat(lon);
-
-      if (map) {
-        map.remove();
-      }
-
-      map = L.map('mapa').setView([latNum, lonNum], 13);
-
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
-
-      L.marker([latNum, lonNum]).addTo(map)
-        .bindPopup('Ubicación del usuario')
-        .openPopup();
-    }
-
-    document.getElementById('btnBorrar').addEventListener('click', function () {
-      if (confirm('¿Estás seguro que quieres borrar los datos?')) {
-        localStorage.removeItem('datosUsuario');
-        location.reload();
-      }
+  if (!usuario || !contrasena) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Campos incompletos',
+      text: 'Por favor, ingresa el usuario y la contraseña.',
+      confirmButtonColor: '#198754'
     });
+    return;
+  }
 
-    window.onload = cargarDatos;
-  </script>
+  const perfiles = JSON.parse(localStorage.getItem("perfilesUsuario") || "[]");
+  const perfil = perfiles.find(p => p.usuario === usuario && p.contrasena === contrasena);
 
+  if (!perfil) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Credenciales incorrectas',
+      text: 'Usuario o contraseña no válidos.',
+      confirmButtonColor: '#dc3545'
+    });
+    return;
+  }
+
+  document.getElementById("perfil_nombre").textContent = perfil.nombre;
+  document.getElementById("perfil_apellido").textContent = perfil.apellido;
+  document.getElementById("perfil_correo").textContent = perfil.correo;
+  document.getElementById("perfil_departamento").textContent = perfil.departamento;
+  document.getElementById("perfil_edad").textContent = perfil.edad;
+  document.getElementById("perfil_lat").textContent = perfil.latitud;
+  document.getElementById("perfil_lon").textContent = perfil.longitud;
+  document.getElementById("perfil_usuario").textContent = perfil.usuario;
+  document.getElementById("perfil_foto").src = perfil.foto;
+
+  document.getElementById("perfilResultado").classList.remove("d-none");
+  document.getElementById("nombreDepto").textContent = perfil.departamento;
+
+  const cumpleList = document.getElementById("listaCumpleanios");
+  const deptoList = document.getElementById("listaDepto");
+  cumpleList.innerHTML = "";
+  deptoList.innerHTML = "";
+
+  const hoy = new Date();
+  perfiles.forEach(p => {
+    if (p.fechaNacimiento) {
+      const cumple = new Date(p.fechaNacimiento);
+      if (cumple.getMonth() === hoy.getMonth()) {
+        cumpleList.innerHTML += `<li class='list-group-item bg-dark text-white'>${p.nombre} - ${cumple.getDate()}/${cumple.getMonth() + 1}</li>`;
+      }
+    }
+    if (p.departamento === perfil.departamento && p.usuario !== perfil.usuario) {
+      deptoList.innerHTML += `<li class='list-group-item bg-dark text-white'>${p.nombre} ${p.apellido}</li>`;
+    }
+  });
+
+  if (perfil.latitud && perfil.longitud) {
+    const map = L.map('mapa').setView([parseFloat(perfil.latitud), parseFloat(perfil.longitud)], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+    L.marker([perfil.latitud, perfil.longitud]).addTo(map).bindPopup('Tu ubicación').openPopup();
+  }
+
+  const loginModalEl = document.getElementById("loginModal");
+  const modalInstance = bootstrap.Modal.getInstance(loginModalEl);
+  if (modalInstance) modalInstance.hide();
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+  loginModal.show();
+
+  const themeToggle = document.getElementById("themeToggle");
+  const themeToggleModal = document.getElementById("themeToggleModal");
+
+  const toggleTheme = () => {
+    const body = document.body;
+    body.classList.toggle("light-theme");
+    body.classList.toggle("dark-theme");
+    const isLight = body.classList.contains("light-theme");
+    themeToggle.innerHTML = isLight ? '<i class="bi bi-brightness-high-fill"></i>' : '<i class="bi bi-moon-stars-fill"></i>';
+    themeToggleModal.innerHTML = isLight ? '<i class="bi bi-brightness-high-fill"></i>' : '<i class="bi bi-moon-stars-fill"></i>';
+    document.getElementById("modalContent").classList.toggle("light-theme", isLight);
+    document.getElementById("modalContent").classList.toggle("dark-theme", !isLight);
+  };
+
+  themeToggle.addEventListener("click", toggleTheme);
+  themeToggleModal.addEventListener("click", toggleTheme);
+});
+</script>
 </body>
 </html>
