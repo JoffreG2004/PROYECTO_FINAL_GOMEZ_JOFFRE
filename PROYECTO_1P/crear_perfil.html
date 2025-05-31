@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HOBBIES</title>
+  <link rel="stylesheet" href="public/bootstrap-5.3.5-dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+  <style>
+    .btn-get-started {
+      font-family: "Poppins", sans-serif;
+      font-weight: 500;
+      font-size: 16px;
+      letter-spacing: 1px;
+      display: inline-block;
+      padding: 8px 28px;
+      border-radius: 50px;
+      transition: 0.5s;
+      margin: 10px;
+      border: 2px solid #fff;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .bg-col {
+      background-color: #000000;
+      color: white;
+      padding: 20px;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .btn-get-started:hover {
+      background: #2dc997;
+      border: 2px solid #2dc997;
+    }
+
+    .quote {
+      font-size: 40px;
+      font-style: italic;
+      color: #ffffff;
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-col">
+    <div class="row">
+      <div class="col-6 col-sm-6 p-3 text-white  ">
+        <h1>PROCEDA A TOMARSE UNA FOTO EN TIEMPO REAL:</h1>
+            
+          <div
+           class = "btn-get-started"  
+           type="button"
+           id="btn_capturar_foto"
+           onclick="fnc_TomarFoto()" style="width: 180px;">TOMAR FOTO
+          </div>
+
+              
+
+                <div class="col-5 col-sm-5 p-3 text-white ">
+
+                <video id="my_video" autoplay width="100%" aria-required="true" style="border: 2px solid rgb(0, 0, 0);"></video>
+
+          </div>
+
+          <p>RESULTADO:</p>
+
+
+              <canvas
+              id="foto"
+              style = "
+              width :350px;
+              height: 250px";
+              
+            ></canvas>
+
+           
+           
+          
+        <br> <br>
+        <br> <br>  
+
+        <!-- Make sure you put this AFTER Leaflet's CSS -->
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+     <style>
+        #map { height: 180px; }
+     </style>
+</head>
+<body>
+    
+<div class="container py-5"> 
+    <h1>TU GEOLOCALIZACION ES :</h1>
+
+    <label for="txt_latitud">TU LATITUD ES: </label>
+    <input type="text" id="txt_latitud">
+
+    <br><br>
+    <label for="txt_longitud">TU LONGITUD ES: </label>
+    <input type="text" id="txt_longitud">
+
+
+
+    <br><br>
+    <div id="map" style="height: 320px;"></div>
+</div>
+
+
+
+
+      </div>
+
+      <div class="col-6 col-sm-6 p-3 text-white text-align-center">
+        <div class="quote">EL MEJOR REGISTRO DE INFORMACION</div>
+        <br /><br />
+        <h1>REGISTRATE AHORA</h1>
+        <br /><br />
+
+        <label for="nombre">INGRESE EL NOMBRE:</label>
+        <input
+          type="text"
+          id="nombre"
+          class="form-control"
+          placeholder="Nombre"
+          style="width: 500px;"
+        />
+        <br />
+
+        <label for="apellido">INGRESE EL APELLIDO:</label>
+        <input
+          required
+          name="apellido"
+          type="text"
+          id="apellido"
+          class="form-control"
+          placeholder="Apellido"
+          style="width: 500px;"
+        />
+        <br />
+
+        <label for="edad">INGRESE LA FECHA DE NACIMIENTO:</label>
+        <input
+        required
+          name="edad"
+          type="date"
+          id="edad"
+          class="form-control"
+          style="width: 200px;"
+        />
+        <br />
+
+        <label for="departamento">INGRESE EL DEPARTAMENTO:</label>
+        <input
+          required  
+          name="departamento"
+          type="text"
+          id="departamento"
+          class="form-control"
+          placeholder="Departamento"
+          style="width: 500px;"
+        />
+        <br> <br> <br> 
+        <br>
+        <img
+          src="public/img/faceapp.png"
+          class="img-fluid rounded-circle mx-auto d-block center"
+          style="height:500px;"
+          alt="Imagen Faceapp"
+        />
+
+
+        <br> <br>  <br>
+       <button type="button" onclick = "guardar_datos()" class="btn btn-success">GUARDAR</button>
+
+<a href="index.html" class="btn btn-danger" role="button">CANCELAR</a>
+
+
+</button>
+
+          </div>
+        </div>
+      </div> 
+    </div> 
+  </div> 
+  <script src="public/bootstrap-5.3.5-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="public/bootstrap-5.3.5-dist/js/camara.js"></script>
+  <script src="public/bootstrap-5.3.5-dist/js/geo.js"></script>
+  <script src ="public/bootstrap-5.3.5-dist/js/guardar_datos.js"></script>
+</body>
+</html>
