@@ -8,6 +8,144 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <style>
+
+   body {
+      font-family: "Poppins", sans-serif;
+      transition: background-color 0.4s, color 0.4s;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px;
+    }
+    body.light-theme { background-color: #f8f9fa; color: #212529; }
+    body.dark-theme { background-color: #121212; color: #eee; }
+
+    .navbar-custom {
+      background-color: #098860;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      margin: 10px;
+    }
+    body.dark-theme .navbar-custom { background-color: #4cd79e; }
+    .navbar-custom .navbar-brand, .navbar-custom .nav-link, .navbar-custom .btn-toggle-theme {
+      color: white;
+      font-weight: 600;
+      transition: color 0.3s;
+      padding: 12px 20px;
+    }
+    .navbar-custom .nav-link:hover, .navbar-custom .btn-toggle-theme:hover {
+      color: #d0f5e9;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+    }
+
+    .container-main {
+      flex: 1;
+      padding: 50px 20px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: linear-gradient(to right, #ffffff, #f0fdf7);
+      border-radius: 20px;
+    }
+    body.dark-theme .container-main {
+      background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+    }
+
+    .title {
+      font-style: italic;
+      font-weight: 700;
+      font-size: 3.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #098860;
+      margin-bottom: 0.5rem;
+    }
+    body.dark-theme .title { color: #4cd79e; }
+
+    .subtitle {
+      font-size: 1.5rem;
+      font-style: italic;
+      color: #4cd79e;
+      margin-bottom: 1.2rem;
+    }
+
+    .img-logo {
+      max-height: 350px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 20px rgba(45, 201, 151, 0.6));
+      transition: transform 0.3s ease;
+    }
+    .img-logo:hover { transform: scale(1.05) rotate(2deg); }
+
+    .btn-get-started {
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 1.1px;
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 32px;
+      border-radius: 50px;
+      margin: 10px 20px 0 0;
+      border: 2px solid currentColor;
+      color: inherit;
+      background-color: transparent;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(45,201,151,0.3);
+    }
+    .btn-get-started:hover {
+      background-color: #2dc997;
+      border-color: #2dc997;
+      color: #fff;
+      box-shadow: 0 10px 25px rgba(45,201,151,0.6);
+    }
+
+    @media (min-width: 768px) {
+      .row-main { display: flex; align-items: center; gap: 4rem; }
+      .col-text { flex: 1 1 50%; text-align: left; }
+      .col-img { flex: 1 1 50%; text-align: center; }
+    }
+
+    .modal-content {
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+    body.dark-theme .modal-content {
+      background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+      color: #eee;
+    }
+    .modal .form-control, .modal .form-select {
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 1rem;
+    }
+    .modal .form-label {
+      font-weight: 500;
+      margin-top: 10px;
+    }
+    .btn-toggle-theme {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      z-index: 1000;
+    }
+    #video-container {
+      display: none;
+    }
+    #errorCamara {
+      color: red;
+      font-size: 0.9rem;
+    }
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+
     body.light-theme {
       background-color: #f8f9fa;
       color: #212529;
@@ -87,9 +225,10 @@
 </div>
 
 <div class="container mt-5 d-none" id="perfilResultado">
-  <section class="row">
+  <section class="row-main">
     <div class="col-lg-8">
       <div class="text-center mb-5">
+        <section style="margin:0cqmax;">AQUI VA EL LOGO DE FACEAPP</section>
         <img src="public/img/faceapp.png" alt="Logo FACEAPP" width="100" class="rounded-circle shadow-sm mb-2">
         <h2 class="fw-bold">Mi Perfil</h2>
       </div>
@@ -196,24 +335,53 @@ function buscarPerfil() {
 
 window.addEventListener("DOMContentLoaded", () => {
   const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
-  loginModal.show();
+loginModal.show();
 
-  const themeToggle = document.getElementById("themeToggle");
-  const themeToggleModal = document.getElementById("themeToggleModal");
+const themeToggleBtn = document.getElementById('themeToggle');
+const themeToggleModalBtn = document.getElementById('themeToggleModal');
+const body = document.body;
+const modalContent = document.getElementById('modalContent');
+const perfilSection = document.getElementById('perfilResultado');
+const savedTheme = localStorage.getItem('theme') || 'light';
 
-  const toggleTheme = () => {
-    const body = document.body;
-    body.classList.toggle("light-theme");
-    body.classList.toggle("dark-theme");
-    const isLight = body.classList.contains("light-theme");
-    themeToggle.innerHTML = isLight ? '<i class="bi bi-brightness-high-fill"></i>' : '<i class="bi bi-moon-stars-fill"></i>';
-    themeToggleModal.innerHTML = isLight ? '<i class="bi bi-brightness-high-fill"></i>' : '<i class="bi bi-moon-stars-fill"></i>';
-    document.getElementById("modalContent").classList.toggle("light-theme", isLight);
-    document.getElementById("modalContent").classList.toggle("dark-theme", !isLight);
-  };
+setTheme(savedTheme);
 
-  themeToggle.addEventListener("click", toggleTheme);
-  themeToggleModal.addEventListener("click", toggleTheme);
+themeToggleBtn.addEventListener('click', () => {
+  toggleTheme();
+});
+themeToggleModalBtn.addEventListener('click', () => {
+  toggleTheme();
+});
+
+function toggleTheme() {
+  const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  setTheme(newTheme);
+  localStorage.setItem('theme', newTheme);
+}
+
+function setTheme(theme) {
+  if (theme === 'dark') {
+    body.classList.add('dark-theme');
+    body.classList.remove('light-theme');
+    modalContent.classList.add('dark-theme');
+    modalContent.classList.remove('light-theme');
+    perfilSection?.classList.add('dark-theme');
+    perfilSection?.classList.remove('light-theme');
+    themeToggleBtn.innerHTML = '<i class="bi bi-brightness-high-fill"></i>';
+    themeToggleModalBtn.innerHTML = '<i class="bi bi-brightness-high-fill"></i>';
+  } else {
+    body.classList.add('light-theme');
+    body.classList.remove('dark-theme');
+    modalContent.classList.add('light-theme');
+    modalContent.classList.remove('dark-theme');
+    perfilSection?.classList.add('light-theme');
+    perfilSection?.classList.remove('dark-theme');
+    themeToggleBtn.innerHTML = '<i class="bi bi-moon-stars-fill"></i>';
+    themeToggleModalBtn.innerHTML = '<i class="bi bi-moon-stars-fill"></i>';
+  }
+}
+
 });
 </script>
 </body>
