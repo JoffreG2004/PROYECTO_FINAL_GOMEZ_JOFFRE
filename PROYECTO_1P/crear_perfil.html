@@ -3,192 +3,244 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HOBBIES</title>
+  <title>Registrar Usuario - FACEAPP</title>
   <link rel="stylesheet" href="public/bootstrap-5.3.5-dist/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-     crossorigin=""/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
   <style>
-    .btn-get-started {
-      font-family: "Poppins", sans-serif;
-      font-weight: 500;
-      font-size: 16px;
-      letter-spacing: 1px;
-      display: inline-block;
-      padding: 8px 28px;
-      border-radius: 50px;
-      transition: 0.5s;
-      margin: 10px;
-      border: 2px solid #fff;
-      color: #fff;
-      text-decoration: none;
+    body {
+      font-family: 'Poppins', sans-serif;
+      transition: background-color 0.4s, color 0.4s;
+      padding-top: 80px;
     }
-
-    .bg-col {
-      background-color: #000000;
+    body.light-theme {
+      background-color: #f8f9fa;
+      color: #212529;
+    }
+    body.dark-theme {
+      background-color: #121212;
       color: white;
-      padding: 20px;
-      min-height: 100vh;
-      margin: 0;
     }
-
-    .btn-get-started:hover {
-      background: #2dc997;
-      border: 2px solid #2dc997;
+    .form-control {
+      background-color: inherit;
+      color: inherit;
+      border: 1px solid #4cd79e;
+      border-radius: 10px;
     }
-
+    .form-control::placeholder {
+      color: #bbb;
+    }
+    .form-label {
+      font-weight: 500;
+      color: #4cd79e;
+    }
+    .section-title {
+      font-size: 2rem;
+      color: #2dc997;
+      margin-bottom: 1rem;
+    }
+    .btn-success, .btn-danger, .btn-outline-success {
+      padding: 10px 25px;
+      border-radius: 50px;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+    .btn-outline-success:hover, .btn-success:hover {
+      background-color: #2dc997;
+      border-color: #2dc997;
+      color: #fff;
+      box-shadow: 0 0 15px #2dc997;
+    }
     .quote {
-      font-size: 40px;
+      font-size: 1.5rem;
       font-style: italic;
-      color: #ffffff;
+      color: #ccc;
+      margin-bottom: 2rem;
+    }
+    nav.navbar {
+      background-color: #098860;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    nav.navbar a {
+      color: white;
+      font-weight: bold;
+    }
+    #passwordAdminGroup {
+      display: none;
     }
   </style>
 </head>
-<body>
-  <div class="bg-col">
-    <div class="row">
-      <div class="col-6 col-sm-6 p-3 text-white  ">
-        <h1>PROCEDA A TOMARSE UNA FOTO EN TIEMPO REAL:</h1>
-            
-          <div
-           class = "btn-get-started"  
-           type="button"
-           id="btn_capturar_foto"
-           onclick="fnc_TomarFoto()" style="width: 180px;">TOMAR FOTO
-          </div>
-
-              
-
-                <div class="col-5 col-sm-5 p-3 text-white ">
-
-                <video id="my_video" autoplay width="100%" aria-required="true" style="border: 2px solid rgb(0, 0, 0);"></video>
-
-          </div>
-
-          <p>RESULTADO:</p>
-
-
-              <canvas
-              id="foto"
-              style = "
-              width :350px;
-              height: 250px";
-              
-            ></canvas>
-
-           
-           
-          
-        <br> <br>
-        <br> <br>  
-
-        <!-- Make sure you put this AFTER Leaflet's CSS -->
-      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-     crossorigin=""></script>
-
-     <style>
-        #map { height: 180px; }
-     </style>
-</head>
-<body>
-    
-<div class="container py-5"> 
-    <h1>TU GEOLOCALIZACION ES :</h1>
-
-    <label for="txt_latitud">TU LATITUD ES: </label>
-    <input type="text" id="txt_latitud">
-
-    <br><br>
-    <label for="txt_longitud">TU LONGITUD ES: </label>
-    <input type="text" id="txt_longitud">
-
-
-
-    <br><br>
-    <div id="map" style="height: 320px;"></div>
+<body class="dark-theme">
+<nav class="navbar navbar-expand-lg fixed-top px-4 py-2">
+  <a class="navbar-brand d-flex align-items-center" href="index.html">
+    <img src="public/img/faceapp.png" alt="Logo" width="40" class="rounded-circle me-2">
+    <span>FACEAPP</span>
+  </a>
+  <div class="collapse navbar-collapse justify-content-end">
+    <ul class="navbar-nav align-items-center gap-2">
+      <li class="nav-item"><a class="nav-link" href="crear_perfil.html">Crear Perfil</a></li>
+      <li class="nav-item"><a class="nav-link" href="ver_perfil.html">Ver Perfil</a></li>
+      <li class="nav-item"><button id="themeToggle" class="btn btn-outline-light btn-sm rounded-pill px-3"><i class="bi bi-moon-stars-fill"></i></button></li>
+    </ul>
+  </div>
+</nav>
+<div class="container py-5">
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="section-title">Tipo de Registro</h2>
+      <select id="tipoRegistro" class="form-control mb-3" onchange="preguntarClaveAdmin()">
+        <option value="usuario">Usuario</option>
+        <option value="admin">Administrador</option>
+      </select>
+      <div id="passwordAdminGroup">
+        <label class="form-label" for="passwordAdmin">Contraseña</label>
+        <input type="password" id="passwordAdmin" class="form-control mb-3" placeholder="Ingrese una contraseña">
+      </div>
+      <h2 class="section-title">Captura de imagen</h2>
+      <button class="btn btn-outline-success mb-2 w-100" id="btn_capturar_foto" onclick="fnc_TomarFoto()">
+        <i class="bi bi-camera"></i> Tomar Foto
+      </button>
+      <input type="file" accept="image/*" class="form-control mb-3" onchange="mostrarImagen(event)" />
+      <video id="my_video" autoplay width="100%" style="border-radius: 10px; border: 2px solid #4cd79e;"></video>
+      <p class="mt-3">Resultado:</p>
+      <canvas id="foto" width="350" height="250" style="border: 1px solid #ccc; border-radius: 10px;"></canvas>
+      <h4 class="mt-4">Geolocalización</h4>
+      <label class="form-label" for="txt_latitud">Latitud</label>
+      <input type="text" id="txt_latitud" class="form-control mb-2">
+      <label class="form-label" for="txt_longitud">Longitud</label>
+      <input type="text" id="txt_longitud" class="form-control mb-2">
+    </div>
+    <div class="col-md-6">
+      <div class="quote">El mejor registro de información</div>
+      <h2 class="section-title">Regístrate ahora</h2>
+      <label class="form-label" for="nombre">Nombre</label>
+      <input type="text" id="nombre" class="form-control" placeholder="Tu nombre">
+      <label class="form-label mt-3" for="apellido">Apellido</label>
+      <input type="text" id="apellido" class="form-control" placeholder="Tu apellido">
+      <label class="form-label mt-3" for="edad">Fecha de nacimiento</label>
+      <input type="date" id="edad" class="form-control">
+      <label class="form-label mt-3" for="correo">Correo electrónico</label>
+      <input type="email" id="correo" class="form-control" placeholder="ejemplo@correo.com">
+      <label class="form-label mt-3" for="departamento">Departamento</label>
+      <select id="departamento" class="form-control">
+        <option value="">Selecciona un departamento</option>
+        <option value="Ciencias Exactas">Ciencias Exactas</option>
+        <option value="DCCO">DCCO</option>
+        <option value="DCE">DCE</option>
+        <option value="PAFDE">PAFDE</option>
+        <option value="Ciencias de la Vida">Ciencias de la Vida</option>
+        <option value="Ciencias de la Construcción">Ciencias de la Construcción</option>
+      </select>
+      <div class="text-center mt-4">
+        <button class="btn btn-success" onclick="guardar_datos()">
+          <i class="bi bi-save"></i> Guardar
+        </button>
+        <a href="index.html" class="btn btn-danger">
+          <i class="bi bi-x-circle"></i> Cancelar
+        </a>
+      </div>
+      <img src="public/img/faceapp.png" class="img-fluid rounded-circle mt-5 d-block mx-auto" style="height:300px;">
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="modalClave" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3">
+      <h5 class="modal-title mb-3">Clave de administrador</h5>
+      <input type="password" id="claveInput" class="form-control mb-3" placeholder="Código secreto">
+      <div class="text-end">
+        <button class="btn btn-outline-light me-2" data-bs-dismiss="modal">Cancelar</button>
+        <button class="btn btn-success" onclick="validarClaveAdmin()">Aceptar</button>
+      </div>
+    </div>
+  </div>
 </div>
 
+<script>
+function preguntarClaveAdmin() {
+  const tipo = document.getElementById("tipoRegistro").value;
+  if (tipo === "admin") {
+    const clave = prompt("Ingrese el código secreto de administrador:");
+    if (clave === "joffreadrian") {
+      document.getElementById("passwordAdminGroup").style.display = "block";
+    } else {
+      alert("Código incorrecto. Se mantendrá como usuario.");
+      document.getElementById("tipoRegistro").value = "usuario";
+      document.getElementById("passwordAdminGroup").style.display = "none";
+    }
+  } else {
+    document.getElementById("passwordAdminGroup").style.display = "none";
+  }
+}
 
+document.getElementById("themeToggle").addEventListener("click", function () {
+  const body = document.body;
+  const isDark = body.classList.contains("dark-theme");
+  body.classList.toggle("dark-theme", !isDark);
+  body.classList.toggle("light-theme", isDark);
+  localStorage.setItem("theme", isDark ? "light" : "dark");
+});
 
+window.addEventListener("DOMContentLoaded", function () {
+  const theme = localStorage.getItem("theme") || "dark";
+  document.body.classList.add(theme + "-theme");
+});
+</script>
 
-      </div>
+<script>
+// --- CÁMARA EN TIEMPO REAL Y CAPTURA ---
+let stream = null;
 
-      <div class="col-6 col-sm-6 p-3 text-white text-align-center">
-        <div class="quote">EL MEJOR REGISTRO DE INFORMACION</div>
-        <br /><br />
-        <h1>REGISTRATE AHORA</h1>
-        <br /><br />
+// Iniciar la cámara al cargar la página
+window.addEventListener('DOMContentLoaded', function () {
+  // Tema
+  const theme = localStorage.getItem("theme") || "dark";
+  document.body.classList.add(theme + "-theme");
 
-        <label for="nombre">INGRESE EL NOMBRE:</label>
-        <input
-          type="text"
-          id="nombre"
-          class="form-control"
-          placeholder="Nombre"
-          style="width: 500px;"
-        />
-        <br />
+  // Geolocalización automática
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+      document.getElementById('txt_latitud').value = pos.coords.latitude;
+      document.getElementById('txt_longitud').value = pos.coords.longitude;
+    }, function(err) {
+      console.log('No se pudo obtener la ubicación:', err.message);
+    });
+  }
 
-        <label for="apellido">INGRESE EL APELLIDO:</label>
-        <input
-          required
-          name="apellido"
-          type="text"
-          id="apellido"
-          class="form-control"
-          placeholder="Apellido"
-          style="width: 500px;"
-        />
-        <br />
+  // Iniciar cámara en tiempo real
+  const video = document.getElementById('my_video');
+  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(s => {
+        stream = s;
+        video.srcObject = stream;
+        video.play();
+      })
+      .catch(err => {
+        alert('No se pudo acceder a la cámara: ' + err);
+      });
+  }
+});
 
-        <label for="edad">INGRESE LA FECHA DE NACIMIENTO:</label>
-        <input
-        required
-          name="edad"
-          type="date"
-          id="edad"
-          class="form-control"
-          style="width: 200px;"
-        />
-        <br />
+// Tomar foto y mostrar en canvas
+function fnc_TomarFoto() {
+  const video = document.getElementById('my_video');
+  const canvas = document.getElementById('foto');
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  // Puedes guardar la imagen con: canvas.toDataURL()
+}
 
-        <label for="departamento">INGRESE EL DEPARTAMENTO:</label>
-        <input
-          required  
-          name="departamento"
-          type="text"
-          id="departamento"
-          class="form-control"
-          placeholder="Departamento"
-          style="width: 500px;"
-        />
-        <br> <br> <br> 
-        <br>
-        <img
-          src="public/img/faceapp.png"
-          class="img-fluid rounded-circle mx-auto d-block center"
-          style="height:500px;"
-          alt="Imagen Faceapp"
-        />
-
-
-        <br> <br>  <br>
-       <button type="button" onclick = "guardar_datos()" class="btn btn-success">GUARDAR</button>
-
-<a href="index.html" class="btn btn-danger" role="button">CANCELAR</a>
-
-
-</button>
-
-          </div>
-        </div>
-      </div> 
-    </div> 
-  </div> 
-  <script src="public/bootstrap-5.3.5-dist/js/bootstrap.bundle.min.js"></script>
-  <script src="public/bootstrap-5.3.5-dist/js/camara.js"></script>
-  <script src="public/bootstrap-5.3.5-dist/js/geo.js"></script>
-  <script src ="public/bootstrap-5.3.5-dist/js/guardar_datos.js"></script>
+// Mostrar imagen seleccionada desde archivo en el canvas
+function mostrarImagen(event) {
+  const canvas = document.getElementById('foto');
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.onload = function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  };
+  img.src = URL.createObjectURL(event.target.files[0]);
+}
+</script>
 </body>
 </html>

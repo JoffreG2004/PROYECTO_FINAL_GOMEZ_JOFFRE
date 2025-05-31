@@ -1,13 +1,13 @@
 function guardar_datos() {
   var nombre = document.getElementById("nombre").value.trim();
   var apellido = document.getElementById("apellido").value.trim();
+  var correo = document.getElementById("correo").value.trim();
   var departamento = document.getElementById("departamento").value.trim();
   var fechaNacimiento = document.getElementById("edad").value;
   var latitud = document.getElementById("txt_latitud").value.trim();
   var longitud = document.getElementById("txt_longitud").value.trim();
 
-
-  if (!nombre || !apellido || !departamento || !fechaNacimiento || !latitud || !longitud) {
+  if (!nombre || !apellido || !correo || !departamento || !fechaNacimiento || !latitud || !longitud) {
     alert("Por favor completa todos los campos y obtén tu localización.");
     return;
   }
@@ -17,7 +17,6 @@ function guardar_datos() {
   var mes = parseInt(partes[1], 10);
   var dia = parseInt(partes[2], 10);
 
-
   var hoy = new Date();
   var edad = hoy.getFullYear() - año;
   var mesActual = hoy.getMonth() + 1;
@@ -26,14 +25,13 @@ function guardar_datos() {
     edad--;
   }
 
-
   var canvas = document.getElementById("foto");
   var fotoBase64 = canvas.toDataURL("image/png");
-
 
   var datos = {
     nombre: nombre,
     apellido: apellido,
+    correo: correo,
     departamento: departamento,
     edad: edad,
     latitud: latitud,
@@ -41,10 +39,8 @@ function guardar_datos() {
     foto: fotoBase64
   };
 
-
   localStorage.setItem("datosUsuario", JSON.stringify(datos));
 
   console.log("Datos guardados:", datos);
-
   alert("Datos guardados correctamente.");
 }

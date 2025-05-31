@@ -4,16 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>FACEAPP - Inicio</title>
-
-  <!-- Google Fonts: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet" />
-
-  <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-
-  <!-- Bootstrap Icons -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-
   <style>
     body {
       font-family: "Poppins", sans-serif;
@@ -22,58 +15,39 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding-top: 70px; 
+      padding-top: 80px;
     }
-
-    body.light-theme {
-      background-color: #f8f9fa;
-      color: #212529;
-    }
-    body.dark-theme {
-      background-color: #121212;
-      color: #eee;
-    }
-
-    /* Navbar personalizado */
+    body.light-theme { background-color: #f8f9fa; color: #212529; }
+    body.dark-theme { background-color: #121212; color: #eee; }
     .navbar-custom {
       background-color: #098860;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.4s ease-in-out, box-shadow 0.3s ease-in-out;
-      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
       margin: 10px;
     }
-    body.dark-theme .navbar-custom {
-      background-color: #4cd79e;
-    }
-
-    .navbar-custom .navbar-brand,
-    .navbar-custom .nav-link,
-    .navbar-custom .btn-toggle-theme {
+    body.dark-theme .navbar-custom { background-color: #4cd79e; }
+    .navbar-custom .navbar-brand, .navbar-custom .nav-link, .navbar-custom .btn-toggle-theme {
       color: white;
       font-weight: 600;
       transition: color 0.3s;
-      padding: 10px 15px;
+      padding: 12px 20px;
     }
-
-    .navbar-custom .nav-link:hover,
-    .navbar-custom .btn-toggle-theme:hover {
+    .navbar-custom .nav-link:hover, .navbar-custom .btn-toggle-theme:hover {
       color: #d0f5e9;
-      background-color: rgba(255, 255, 255, 0.2); /* Fondo al hacer hover */
-      border-radius: 5px;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
     }
-
-    .navbar-custom .nav-item {
-      margin-right: 20px;
-    }
-
-    /* Contenedor principal */
     .container-main {
       flex: 1;
-      padding: 40px 20px 60px;
+      padding: 50px 20px 60px;
       max-width: 1100px;
       margin: 0 auto;
+      background: linear-gradient(to right, #ffffff, #f0fdf7);
+      border-radius: 20px;
     }
-
+    body.dark-theme .container-main {
+      background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+    }
     .title {
       font-style: italic;
       font-weight: 700;
@@ -81,40 +55,25 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       color: #098860;
-      margin-bottom: 1rem;
+      margin-bottom: 0.5rem;
       user-select: none;
     }
-
-    body.dark-theme .title {
+    body.dark-theme .title { color: #4cd79e; }
+    .subtitle {
+      font-size: 1.5rem;
+      font-style: italic;
       color: #4cd79e;
-    }
-
-    .quote {
-      background: linear-gradient(135deg, rgba(4, 84, 90, 0.85), rgba(2, 52, 54, 0.85));
-      padding: 20px 30px;
-      border-radius: 12px;
-      font-size: 1.2rem;
-      color: #ccc;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      max-width: 700px;
-      margin-bottom: 2rem;
+      margin-bottom: 1.2rem;
       user-select: none;
-      line-height: 1.5;
     }
-
     .img-logo {
       max-height: 350px;
       border-radius: 50%;
-      box-shadow: 0 8px 20px rgba(45,201,151,0.4);
+      filter: drop-shadow(0 0 20px rgba(45, 201, 151, 0.6));
       transition: transform 0.3s ease;
       user-select: none;
     }
-
-    .img-logo:hover {
-      transform: scale(1.05);
-      box-shadow: 0 12px 28px rgba(45,201,151,0.7);
-    }
-
+    .img-logo:hover { transform: scale(1.05) rotate(2deg); }
     .btn-get-started {
       font-weight: 600;
       font-size: 1.1rem;
@@ -123,79 +82,25 @@
       align-items: center;
       padding: 12px 32px;
       border-radius: 50px;
-      margin: 10px 10px 0 0;
+      margin: 10px 20px 0 0;
       border: 2px solid currentColor;
       color: inherit;
       background-color: transparent;
       text-decoration: none;
       cursor: pointer;
       box-shadow: 0 6px 16px rgba(45,201,151,0.3);
-      transition: all 0.3s ease;
-      user-select: none;
     }
-
     .btn-get-started:hover {
       background-color: #2dc997;
       border-color: #2dc997;
       color: #fff;
       box-shadow: 0 10px 25px rgba(45,201,151,0.6);
     }
-
-    .fade-in {
-      animation: fadeIn 1.5s ease forwards;
-      opacity: 0;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
     @media (min-width: 768px) {
-      .row-main {
-        display: flex;
-        align-items: center;
-        gap: 4rem;
-      }
-      .col-text {
-        flex: 1 1 50%;
-        text-align: left;
-      }
-      .col-img {
-        flex: 1 1 50%;
-        text-align: center;
-      }
+      .row-main { display: flex; align-items: center; gap: 4rem; }
+      .col-text { flex: 1 1 50%; text-align: left; }
+      .col-img { flex: 1 1 50%; text-align: center; }
     }
-
-    /* NUEVO: Sección con imagen y botón */
-    .image-section {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .image-section img {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      user-select: none;
-    }
-    .image-section .btn {
-      margin-top: 1.5rem;
-      padding: 12px 36px;
-      font-size: 1.2rem;
-      border-radius: 50px;
-      box-shadow: 0 6px 16px rgba(45,201,151,0.3);
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-    .image-section .btn:hover {
-      background-color: #2dc997;
-      border-color: #2dc997;
-      color: #fff;
-      box-shadow: 0 10px 25px rgba(45,201,151,0.6);
-    }
-
-    /* Footer */
     footer {
       background-color: #f8f9fa;
       padding: 2rem 0;
@@ -205,70 +110,95 @@
       color: #212529;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     }
-
     footer a {
       text-decoration: none;
       color: #098860;
     }
-
     footer a:hover {
       text-decoration: underline;
     }
-
+    #chatbotWidget {
+      display:none; flex-direction:column; position:fixed; bottom:90px; left:20px; width:320px; background:#fff; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.2); z-index:9999;
+    }
+    #adminPanel {
+      display: none; position: fixed; top: 100px; right: 20px; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.3); z-index: 10000;
+    }
+    #chatbotWidget {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      bottom: 90px;
+      left: 20px;
+      width: 320px;
+      background: #f8f9fa;
+      color: #333;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      z-index: 9999;
+    }
+    #chatbotBody {
+      padding: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+    }
+    #chatbotInput input {
+      flex: 1;
+      border: none;
+      padding: 8px;
+      background: #fff;
+      color: #333;
+    }
+    #chatbotInput button {
+      border: none;
+      background: #098860;
+      color: #fff;
+      padding: 8px 16px;
+    }
   </style>
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-md navbar-custom fixed-top px-4">
-    <a class="navbar-brand" href="#">FACEAPP</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarContent"
-      aria-controls="navbarContent"
-      aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarContent">
-      <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item">
-          <a class="nav-link" href="crear_perfil.html"><i class="bi bi-person-circle"></i> Crear Perfil</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="ver_perfil.html"><i class="bi bi-card-list"></i> Ver Perfil</a>
-        </li>
-        <li class="nav-item">
-          <button id="themeToggle" class="btn btn-toggle-theme" aria-label="Cambiar tema">Modo Oscuro</button>
-        </li>
+  <nav class="navbar navbar-expand-md navbar-custom fixed-top px-4 py-2 shadow">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="public/img/faceapp.png" alt="Logo FACEAPP" width="40" height="40" class="me-2 rounded-circle shadow-sm img-logo" ondblclick="toggleAdminPanel()" />
+      <span class="fw-bold fs-4">FACEAPP</span>
+    </a>
+    <div class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav align-items-center gap-2">
+        <li class="nav-item"><a class="nav-link d-flex align-items-center" href="crear_perfil.html"><i class="bi bi-person-circle me-1 fs-5"></i> Crear Perfil</a></li>
+        <li class="nav-item"><a class="nav-link d-flex align-items-center" href="ver_perfil.html"><i class="bi bi-card-list me-1 fs-5"></i> Ver Perfil</a></li>
+        <li class="nav-item"><button id="themeToggle" class="btn btn-outline-light btn-sm rounded-pill px-3"><i class="bi bi-moon-stars-fill"></i></button></li>
       </ul>
     </div>
   </nav>
 
-
-  <main class="container-main fade-in">
+  <main class="container-main">
     <div class="row-main">
       <section class="col-text">
         <h1 class="title">FACEAPP</h1>
-        <p class="quote">
-          Bienvenido a FACEAPP<br />
-          Esta aplicación web te permite crear y gestionar tu perfil personal de manera sencilla e interactiva.
-          Aquí puedes ingresar tus datos personales, tomar una foto directamente desde la cámara del navegador, y compartir tu 
-          ubicación geográfica actual. Además, la app ofrece una visualización clara de la información guardada, incluyendo un mapa para mostrar tu ubicación y tus datos.
-        </p>
-        <div>
-          <a href="crear_perfil.html" class="btn-get-started" role="button" tabindex="0">
-            <i class="bi bi-person-circle" style="font-size: 1.4rem;"></i>
-            CREAR PERFIL
-          </a>
-          <a href="ver_perfil.html" class="btn-get-started" role="button" tabindex="0">
-            <i class="bi bi-card-list" style="font-size: 1.4rem;"></i>
-            VER PERFIL
-          </a>
+        <h2 class="subtitle">Tu identidad, tu espacio</h2>
+        <div id="infoCarrusel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active text-center p-4">
+              <h4><i class="bi bi-lightbulb"></i> Nuestra Misión</h4>
+              <p>Ofrecer una plataforma segura y fácil para crear perfiles personales con geolocalización y fotografía web.</p>
+            </div>
+            <div class="carousel-item text-center p-4">
+              <h4><i class="bi bi-eye"></i> Nuestra Visión</h4>
+              <p>Ser una app educativa referente en registro de usuarios con herramientas modernas.</p>
+            </div>
+            <div class="carousel-item text-center p-4">
+              <h4><i class="bi bi-rocket-takeoff"></i> Últimas actualizaciones</h4>
+              <ul class="list-unstyled">
+                <li>✔️ Modo oscuro</li>
+                <li>✔️ Captura desde cámara</li>
+                <li>✔️ Mapa con geolocalización</li>
+              </ul>
+            </div>
+          </div>
         </div>
+        <a href="crear_perfil.html" class="btn-get-started"><i class="bi bi-person-circle me-2"></i> CREAR PERFIL</a>
+        <a href="ver_perfil.html" class="btn-get-started"><i class="bi bi-card-list me-2"></i> VER PERFIL</a>
       </section>
       <section class="col-img">
         <img src="public/img/faceapp.png" alt="Logo FACEAPP" class="img-logo" />
@@ -276,22 +206,37 @@
     </div>
   </main>
 
-  <!-- Footer -->
+  <div id="chatbotWidget">
+    <header style="background:#098860; color:#fff; padding:10px; border-radius:10px 10px 0 0;">Asistente FACEAPP</header>
+    <div id="chatbotBody" style="padding:10px; max-height:200px; overflow-y:auto;"></div>
+    <div id="chatbotInput" style="display:flex; border-top:1px solid #eee;">
+      <input type="text" id="chatInput" placeholder="Escribe tu pregunta..." style="flex:1; border:none; padding:8px;">
+      <button onclick="responderChat()" style="border:none; background:#098860; color:#fff; padding:8px 16px;">Enviar</button>
+    </div>
+  </div>
+
+  <button onclick="toggleChatbot()" class="btn btn-secondary position-fixed" style="bottom: 20px; left: 20px; z-index:9999;">
+    <i class="bi bi-chat-dots-fill"></i>
+  </button>
+
+  <div id="adminPanel">
+    <h5 class="text-success">Modo Administrador</h5>
+    <p>Acceso concedido. Aquí puedes colocar opciones avanzadas para editar datos, ver estadísticas o hacer mantenimiento.</p>
+  </div>
+
   <footer>
-    <p>&copy; 2025 Ingeniero Joffre Gomez y Adrian Padilla</p>
+    <p>&copy; 2025 Ingeniero Joffre Gómez y Adrián Padilla</p>
     <p>¿Quieres saber más sobre el programador?</p>
     <p>
-      <a href="https://www.linkedin.com/in/joffre-esteban-gomez-quinaluisa-969216309/" target="_blank">Joffre Gomez</a> |
-      <a href="https://www.linkedin.com/in/marco-adrian-padilla-trivi%C3%B1o-1a524730b" target="_blank">Adrian Padilla</a>
+      <a href="https://www.linkedin.com/in/joffre-esteban-gomez-quinaluisa-969216309/" target="_blank">Joffre Gómez</a> |
+      <a href="https://www.linkedin.com/in/marco-adrian-padilla-trivi%C3%B1o-1a524730b" target="_blank">Adrián Padilla</a>
     </p>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
   <script>
     const themeToggleBtn = document.getElementById('themeToggle');
     const body = document.body;
-
     const savedTheme = localStorage.getItem('theme') || 'light';
     setTheme(savedTheme);
 
@@ -306,12 +251,50 @@
       if(theme === 'dark') {
         body.classList.add('dark-theme');
         body.classList.remove('light-theme');
-        themeToggleBtn.textContent = 'Modo Claro';
+        themeToggleBtn.innerHTML = '<i class="bi bi-brightness-high-fill"></i>';
       } else {
         body.classList.add('light-theme');
         body.classList.remove('dark-theme');
-        themeToggleBtn.textContent = 'Modo Oscuro';
+        themeToggleBtn.innerHTML = '<i class="bi bi-moon-stars-fill"></i>';
       }
+    }
+
+    function toggleChatbot() {
+      const chat = document.getElementById("chatbotWidget");
+      chat.style.display = chat.style.display === "flex" ? "none" : "flex";
+    }
+
+    function responderChat() {
+      const input = document.getElementById("chatInput").value.toLowerCase();
+      const body = document.getElementById("chatbotBody");
+      let respuesta = "Lo siento, no entiendo esa pregunta.";
+      if (input.includes("editar")) {
+  respuesta = "Para editar tu perfil, ve a 'Ver Perfil'.";
+} else if (
+  input.includes("guardar") || 
+  input.includes("información") || 
+  input.includes("guardo") || 
+    input.includes("veo") || 
+      input.includes("ver") || 
+        input.includes("informacion") || 
+  input.includes("registro") ||
+  input.includes("perfil")
+) {
+  respuesta = "Haz clic en 'Crear Perfil' y llena el formulario para guardar tu información.";
+} else if (input.includes("mapa") || input.includes("ubicación")) {
+  respuesta = "El mapa se muestra automáticamente en la sección 'Ver Perfil' si creaste tu perfil.";
+} else if (input.includes("admin")) {
+  respuesta = "Haz doble clic en el logo de FACEAPP para acceder al panel administrador oculto.";
+}
+
+      body.innerHTML += `<p><strong>Tú:</strong> ${input}</p><p><strong>Bot:</strong> ${respuesta}</p>`;
+      document.getElementById("chatInput").value = "";
+      body.scrollTop = body.scrollHeight;
+    }
+
+    function toggleAdminPanel() {
+      const panel = document.getElementById("adminPanel");
+      panel.style.display = panel.style.display === "block" ? "none" : "block";
     }
   </script>
 </body>
