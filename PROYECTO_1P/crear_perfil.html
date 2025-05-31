@@ -1,246 +1,396 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Registrar Usuario - FACEAPP</title>
-  <link rel="stylesheet" href="public/bootstrap-5.3.5-dist/css/bootstrap.min.css" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
-  <style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Perfil - FACEAPP</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
     body {
-      font-family: 'Poppins', sans-serif;
+      font-family: "Poppins", sans-serif;
       transition: background-color 0.4s, color 0.4s;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
       padding-top: 80px;
     }
-    body.light-theme {
-      background-color: #f8f9fa;
-      color: #212529;
+    body.light-theme { background-color: #f8f9fa; color: #212529; }
+    body.dark-theme { background-color: #121212; color: #eee; }
+
+    .navbar-custom {
+      background-color: #098860;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      border-radius: 15px;
+      margin: 10px;
     }
-    body.dark-theme {
-      background-color: #121212;
+    body.dark-theme .navbar-custom { background-color: #4cd79e; }
+    .navbar-custom .navbar-brand, .navbar-custom .nav-link, .navbar-custom .btn-toggle-theme {
       color: white;
+      font-weight: 600;
+      transition: color 0.3s;
+      padding: 12px 20px;
     }
-    .form-control {
-      background-color: inherit;
-      color: inherit;
-      border: 1px solid #4cd79e;
-      border-radius: 10px;
+    .navbar-custom .nav-link:hover, .navbar-custom .btn-toggle-theme:hover {
+      color: #d0f5e9;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
     }
-    .form-control::placeholder {
-      color: #bbb;
+
+    .container-main {
+      flex: 1;
+      padding: 50px 20px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      background: linear-gradient(to right, #ffffff, #f0fdf7);
+      border-radius: 20px;
     }
-    .form-label {
-      font-weight: 500;
+    body.dark-theme .container-main {
+      background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+    }
+
+    .title {
+      font-style: italic;
+      font-weight: 700;
+      font-size: 3.5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #098860;
+      margin-bottom: 0.5rem;
+    }
+    body.dark-theme .title { color: #4cd79e; }
+
+    .subtitle {
+      font-size: 1.5rem;
+      font-style: italic;
       color: #4cd79e;
+      margin-bottom: 1.2rem;
     }
-    .section-title {
-      font-size: 2rem;
-      color: #2dc997;
-      margin-bottom: 1rem;
+
+    .img-logo {
+      max-height: 350px;
+      border-radius: 50%;
+      filter: drop-shadow(0 0 20px rgba(45, 201, 151, 0.6));
+      transition: transform 0.3s ease;
     }
-    .btn-success, .btn-danger, .btn-outline-success {
-      padding: 10px 25px;
+    .img-logo:hover { transform: scale(1.05) rotate(2deg); }
+
+    .btn-get-started {
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 1.1px;
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 32px;
       border-radius: 50px;
-      font-weight: bold;
-      transition: 0.3s;
+      margin: 10px 20px 0 0;
+      border: 2px solid currentColor;
+      color: inherit;
+      background-color: transparent;
+      text-decoration: none;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(45,201,151,0.3);
     }
-    .btn-outline-success:hover, .btn-success:hover {
+    .btn-get-started:hover {
       background-color: #2dc997;
       border-color: #2dc997;
       color: #fff;
-      box-shadow: 0 0 15px #2dc997;
+      box-shadow: 0 10px 25px rgba(45,201,151,0.6);
     }
-    .quote {
-      font-size: 1.5rem;
-      font-style: italic;
-      color: #ccc;
-      margin-bottom: 2rem;
+
+    @media (min-width: 768px) {
+      .row-main { display: flex; align-items: center; gap: 4rem; }
+      .col-text { flex: 1 1 50%; text-align: left; }
+      .col-img { flex: 1 1 50%; text-align: center; }
     }
-    nav.navbar {
-      background-color: #098860;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+    .modal-content {
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      padding: 30px;
+      transition: background-color 0.4s ease, color 0.4s ease;
     }
-    nav.navbar a {
-      color: white;
-      font-weight: bold;
+    body.dark-theme .modal-content {
+      background: linear-gradient(to right, #1e1e1e, #2a2a2a);
+      color: #eee;
     }
-    #passwordAdminGroup {
+    .modal .form-control, .modal .form-select {
+      border-radius: 12px;
+      padding: 12px;
+      font-size: 1rem;
+    }
+    .modal .form-label {
+      font-weight: 500;
+      margin-top: 10px;
+    }
+    .btn-toggle-theme {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      z-index: 1000;
+    }
+    #video-container {
       display: none;
     }
-  </style>
-</head>
-<body class="dark-theme">
-<nav class="navbar navbar-expand-lg fixed-top px-4 py-2">
-  <a class="navbar-brand d-flex align-items-center" href="index.html">
-    <img src="public/img/faceapp.png" alt="Logo" width="40" class="rounded-circle me-2">
-    <span>FACEAPP</span>
-  </a>
-  <div class="collapse navbar-collapse justify-content-end">
-    <ul class="navbar-nav align-items-center gap-2">
-      <li class="nav-item"><a class="nav-link" href="crear_perfil.html">Crear Perfil</a></li>
-      <li class="nav-item"><a class="nav-link" href="ver_perfil.html">Ver Perfil</a></li>
-      <li class="nav-item"><button id="themeToggle" class="btn btn-outline-light btn-sm rounded-pill px-3"><i class="bi bi-moon-stars-fill"></i></button></li>
-    </ul>
-  </div>
-</nav>
-<div class="container py-5">
-  <div class="row">
-    <div class="col-md-6">
-      <h2 class="section-title">Tipo de Registro</h2>
-      <select id="tipoRegistro" class="form-control mb-3" onchange="preguntarClaveAdmin()">
-        <option value="usuario">Usuario</option>
-        <option value="admin">Administrador</option>
-      </select>
-      <div id="passwordAdminGroup">
-        <label class="form-label" for="passwordAdmin">Contraseña</label>
-        <input type="password" id="passwordAdmin" class="form-control mb-3" placeholder="Ingrese una contraseña">
-      </div>
-      <h2 class="section-title">Captura de imagen</h2>
-      <button class="btn btn-outline-success mb-2 w-100" id="btn_capturar_foto" onclick="fnc_TomarFoto()">
-        <i class="bi bi-camera"></i> Tomar Foto
-      </button>
-      <input type="file" accept="image/*" class="form-control mb-3" onchange="mostrarImagen(event)" />
-      <video id="my_video" autoplay width="100%" style="border-radius: 10px; border: 2px solid #4cd79e;"></video>
-      <p class="mt-3">Resultado:</p>
-      <canvas id="foto" width="350" height="250" style="border: 1px solid #ccc; border-radius: 10px;"></canvas>
-      <h4 class="mt-4">Geolocalización</h4>
-      <label class="form-label" for="txt_latitud">Latitud</label>
-      <input type="text" id="txt_latitud" class="form-control mb-2">
-      <label class="form-label" for="txt_longitud">Longitud</label>
-      <input type="text" id="txt_longitud" class="form-control mb-2">
-    </div>
-    <div class="col-md-6">
-      <div class="quote">El mejor registro de información</div>
-      <h2 class="section-title">Regístrate ahora</h2>
-      <label class="form-label" for="nombre">Nombre</label>
-      <input type="text" id="nombre" class="form-control" placeholder="Tu nombre">
-      <label class="form-label mt-3" for="apellido">Apellido</label>
-      <input type="text" id="apellido" class="form-control" placeholder="Tu apellido">
-      <label class="form-label mt-3" for="edad">Fecha de nacimiento</label>
-      <input type="date" id="edad" class="form-control">
-      <label class="form-label mt-3" for="correo">Correo electrónico</label>
-      <input type="email" id="correo" class="form-control" placeholder="ejemplo@correo.com">
-      <label class="form-label mt-3" for="departamento">Departamento</label>
-      <select id="departamento" class="form-control">
-        <option value="">Selecciona un departamento</option>
-        <option value="Ciencias Exactas">Ciencias Exactas</option>
-        <option value="DCCO">DCCO</option>
-        <option value="DCE">DCE</option>
-        <option value="PAFDE">PAFDE</option>
-        <option value="Ciencias de la Vida">Ciencias de la Vida</option>
-        <option value="Ciencias de la Construcción">Ciencias de la Construcción</option>
-      </select>
-      <div class="text-center mt-4">
-        <button class="btn btn-success" onclick="guardar_datos()">
-          <i class="bi bi-save"></i> Guardar
-        </button>
-        <a href="index.html" class="btn btn-danger">
-          <i class="bi bi-x-circle"></i> Cancelar
-        </a>
-      </div>
-      <img src="public/img/faceapp.png" class="img-fluid rounded-circle mt-5 d-block mx-auto" style="height:300px;">
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="modalClave" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-3">
-      <h5 class="modal-title mb-3">Clave de administrador</h5>
-      <input type="password" id="claveInput" class="form-control mb-3" placeholder="Código secreto">
-      <div class="text-end">
-        <button class="btn btn-outline-light me-2" data-bs-dismiss="modal">Cancelar</button>
-        <button class="btn btn-success" onclick="validarClaveAdmin()">Aceptar</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-function preguntarClaveAdmin() {
-  const tipo = document.getElementById("tipoRegistro").value;
-  if (tipo === "admin") {
-    const clave = prompt("Ingrese el código secreto de administrador:");
-    if (clave === "joffreadrian") {
-      document.getElementById("passwordAdminGroup").style.display = "block";
-    } else {
-      alert("Código incorrecto. Se mantendrá como usuario.");
-      document.getElementById("tipoRegistro").value = "usuario";
-      document.getElementById("passwordAdminGroup").style.display = "none";
+    #errorCamara {
+      color: red;
+      font-size: 0.9rem;
     }
-  } else {
-    document.getElementById("passwordAdminGroup").style.display = "none";
-  }
-}
+    .step {
+      display: none;
+    }
+    .step.active {
+      display: block;
+    }
+  </style>
 
-document.getElementById("themeToggle").addEventListener("click", function () {
-  const body = document.body;
-  const isDark = body.classList.contains("dark-theme");
-  body.classList.toggle("dark-theme", !isDark);
-  body.classList.toggle("light-theme", isDark);
-  localStorage.setItem("theme", isDark ? "light" : "dark");
-});
+</head>
+<body class="light-theme">
+   <nav class="navbar navbar-expand-md navbar-custom fixed-top px-4 py-2 shadow">
+    <a class="navbar-brand d-flex align-items-center" href="#">
+      <img src="public/img/faceapp.png" alt="Logo FACEAPP" width="40" height="40" class="me-2 rounded-circle shadow-sm img-logo" ondblclick="toggleAdminPanel()" />
+      <span class="fw-bold fs-4">FACEAPP</span>
+    </a>
+    <div class="collapse navbar-collapse justify-content-end">
+      <ul class="navbar-nav align-items-center gap-2">
+        <li class="nav-item"><a class="nav-link d-flex align-items-center" href="crear_perfil.html"><i class="bi bi-person-circle me-1 fs-5"></i> Crear Perfil</a></li>
+        <li class="nav-item"><a class="nav-link d-flex align-items-center" href="ver_perfil.html"><i class="bi bi-card-list me-1 fs-5"></i> Ver Perfil</a></li>
+        <li class="nav-item"><button id="themeToggle" class="btn btn-outline-light btn-sm rounded-pill px-3"><i class="bi bi-moon-stars-fill"></i></button></li>
+      </ul>
+    </div>
+  </nav>
 
-window.addEventListener("DOMContentLoaded", function () {
-  const theme = localStorage.getItem("theme") || "dark";
-  document.body.classList.add(theme + "-theme");
-});
-</script>
+  <main class="container-main">
+    <div class="row-main">
+      <section class="col-text">
+        <h1 class="title">FACEAPP</h1>
+        <h2 class="subtitle">Tu identidad, tu espacio</h2>
+        <div id="infoCarrusel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active text-center p-4">
+              <h4><i class="bi bi-lightbulb"></i> Nuestra Misión</h4>
+              <p>Ofrecer una plataforma segura y fácil para crear perfiles personales con geolocalización y fotografía web.</p>
+            </div>
+            <div class="carousel-item text-center p-4">
+              <h4><i class="bi bi-eye"></i> Nuestra Visión</h4>
+              <p>Ser una app educativa referente en registro de usuarios con herramientas modernas.</p>
+            </div>
+            <div class="carousel-item text-center p-4">
+              <h4><i class="bi bi-rocket-takeoff"></i> Últimas actualizaciones</h4>
+              <ul class="list-unstyled">
+                <li>✔️ Modo oscuro</li>
+                <li>✔️ Captura desde cámara</li>
+                <li>✔️ Mapa con geolocalización</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <a href="crear_perfil.html" class="btn-get-started"><i class="bi bi-person-circle me-2"></i> CREAR PERFIL</a>
+        <a href="ver_perfil.html" class="btn-get-started"><i class="bi bi-card-list me-2"></i> VER PERFIL</a>
+      </section>
+      <section class="col-img">
+        <img src="public/img/faceapp.png" alt="Logo FACEAPP" class="img-logo" />
+      </section>
+    </div>
+  </main>
+  
+<div class="modal fade" id="registroModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content p-4">
+      <button id="themeToggleModal" class="btn btn-outline-secondary btn-sm btn-toggle-theme">
+        <i class="bi bi-moon-stars-fill"></i>
+      </button>
+
+      <div class="modal-header border-0">
+        <h5 class="modal-title w-100 text-center fw-bold fs-4">Paso <span id="pasoActual">1</span> de 5 - FACEAPP</h5>
+      </div>
+
+      <div class="modal-body">
+        <form id="formRegistro" onsubmit="finalizarRegistro(event)">
+          <div class="mb-3">
+            <label for="tipoAcceso" class="form-label">Tipo de Acceso</label>
+            <select class="form-select" id="tipoAcceso" required>
+              <option value="">Selecciona...</option>
+              <option value="usuario">Usuario</option>
+              <option value="admin">Administrador</option>
+            </select>
+          </div>
+
+          <div class="step active" id="step1">
+            <label class="form-label">Nombre</label>
+            <input type="text" class="form-control mb-2" required>
+            <label class="form-label">Apellido</label>
+            <input type="text" class="form-control mb-2" required>
+          </div>
+
+          <div class="step" id="step2">
+            <label class="form-label">Fecha de Nacimiento</label>
+            <input type="date" class="form-control mb-2" required>
+            <label class="form-label">Correo</label>
+            <input type="email" class="form-control mb-2" required>
+          </div>
+
+          <div class="step" id="step3">
+            <label class="form-label">Foto de Perfil</label>
+            <div id="video-container">
+              <video id="my_video" autoplay playsinline class="w-100 rounded mb-2" style="max-height: 240px;"></video>
+              <canvas id="foto" width="300" height="200" class="d-none"></canvas>
+            </div>
+            <p id="errorCamara" class="d-none text-danger">No se pudo acceder a la cámara. Puedes subir una imagen manualmente.</p>
+            <input type="file" accept="image/*" class="form-control mb-3">
+          </div>
+
+          <div class="step" id="step4">
+            <label class="form-label">Latitud</label>
+            <input type="text" id="txt_latitud" class="form-control mb-2" readonly>
+            <label class="form-label">Longitud</label>
+            <input type="text" id="txt_longitud" class="form-control mb-2" readonly>
+          </div>
+
+          <div class="step" id="step5">
+            <p class="text-success fs-5 text-center">¡Registro casi completo! Haz clic en "Registrar" para finalizar.</p>
+          </div>
+
+          <div class="d-flex justify-content-between mt-4">
+            <button type="button" class="btn btn-outline-secondary" onclick="cambiarPaso(-1)">Anterior</button>
+            <button type="button" class="btn btn-success" onclick="cambiarPaso(1)">Siguiente</button>
+          </div>
+
+          <div class="text-end mt-3">
+            <a href="index.html" class="btn btn-outline-danger">Cancelar</a>
+          </div>
+        </form>
+
+        <!-- Chatbot dentro del modal -->
+        <div id="chatbotModal" class="mt-4 border rounded bg-light p-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <strong class="text-success">Asistente FACEAPP</strong>
+            <button class="btn btn-sm btn-outline-danger" onclick="limpiarChat()">🗑 Limpiar</button>
+          </div>
+          <div id="chatbotBodyModal" class="my-2" style="max-height: 200px; overflow-y: auto; font-size: 0.9rem;"></div>
+          <div class="d-flex">
+            <input type="text" id="chatInputModal" class="form-control me-2" placeholder="Escribe tu pregunta...">
+            <button class="btn btn-success" onclick="responderChatModal()">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-// --- CÁMARA EN TIEMPO REAL Y CAPTURA ---
-let stream = null;
+const modal = new bootstrap.Modal(document.getElementById('registroModal'));
+let paso = 1;
 
-// Iniciar la cámara al cargar la página
-window.addEventListener('DOMContentLoaded', function () {
-  // Tema
-  const theme = localStorage.getItem("theme") || "dark";
-  document.body.classList.add(theme + "-theme");
+window.addEventListener('DOMContentLoaded', () => {
+  modal.show();
+  obtenerUbicacion();
+  accederCamara();
+  mostrarHistorialChat();
+});
 
-  // Geolocalización automática
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(pos) {
-      document.getElementById('txt_latitud').value = pos.coords.latitude;
-      document.getElementById('txt_longitud').value = pos.coords.longitude;
-    }, function(err) {
-      console.log('No se pudo obtener la ubicación:', err.message);
-    });
-  }
-
-  // Iniciar cámara en tiempo real
-  const video = document.getElementById('my_video');
-  if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-    navigator.mediaDevices.getUserMedia({ video: true })
-      .then(s => {
-        stream = s;
-        video.srcObject = stream;
-        video.play();
-      })
-      .catch(err => {
-        alert('No se pudo acceder a la cámara: ' + err);
-      });
+document.getElementById("tipoAcceso").addEventListener("change", function() {
+  if (this.value === "admin") {
+    const clave = prompt("🔐 Ingresa la clave de administrador:");
+    if (clave !== "joffreadrian") {
+      alert("❌ Clave incorrecta. Se cambiará a Usuario.");
+      this.value = "usuario";
+    }
   }
 });
 
-// Tomar foto y mostrar en canvas
-function fnc_TomarFoto() {
-  const video = document.getElementById('my_video');
-  const canvas = document.getElementById('foto');
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  // Puedes guardar la imagen con: canvas.toDataURL()
+function cambiarPaso(direccion) {
+  document.getElementById(`step${paso}`).classList.remove('active');
+  paso += direccion;
+  if (paso < 1) paso = 1;
+  if (paso > 5) paso = 5;
+  document.getElementById(`step${paso}`).classList.add('active');
+  document.getElementById('pasoActual').textContent = paso;
 }
 
-// Mostrar imagen seleccionada desde archivo en el canvas
-function mostrarImagen(event) {
-  const canvas = document.getElementById('foto');
-  const ctx = canvas.getContext('2d');
-  const img = new Image();
-  img.onload = function() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  };
-  img.src = URL.createObjectURL(event.target.files[0]);
+function finalizarRegistro(e) {
+  e.preventDefault();
+  const tipo = document.getElementById("tipoAcceso").value;
+  alert(`Perfil de ${tipo.toUpperCase()} creado con éxito.`);
+  window.location.href = "index.html";
 }
+
+function obtenerUbicacion() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      pos => {
+        document.getElementById("txt_latitud").value = pos.coords.latitude;
+        document.getElementById("txt_longitud").value = pos.coords.longitude;
+      },
+      () => {
+        document.getElementById("txt_latitud").value = "No disponible";
+        document.getElementById("txt_longitud").value = "No disponible";
+      }
+    );
+  }
+}
+
+function accederCamara() {
+  const video = document.getElementById("my_video");
+  const contenedor = document.getElementById("video-container");
+  const errorMsg = document.getElementById("errorCamara");
+
+  navigator.mediaDevices.getUserMedia({ video: true })
+    .then(stream => {
+      video.srcObject = stream;
+      contenedor.style.display = 'block';
+    })
+    .catch(() => {
+      errorMsg.classList.remove("d-none");
+      contenedor.style.display = 'none';
+    });
+}
+
+function responderChatModal() {
+  const input = document.getElementById("chatInputModal").value.trim();
+  const chatBody = document.getElementById("chatbotBodyModal");
+  if (input === "") return;
+
+  let respuesta = "🤖 No entendí tu mensaje. Intenta con otra pregunta.";
+  if (paso === 1) respuesta = "En este paso debes ingresar tu nombre y apellido correctamente.";
+  else if (paso === 2) respuesta = "Ingresa tu fecha de nacimiento y correo electrónico válido.";
+  else if (paso === 3) respuesta = "Aquí puedes usar tu cámara o subir una imagen de perfil.";
+  else if (paso === 4) respuesta = "Verifica que tu ubicación haya sido cargada automáticamente.";
+  else if (paso === 5) respuesta = "Haz clic en 'Registrar' para finalizar tu perfil.";
+
+  chatBody.innerHTML += `<p><strong>Tú:</strong> ${input}</p><p><strong>Bot:</strong> ${respuesta}</p>`;
+  chatBody.scrollTop = chatBody.scrollHeight;
+  guardarChatLocal(input, respuesta);
+  document.getElementById("chatInputModal").value = "";
+}
+
+function guardarChatLocal(pregunta, respuesta) {
+  const historial = JSON.parse(localStorage.getItem("chatModal") || "[]");
+  historial.push({ pregunta, respuesta, paso });
+  localStorage.setItem("chatModal", JSON.stringify(historial));
+}
+
+function mostrarHistorialChat() {
+  const historial = JSON.parse(localStorage.getItem("chatModal") || "[]");
+  const chatBody = document.getElementById("chatbotBodyModal");
+  chatBody.innerHTML = "";
+  historial.forEach(entry => {
+    chatBody.innerHTML += `<p><strong>Tú:</strong> ${entry.pregunta}</p><p><strong>Bot:</strong> ${entry.respuesta}</p>`;
+  });
+  chatBody.scrollTop = chatBody.scrollHeight;
+}
+
+function limpiarChat() {
+  localStorage.removeItem("chatModal");
+  document.getElementById("chatbotBodyModal").innerHTML = "";
+}
+
+document.getElementById('themeToggleModal').addEventListener('click', () => {
+  document.body.classList.toggle('dark-theme');
+  document.body.classList.toggle('light-theme');
+  document.querySelector('.modal-content').classList.toggle('dark-theme');
+});
 </script>
 </body>
 </html>
