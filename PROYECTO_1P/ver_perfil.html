@@ -619,12 +619,42 @@ function setTheme(theme) {
       document.getElementById("perfil_foto").src = perfil.foto;
       document.getElementById("perfilResultado").classList.remove("d-none");
       document.getElementById("nombreDepto").textContent = perfil.departamento;
+       
+       const cumpleList = document.getElementById("listaCumpleanios");
+    const deptoList = document.getElementById("listaDepto");
+    cumpleList.innerHTML = "";
+    deptoList.innerHTML = "";
 
-      // Oculta el modal porque ya está logueado
+    const hoy = new Date();
+    perfiles.forEach(p => {
+      if (p.fechaNacimiento) {
+        const cumple = new Date(p.fechaNacimiento);
+        if (cumple.getMonth() === hoy.getMonth()) {
+          cumpleList.innerHTML += `<li class='list-group-item bg-dark text-white'>${p.nombre} - ${cumple.getDate()}/${cumple.getMonth() + 1}</li>`;
+        }
+      }
+      if (p.departamento === perfil.departamento && p.usuario !== perfil.usuario) {
+        deptoList.innerHTML += `
+          <li class='list-group-item bg-dark text-white'>
+            <a href="perfil_readonly.html?usuario=${p.usuario}" class="text-decoration-none text-info fw-semibold">
+              ${p.nombre} ${p.apellido}
+            </a>
+          </li>
+        `;
+      }
+    });
+
+    if (perfil.latitud && perfil.longitud) {
+      const map = L.map('mapa').setView([parseFloat(perfil.latitud), parseFloat(perfil.longitud)], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+      }).addTo(map);
+      L.marker([perfil.latitud, perfil.longitud]).addTo(map).bindPopup('Tu ubicación').openPopup();
+    }
       loginModal.hide();
     }
   } else {
-    // Si no está logueado, muestra el modal
     loginModal.show();
   }
 
