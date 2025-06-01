@@ -455,12 +455,13 @@ function buscarPerfil() {
       }
     }
     if (p.departamento === perfil.departamento && p.usuario !== perfil.usuario) {
-    deptoList.innerHTML += `
-<li class='list-group-item bg-dark text-white'>
-  <a href="perfil_readondly.html?usuario=${p.usuario}" class="text-decoration-none text-info fw-semibold">
-    Dcco Nombre
-  </a>
-</li>
+deptoList.innerHTML += `
+  <li class='list-group-item bg-dark text-white d-flex align-items-center gap-3'>
+    <img src="${p.foto}" alt="${p.nombre}" class="rounded-circle border border-2" width="40" height="40" style="object-fit: cover;">
+    <a href="perfil_readondly.html?usuario=${p.usuario}" class="text-decoration-none text-info fw-semibold">
+      ${p.nombre} ${p.apellido}
+    </a>
+  </li>
 `;
 
     }
@@ -480,68 +481,6 @@ function buscarPerfil() {
   if (modalInstance) modalInstance.hide();
 }
 
-//ESTA PARTE ES SOLO PARA PROBAR(DESPUES BORRAR ESTO)
-function cargarPrimerPerfil() {
-  const perfiles = JSON.parse(localStorage.getItem("perfilesUsuario") || "[]");
-
-  if (perfiles.length === 0) {
-    Swal.fire({
-      icon: 'info',
-      title: 'Sin perfiles',
-      text: 'No se encontró ningún perfil guardado.',
-      confirmButtonColor: '#0d6efd'
-    });
-    return;
-  }
-
-  const perfil = perfiles[0]; 
-
-  document.getElementById("perfil_nombre").textContent = perfil.nombre;
-  document.getElementById("perfil_apellido").textContent = perfil.apellido;
-  document.getElementById("perfil_correo").textContent = perfil.correo;
-  document.getElementById("perfil_departamento").textContent = perfil.departamento;
-  document.getElementById("perfil_edad").textContent = perfil.edad;
-  document.getElementById("perfil_lat").textContent = perfil.latitud;
-  document.getElementById("perfil_lon").textContent = perfil.longitud;
-  document.getElementById("perfil_usuario").textContent = perfil.usuario;
-  document.getElementById("perfil_foto").src = perfil.foto;
-
-  document.getElementById("perfilResultado").classList.remove("d-none");
-  document.getElementById("nombreDepto").textContent = perfil.departamento;
-
-
-  const cumpleList = document.getElementById("listaCumpleanios");
-  const deptoList = document.getElementById("listaDepto");
-  cumpleList.innerHTML = "";
-  deptoList.innerHTML = "";
-
-  const hoy = new Date();
-  perfiles.forEach(p => {
-    if (p.fechaNacimiento) {
-      const cumple = new Date(p.fechaNacimiento);
-      if (cumple.getMonth() === hoy.getMonth()) {
-        cumpleList.innerHTML += `<li class='list-group-item bg-dark text-white'>${p.nombre} - ${cumple.getDate()}/${cumple.getMonth() + 1}</li>`;
-      }
-    }
-    if (p.departamento === perfil.departamento && p.usuario !== perfil.usuario) {
-      deptoList.innerHTML += `<li class='list-group-item bg-dark text-white'>${p.nombre} ${p.apellido}</li>`;
-    }
-  });
-
-
-  if (perfil.latitud && perfil.longitud) {
-    const map = L.map('mapa').setView([parseFloat(perfil.latitud), parseFloat(perfil.longitud)], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
-    L.marker([perfil.latitud, perfil.longitud]).addTo(map).bindPopup('Tu ubicación').openPopup();
-  }
-}
-
-
-
-//EL CODIGO DE ARRIBA SE DEBE BORRAR
 
 window.addEventListener("DOMContentLoaded", () => {
 
@@ -599,7 +538,7 @@ function setTheme(theme) {
   if (themeToggleNavbarBtn) themeToggleNavbarBtn.innerHTML = icon;
 }
 
-   const usuarioActivo = localStorage.getItem("usuarioActivo");
+    const usuarioActivo = localStorage.getItem("usuarioActivo");
   const loginModalEl = document.getElementById('loginModal');
   const loginModal = bootstrap.Modal.getOrCreateInstance(loginModalEl);
 
@@ -607,57 +546,78 @@ function setTheme(theme) {
     const perfiles = JSON.parse(localStorage.getItem("perfilesUsuario") || "[]");
     const perfil = perfiles.find(p => p.usuario === usuarioActivo);
 
-    if (perfil) {
-      document.getElementById("perfil_nombre").textContent = perfil.nombre;
-      document.getElementById("perfil_apellido").textContent = perfil.apellido;
-      document.getElementById("perfil_correo").textContent = perfil.correo;
-      document.getElementById("perfil_departamento").textContent = perfil.departamento;
-      document.getElementById("perfil_edad").textContent = perfil.edad;
-      document.getElementById("perfil_lat").textContent = perfil.latitud;
-      document.getElementById("perfil_lon").textContent = perfil.longitud;
-      document.getElementById("perfil_usuario").textContent = perfil.usuario;
-      document.getElementById("perfil_foto").src = perfil.foto;
-      document.getElementById("perfilResultado").classList.remove("d-none");
-      document.getElementById("nombreDepto").textContent = perfil.departamento;
-       
-       const cumpleList = document.getElementById("listaCumpleanios");
-    const deptoList = document.getElementById("listaDepto");
-    cumpleList.innerHTML = "";
-    deptoList.innerHTML = "";
+if (perfil) {
+  document.getElementById("perfil_nombre").textContent = perfil.nombre || "";
+  document.getElementById("perfil_apellido").textContent = perfil.apellido || "";
+  document.getElementById("perfil_correo").textContent = perfil.correo || "";
+  document.getElementById("perfil_departamento").textContent = perfil.departamento || "";
+  document.getElementById("perfil_edad").textContent = perfil.edad || "";
+  document.getElementById("perfil_lat").textContent = perfil.latitud || "";
+  document.getElementById("perfil_lon").textContent = perfil.longitud || "";
+  document.getElementById("perfil_usuario").textContent = perfil.usuario || "";
 
-    const hoy = new Date();
-    perfiles.forEach(p => {
-      if (p.fechaNacimiento) {
-        const cumple = new Date(p.fechaNacimiento);
-        if (cumple.getMonth() === hoy.getMonth()) {
-          cumpleList.innerHTML += `<li class='list-group-item bg-dark text-white'>${p.nombre} - ${cumple.getDate()}/${cumple.getMonth() + 1}</li>`;
-        }
-      }
-      if (p.departamento === perfil.departamento && p.usuario !== perfil.usuario) {
-        deptoList.innerHTML += `
-          <li class='list-group-item bg-dark text-white'>
-            <a href="perfil_readonly.html?usuario=${p.usuario}" class="text-decoration-none text-info fw-semibold">
-              ${p.nombre} ${p.apellido}
-            </a>
+const fotoPerfil = document.getElementById("perfil_foto");
+
+if (fotoPerfil) {
+  if (perfil.foto && perfil.foto.startsWith("data:image")) {
+    fotoPerfil.src = perfil.foto;
+  } else {
+    fotoPerfil.src = "public/img/default.png"; 
+  }
+}
+
+
+  document.getElementById("perfilResultado").classList.remove("d-none");
+  document.getElementById("nombreDepto").textContent = perfil.departamento || "";
+
+  const cumpleList = document.getElementById("listaCumpleanios");
+  const deptoList = document.getElementById("listaDepto");
+  cumpleList.innerHTML = "";
+  deptoList.innerHTML = "";
+
+  const hoy = new Date();
+  perfiles.forEach(p => {
+    if (p.fechaNacimiento) {
+      const cumple = new Date(p.fechaNacimiento);
+      if (cumple.getMonth() === hoy.getMonth()) {
+        const foto = (p.foto && p.foto.startsWith("data:image")) ? p.foto : "public/img/default.png";
+        cumpleList.innerHTML += `
+          <li class='list-group-item bg-dark text-white d-flex align-items-center gap-3'>
+            <img src="${foto}" alt="${p.nombre}" class="rounded-circle border border-2" width="40" height="40" style="object-fit: cover;">
+            <span>${p.nombre} - ${cumple.getDate()}/${cumple.getMonth() + 1}</span>
           </li>
         `;
       }
-    });
-
-    if (perfil.latitud && perfil.longitud) {
-      const map = L.map('mapa').setView([parseFloat(perfil.latitud), parseFloat(perfil.longitud)], 13);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 19,
-        attribution: '&copy; OpenStreetMap contributors'
-      }).addTo(map);
-      L.marker([perfil.latitud, perfil.longitud]).addTo(map).bindPopup('Tu ubicación').openPopup();
     }
+
+    if (p.departamento === perfil.departamento && p.usuario !== perfil.usuario) {
+      const foto = (p.foto && p.foto.startsWith("data:image")) ? p.foto : "public/img/default.png";
+      deptoList.innerHTML += `
+        <li class='list-group-item bg-dark text-white d-flex align-items-center gap-3'>
+          <img src="${foto}" alt="${p.nombre}" class="rounded-circle border border-2" width="40" height="40" style="object-fit: cover;">
+          <a href="perfil_readonly.html?usuario=${p.usuario}" class="text-decoration-none text-info fw-semibold">
+            ${p.nombre} ${p.apellido}
+          </a>
+        </li>
+      `;
+    }
+  });
+
+
+      if (perfil.latitud && perfil.longitud) {
+        const map = L.map('mapa').setView([parseFloat(perfil.latitud), parseFloat(perfil.longitud)], 13);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          maxZoom: 19,
+          attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+        L.marker([perfil.latitud, perfil.longitud]).addTo(map).bindPopup('Tu ubicación').openPopup();
+      }
+
       loginModal.hide();
     }
   } else {
     loginModal.show();
   }
-
   
 });
 
