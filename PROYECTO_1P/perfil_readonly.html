@@ -253,19 +253,31 @@ body.dark-theme .perfil-detalles {
 <body>
     
 <nav class="navbar navbar-expand-md navbar-custom fixed-top px-4 py-2 shadow">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="public/img/faceapp.png" alt="Logo FACEAPP" width="40" height="40" class="me-2 rounded-circle shadow-sm img-logo" ondblclick="toggleAdminPanel()" />
-      <span class="fw-bold fs-4">FACEAPP</span>
-    </a>
-    <div class="collapse navbar-collapse justify-content-end">
-      <ul class="navbar-nav align-items-center gap-2">
-        <li class="nav-item"><a class="nav-link d-flex align-items-center" href="crear_perfil.html"><i class="bi bi-person-circle me-1 fs-5"></i> Crear Perfil</a></li>
-        <li class="nav-item"><a class="nav-link d-flex align-items-center" href="ver_perfil.html"><i class="bi bi-card-list me-1 fs-5"></i> Ver Perfil</a></li>
-        <li class="nav-item"><button id="themeToggleNavbar" class="btn btn-outline-light btn-sm rounded-pill px-3"><i class="bi bi-moon-stars-fill"></i></button></li>
-      </ul>
-    </div>
-  </nav>
-
+  <a class="navbar-brand d-flex align-items-center" href="#">
+    <img src="public/img/faceapp.png" alt="Logo FACEAPP" width="40" height="40" class="me-2 rounded-circle shadow-sm img-logo" ondblclick="toggleAdminPanel()" />
+    <span class="fw-bold fs-4">FACEAPP</span>
+  </a>
+  <div class="collapse navbar-collapse justify-content-end">
+    <ul class="navbar-nav align-items-center gap-2">
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="index.html">
+          <i class="bi bi-house-door-fill me-1 fs-5"></i> Inicio
+        </a>
+      </li>
+     <li class="nav-item">
+  <button class="nav-link btn btn-outline-light btn-sm rounded-pill d-flex align-items-center px-3 shadow-sm" onclick="history.back()">
+    <i class="bi bi-arrow-left-circle-fill me-2 fs-5 text-warning"></i>
+    <span class="fw-semibold">Regresar</span>
+  </button>
+</li>
+      <li class="nav-item">
+        <button id="themeToggle" class="btn btn-outline-light btn-sm rounded-pill px-3">
+          <i class="bi bi-moon-stars-fill"></i>
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 <div class="container-fluid mt-5 d-none" id="perfilResultado" >
   <div class="row justify-content-center mb-4">
@@ -315,6 +327,7 @@ body.dark-theme .perfil-detalles {
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 <script>
+window.addEventListener("DOMContentLoaded", () => {
   const params = new URLSearchParams(window.location.search);
   const usuarioBuscado = params.get("usuario");
 
@@ -330,7 +343,14 @@ body.dark-theme .perfil-detalles {
     document.getElementById("perfil_lat").textContent = perfil.latitud;
     document.getElementById("perfil_lon").textContent = perfil.longitud;
     document.getElementById("perfil_usuario").textContent = `@${perfil.usuario}`;
-    document.getElementById("perfil_foto").src = perfil.foto;
+
+ const img = document.getElementById("perfil_foto");
+if (perfil.foto && perfil.foto.startsWith("data:image") && perfil.foto.length > 100) {
+  img.src = perfil.foto;
+} else {
+  console.warn("⚠️ Foto de perfil inválida. Cargando imagen por defecto.");
+  img.src = "public/img/default.jpeg";
+}
 
     if (perfil.latitud && perfil.longitud) {
       const map = L.map('mapa').setView([parseFloat(perfil.latitud), parseFloat(perfil.longitud)], 13);
@@ -342,6 +362,7 @@ body.dark-theme .perfil-detalles {
     }
 
     document.getElementById("perfilResultado").classList.remove("d-none");
+
   } else {
     document.body.innerHTML = `
       <div class="container text-center mt-5">
@@ -349,7 +370,35 @@ body.dark-theme .perfil-detalles {
         <a href="ver_perfil.html" class="btn btn-outline-light mt-3">Volver</a>
       </div>`;
   }
+
+  const themeToggleBtn = document.getElementById('themeToggle');
+  const body = document.body;
+  const savedTheme = localStorage.getItem('theme') || 'light';
+
+  setTheme(savedTheme);
+
+  themeToggleBtn.addEventListener('click', () => {
+    const currentTheme = body.classList.contains('dark-theme') ? 'dark' : 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  });
+
+  function setTheme(theme) {
+    if(theme === 'dark') {
+      body.classList.add('dark-theme');
+      body.classList.remove('light-theme');
+      themeToggleBtn.innerHTML = '<i class="bi bi-brightness-high-fill"></i>';
+    } else {
+      body.classList.add('light-theme');
+      body.classList.remove('dark-theme');
+      themeToggleBtn.innerHTML = '<i class="bi bi-moon-stars-fill"></i>';
+    }
+  }
+});
 </script>
+
+
 
 </body>
 </html>
