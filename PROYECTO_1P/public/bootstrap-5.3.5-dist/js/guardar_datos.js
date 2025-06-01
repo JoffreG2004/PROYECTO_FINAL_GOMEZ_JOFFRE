@@ -56,6 +56,17 @@ function guardar_datos() {
   };
 
   let perfiles = JSON.parse(localStorage.getItem("perfilesUsuario") || "[]");
+const usuarioExistente = perfiles.find(p => p.usuario === usuario);
+if (usuarioExistente) {
+  Swal.fire({
+    icon: 'error',
+    title: 'Usuario existente',
+    text: 'Ya existe un perfil con ese nombre de usuario. Por favor elige otro.',
+    confirmButtonColor: '#d33'
+  });
+  return;
+}
+
   perfiles.push(nuevoPerfil);
   localStorage.setItem("perfilesUsuario", JSON.stringify(perfiles));
 
