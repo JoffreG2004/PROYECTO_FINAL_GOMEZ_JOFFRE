@@ -334,34 +334,39 @@ window.addEventListener("DOMContentLoaded", () => {
   const perfiles = JSON.parse(localStorage.getItem("perfilesUsuario") || "[]");
   const perfil = perfiles.find(p => p.usuario === usuarioBuscado);
 
-  if (perfil) {
-    document.getElementById("perfil_nombre").textContent = perfil.nombre;
-    document.getElementById("perfil_apellido").textContent = perfil.apellido;
-    document.getElementById("perfil_correo").textContent = perfil.correo;
-    document.getElementById("perfil_departamento").textContent = perfil.departamento;
-    document.getElementById("perfil_edad").textContent = perfil.edad;
-    document.getElementById("perfil_lat").textContent = perfil.latitud;
-    document.getElementById("perfil_lon").textContent = perfil.longitud;
-    document.getElementById("perfil_usuario").textContent = `@${perfil.usuario}`;
+if (perfil) {
+  document.getElementById("perfil_nombre").textContent = perfil.nombre;
+  document.getElementById("perfil_apellido").textContent = perfil.apellido;
+  document.getElementById("perfil_correo").textContent = perfil.correo;
+  document.getElementById("perfil_departamento").textContent = perfil.departamento;
+  document.getElementById("perfil_edad").textContent = perfil.edad;
+  document.getElementById("perfil_lat").textContent = perfil.latitud;
+  document.getElementById("perfil_lon").textContent = perfil.longitud;
+  document.getElementById("perfil_usuario").textContent = `@${perfil.usuario}`;
 
- const img = document.getElementById("perfil_foto");
-if (perfil.foto && perfil.foto.startsWith("data:image") && perfil.foto.length > 100) {
-  img.src = perfil.foto;
-} else {
-  console.warn("⚠️ Foto de perfil inválida. Cargando imagen por defecto.");
-  img.src = "public/img/default.jpeg";
-}
+  const img = document.getElementById("perfil_foto");
+  if (perfil.foto && perfil.foto.startsWith("data:image") && perfil.foto.length > 100) {
+    img.src = perfil.foto;
+  } else {
+    console.warn("⚠️ Foto de perfil inválida. Cargando imagen por defecto.");
+    img.src = "public/img/default.jpeg";
+  }
 
-    if (perfil.latitud && perfil.longitud) {
+  const perfilContainer = document.getElementById("perfilResultado");
+  perfilContainer.classList.remove("d-none");
+
+  if (perfil.latitud && perfil.longitud) {
+    setTimeout(() => {
       const map = L.map('mapa').setView([parseFloat(perfil.latitud), parseFloat(perfil.longitud)], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
       }).addTo(map);
       L.marker([perfil.latitud, perfil.longitud]).addTo(map).bindPopup('Ubicación de este usuario').openPopup();
-    }
 
-    document.getElementById("perfilResultado").classList.remove("d-none");
+      map.invalidateSize();
+    }, 300);
+  }
 
   } else {
     document.body.innerHTML = `

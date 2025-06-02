@@ -21,15 +21,23 @@ function guardar_datos() {
     return;
   }
 
-  const partes = fechaNacimiento.split("-");
-  const año = parseInt(partes[0], 10);
-  const mes = parseInt(partes[1], 10);
-  const dia = parseInt(partes[2], 10);
-
-  const hoy = new Date();
-  let edad = hoy.getFullYear() - año;
-  if ((hoy.getMonth() + 1) < mes || ((hoy.getMonth() + 1) === mes && hoy.getDate() < dia)) {
-    edad--;
+  let edad = 0;
+  try {
+    const fecha = new Date(fechaNacimiento);
+    const hoy = new Date();
+    edad = hoy.getFullYear() - fecha.getFullYear();
+    const m = hoy.getMonth() - fecha.getMonth();
+    if (m < 0 || (m === 0 && hoy.getDate() < fecha.getDate())) {
+      edad--;
+    }
+  } catch (e) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Fecha inválida',
+      text: 'La fecha de nacimiento no es válida.',
+      confirmButtonColor: '#d33'
+    });
+    return;
   }
 
   let fotoBase64 = "";
@@ -48,6 +56,7 @@ function guardar_datos() {
     departamento,
     tipoAcceso,
     edad,
+    fechaNacimiento,
     latitud,
     longitud,
     usuario,
@@ -56,16 +65,16 @@ function guardar_datos() {
   };
 
   let perfiles = JSON.parse(localStorage.getItem("perfilesUsuario") || "[]");
-const usuarioExistente = perfiles.find(p => p.usuario === usuario);
-if (usuarioExistente) {
-  Swal.fire({
-    icon: 'error',
-    title: 'Usuario existente',
-    text: 'Ya existe un perfil con ese nombre de usuario. Por favor elige otro.',
-    confirmButtonColor: '#d33'
-  });
-  return;
-}
+  const usuarioExistente = perfiles.find(p => p.usuario === usuario);
+  if (usuarioExistente) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Usuario existente',
+      text: 'Ya existe un perfil con ese nombre de usuario. Por favor elige otro.',
+      confirmButtonColor: '#d33'
+    });
+    return;
+  }
 
   perfiles.push(nuevoPerfil);
   localStorage.setItem("perfilesUsuario", JSON.stringify(perfiles));

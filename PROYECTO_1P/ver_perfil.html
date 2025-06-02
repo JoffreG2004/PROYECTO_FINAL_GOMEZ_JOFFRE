@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="public/bootstrap-5.3.5-dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  
+
   <style>
 
    body {
@@ -365,10 +367,14 @@ body.dark-theme .perfil-detalles {
       <div id="mapa" class="rounded shadow-sm mb-4" style="height: 300px;"></div>
 
       <div class="text-center">
-        <button class="btn btn-outline-success rounded-pill px-4 shadow-sm">
-          <i class="bi bi-pencil-fill me-2"></i>Editar Datos
-        </button>
-      </div>
+    <button class="btn btn-outline-success rounded-pill px-4 shadow-sm"
+      onclick="editarPerfilActivo()">Editar Perfil</button>
+
+      <div class="text-center mt-4">
+<button id="btnDescargarPDF" class="btn btn-success">Descargar PDF</button>
+
+</div>
+  </div>
 
     </div>
   </div>
@@ -383,6 +389,62 @@ body.dark-theme .perfil-detalles {
       <h5 class="text-info fw-bold mb-3">👥 También están en <span id="nombreDepto"></span></h5>
       <ul id="listaDepto" class="list-group list-group-flush"></ul>
     </div>
+
+
+    <div class="container mt-5">
+  <h4 class="text-success fw-bold mb-3 text-center">🎵 Estas canciones te pueden gustar <i class="bi bi-spotify ms-2"></i></h4>
+  <div id="carruselCanciones" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+      <!-- Cada canción como carousel-item -->
+      <!-- Generado automáticamente -->
+
+      <!-- Aquí puedes añadir más canciones repitiendo este bloque con sus datos correctos -->
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carruselCanciones" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bg-dark rounded-circle"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carruselCanciones" data-bs-slide="next">
+      <span class="carousel-control-next-icon bg-dark rounded-circle"></span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const canciones = [
+    { nombre: "Quavo - Duki", url: "https://open.spotify.com/embed/track/262lBp5MtK39jc7gQdYrVM" },
+    { nombre: "Mi Refe - Beéle", url: "https://open.spotify.com/embed/track/7ricDBUakN3N0YkkKE8Obu" },
+    { nombre: "Soltera - Blessd", url: "https://open.spotify.com/embed/track/13BDiikG6y5o5cQTK0HpW6" },
+    { nombre: "Ramen para dos - Maria Becerra", url: "https://open.spotify.com/embed/track/0vcuJjViqrFCCWUrjrZW1X" },
+    { nombre: "Gazz Probo - Tury Kris R", url: "https://open.spotify.com/embed/track/7K7PES4hr8tgM0FfNLEzeR" },
+    { nombre: "Vida de Rock - Duki & Milo J", url: "https://open.spotify.com/embed/track/26y2gBrbiFJIOUjIlSQfdH" },
+    { nombre: "Qué vas a hacer hoy - Milo J", url: "https://open.spotify.com/embed/track/0Sr7ssScx54yxdM2ols7nW" },
+    { nombre: "Una Bala - Milo J", url: "https://open.spotify.com/embed/track/6Rz80wUWSUbGGVHvkH7NpU" },
+    { nombre: "Bésame - Seven Kayne", url: "https://open.spotify.com/embed/track/3GD6eImRvT0zgr8cQnokUq" },
+    { nombre: "Paraíso (Daña) - Milo J", url: "https://open.spotify.com/embed/track/03PN2qMfzrk48jzUEXHZAh" },
+    { nombre: "Blinding Lights - The Weeknd", url: "https://open.spotify.com/embed/track/0VjIjW4GlUZAMYd2vXMi3b" },
+    { nombre: "Flowers - Miley Cyrus", url: "https://open.spotify.com/embed/track/4DHcnVTT87F0zZhRPYmZ3B" },
+    { nombre: "Thunder - Imagine Dragons", url: "https://open.spotify.com/embed/track/1zB4vmk8tFRmM9UULNzbLB" },
+    { nombre: "Shivers - Ed Sheeran", url: "https://open.spotify.com/embed/track/50nfwKoDiSYg8zOCREWAm5" },
+    { nombre: "As It Was - Harry Styles", url: "https://open.spotify.com/embed/track/4LRPiXqCikLlN15c3yImP7" },
+    { nombre: "STAY - The Kid LAROI, Justin Bieber", url: "https://open.spotify.com/embed/track/5PjdY0CKGZdEuoNab3yDmX" },
+    { nombre: "Aceite de Coco - Blessd", url: "https://open.spotify.com/embed/track/0hzO3OqNIPCwRKxvwBdtjS" },
+    { nombre: "Sisas Nada - Tury", url: "https://open.spotify.com/embed/track/7jkNUCqYvmgWe8JxhE6C98" }
+  ];
+
+  const inner = document.querySelector(".carousel-inner");
+  canciones.forEach((cancion, i) => {
+    const item = document.createElement("div");
+    item.className = "carousel-item text-center" + (i === 0 ? " active" : "");
+    item.innerHTML = `
+      <iframe style="border-radius:12px" src="${cancion.url}?utm_source=generator" width="300" height="380" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      <p class="mt-2 fw-semibold">${cancion.nombre}</p>
+    `;
+    inner.appendChild(item);
+  });
+</script>
+
   </div>
 </div>
 
@@ -583,9 +645,15 @@ if (fotoPerfil) {
         const foto = (p.foto && p.foto.startsWith("data:image")) ? p.foto : "public/img/default.png";
         cumpleList.innerHTML += `
           <li class='list-group-item bg-dark text-white d-flex align-items-center gap-3'>
-            <img src="${foto}" alt="${p.nombre}" class="rounded-circle border border-2" width="40" height="40" style="object-fit: cover;">
-            <span>${p.nombre} - ${cumple.getDate()}/${cumple.getMonth() + 1}</span>
-          </li>
+  <img src="${foto}" alt="${p.nombre}" class="rounded-circle border border-2" width="40" height="40" style="object-fit: cover;">
+  <div class="d-flex flex-column">
+    <a href="perfil_readonly.html?usuario=${p.usuario}" class="text-decoration-none text-info fw-semibold">
+      <i class="bi bi-cake2-fill text-warning me-1"></i> ${p.nombre}
+    </a>
+    <small class="text-muted">🎂 ${cumple.getDate()} de ${cumple.toLocaleString('es-ES', { month: 'long' })}</small>
+  </div>
+</li>
+
         `;
       }
     }
@@ -644,5 +712,195 @@ if (fotoPerfil) {
 }
 
 </script>
+
+<script>
+function editarPerfilActivo() {
+  const usuarioActivo = localStorage.getItem("usuarioActivo");
+  const perfiles = JSON.parse(localStorage.getItem("perfilesUsuario") || "[]");
+  const index = perfiles.findIndex(p => p.usuario === usuarioActivo);
+
+  if (index === -1) {
+    Swal.fire('Error', 'Usuario activo no encontrado.', 'error');
+    return;
+  }
+
+  const perfil = perfiles[index];
+
+  Swal.fire({
+    title: '✏ Editar Perfil',
+    html: `
+      <div class="text-start">
+        <label class="form-label">Usuario</label>
+        <input id="swal_usuario" class="form-control" value="${perfil.usuario}"  />
+
+        <label class="form-label">Contraseña</label>
+        <input type="password" id="swal_contrasena" class="form-control" value="${perfil.contrasena}" />
+
+        <label class="form-label">Nombre</label>
+        <input id="swal_nombre" class="form-control" value="${perfil.nombre}" />
+
+        <label class="form-label">Apellido</label>
+        <input id="swal_apellido" class="form-control" value="${perfil.apellido}" />
+
+        <label class="form-label">Edad</label>
+        <input type="number" id="swal_edad" class="form-control" value="${perfil.edad}" />
+
+        <label class="form-label">Fecha de Nacimiento</label>
+        <input type="date" id="swal_fecha" class="form-control" value="${perfil.fechaNacimiento || ''}" />
+
+        <label class="form-label">Departamento</label>
+        <select id="swal_departamento" class="form-select">
+          <option value="DCCO" ${perfil.departamento === 'DCCO' ? 'selected' : ''}>DCCO</option>
+          <option value="CIENCIAS EXACTAS" ${perfil.departamento === 'CIENCIAS EXACTAS' ? 'selected' : ''}>CIENCIAS EXACTAS</option>
+          <option value="CIENCIAS DE LA VIDA" ${perfil.departamento === 'CIENCIAS DE LA VIDA' ? 'selected' : ''}>CIENCIAS DE LA VIDA</option>
+          <option value="CIENCIAS DE LA CONSTRUCCIÓN" ${perfil.departamento === 'CIENCIAS DE LA CONSTRUCCIÓN' ? 'selected' : ''}>CIENCIAS DE LA CONSTRUCCIÓN</option>
+          <option value="CIENCIAS HUMANAS" ${perfil.departamento === 'CIENCIAS HUMANAS' ? 'selected' : ''}>CIENCIAS HUMANAS</option>
+          <option value="DCA" ${perfil.departamento === 'DCA' ? 'selected' : ''}>DCA</option>
+        </select>
+      </div>
+    `,
+    confirmButtonText: 'Guardar cambios',
+    showCancelButton: true,
+    customClass: {
+      popup: 'bg-dark text-white'
+    },
+    preConfirm: () => {
+      const contrasena = document.getElementById('swal_contrasena').value.trim();
+      const nombre = document.getElementById('swal_nombre').value.trim();
+      const apellido = document.getElementById('swal_apellido').value.trim();
+      const edad = parseInt(document.getElementById('swal_edad').value);
+      const fecha = document.getElementById('swal_fecha').value;
+      const departamento = document.getElementById('swal_departamento').value;
+
+      if (!contrasena || !nombre || !apellido || !edad || !departamento) {
+        Swal.showValidationMessage('Todos los campos son obligatorios');
+        return false;
+      }
+
+      perfiles[index] = {
+        ...perfil,
+        contrasena,
+        nombre,
+        apellido,
+        edad,
+        fechaNacimiento: fecha,
+        departamento,
+            };
+
+      localStorage.setItem("perfilesUsuario", JSON.stringify(perfiles));
+      Swal.fire({ icon: 'success', title: 'Perfil actualizardo correctamente' });
+      location.reload(); 
+    }
+  });
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+<script>
+document.getElementById("btnDescargarPDF").addEventListener("click", async () => {
+  const { jsPDF } = window.jspdf;
+
+  // Mostrar loader
+  const swalInstance = Swal.fire({
+    title: 'Generando PDF',
+    html: 'Preparando tu perfil...',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
+  });
+
+  try {
+    // Obtener datos del perfil
+    const nombre = document.getElementById("perfil_nombre").textContent;
+    const apellido = document.getElementById("perfil_apellido").textContent;
+    const edad = document.getElementById("perfil_edad").textContent;
+    const correo = document.getElementById("perfil_correo").textContent;
+    const departamento = document.getElementById("perfil_departamento").textContent;
+    const latitud = document.getElementById("perfil_lat").textContent;
+    const longitud = document.getElementById("perfil_lon").textContent;
+    const fotoPerfil = document.getElementById("perfil_foto").src;
+    const usuario = document.getElementById("perfil_usuario").textContent;
+
+    // Construye el contenido del PDF (sin mapa)
+    const pdfContent = document.createElement('div');
+    pdfContent.style.width = '800px';
+    pdfContent.style.padding = '20px';
+    pdfContent.style.background = 'white';
+    pdfContent.style.color = 'black';
+    pdfContent.style.fontFamily = 'Arial, sans-serif';
+
+    pdfContent.innerHTML = `
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="color: #098860;">Perfil de ${nombre} ${apellido}</h1>
+        <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+          <img src="${fotoPerfil}" alt="Foto de perfil"
+               style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid #098860; object-fit: cover;">
+        </div>
+      </div>
+      <div style="margin: 0 auto; max-width: 600px;">
+        <h2 style="color: #098860; border-bottom: 2px solid #098860; padding-bottom: 5px;">
+          Información Personal
+        </h2>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+          <tr><td><b>Usuario:</b></td><td>${usuario}</td></tr>
+          <tr><td><b>Nombre:</b></td><td>${nombre}</td></tr>
+          <tr><td><b>Apellido:</b></td><td>${apellido}</td></tr>
+          <tr><td><b>Edad:</b></td><td>${edad}</td></tr>
+          <tr><td><b>Correo:</b></td><td>${correo}</td></tr>
+          <tr><td><b>Departamento:</b></td><td>${departamento}</td></tr>
+          <tr><td><b>Coordenadas:</b></td><td>Lat: ${latitud}, Lon: ${longitud}</td></tr>
+        </table>
+      </div>
+      <div style="text-align: center; margin-top: 30px; font-size: 12px; color: #777;">
+        <p>Generado el ${new Date().toLocaleDateString()} - FACEAPP</p>
+      </div>
+    `;
+
+    // Genera el PDF
+    document.body.appendChild(pdfContent);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const canvas = await html2canvas(pdfContent, { backgroundColor: '#FFFFFF' });
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`Perfil_${nombre}_${apellido}.pdf`);
+    document.body.removeChild(pdfContent);
+
+    swalInstance.close();
+    Swal.fire(
+      '¡PDF generado!',
+      'Tu perfil se ha descargado correctamente.',
+      'success'
+    );
+  } catch (error) {
+    console.error("Error al generar PDF:", error);
+    Swal.fire(
+      'Error',
+      'Hubo un problema al generar el PDF. Intenta con otro navegador.',
+      'error'
+    );
+  }
+});
+</script>
+
+<div id="pdfContenido" class="d-none">
+  <div style="text-align:center;">
+    <img id="pdf_foto" src="" alt="Foto de perfil" style="width:120px;height:120px;border-radius:50%;margin-bottom:10px;">
+    <h2 id="pdf_nombre"></h2>
+    <p><strong>Apellido:</strong> <span id="pdf_apellido"></span></p>
+    <p><strong>Edad:</strong> <span id="pdf_edad"></span></p>
+    <p><strong>Correo:</strong> <span id="pdf_correo"></span></p>
+    <p><strong>Departamento:</strong> <span id="pdf_departamento"></span></p>
+    <p><strong>Latitud:</strong> <span id="pdf_lat"></span></p>
+    <p><strong>Longitud:</strong> <span id="pdf_lon"></span></p>
+    <img id="pdf_mapa" src="" alt="Mapa" style="width:100%;margin-top:10px;">
+    <div id="mapaParaPDF" style="width:400px; height:300px; position:fixed; left:-9999px; top:0;"></div>
+  </div>
+</div>
 </body>
 </html>
