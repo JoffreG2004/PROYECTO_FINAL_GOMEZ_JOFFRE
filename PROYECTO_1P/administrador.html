@@ -100,7 +100,7 @@
     }
   </style>
 </head>
-<body class="dark-theme">
+<body class="dark-theme light-theme">
 
 <nav class="navbar navbar-expand-md navbar-custom fixed-top px-4 py-2 shadow">
   <a class="navbar-brand d-flex align-items-center" href="index.html">
@@ -109,6 +109,11 @@
   </a>
   <div class="collapse navbar-collapse justify-content-end">
     <ul class="navbar-nav align-items-center gap-2">
+      <li class="nav-item">
+        <button id="themeToggle" class="btn btn-outline-light btn-sm rounded-pill px-3">
+          <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+        </button>
+      </li>
       <li class="nav-item">
         <button class="btn btn-outline-danger btn-sm rounded-pill px-3" onclick="cerrarSesion()">
           <i class="bi bi-box-arrow-right me-1"></i> Cerrar Sesión
@@ -121,7 +126,7 @@
 <div class="container mt-5 table-container d-none" id="panelAdmin">
   <h2 class="text-center mb-4">👮 Panel de Administración</h2>
   <div class="table-responsive">
-    <table class="table table-bordered table-hover table-dark">
+    <table class="table table-bordered table-hover">
       <thead class="table-success text-center">
         <tr>
           <th>Foto</th>
@@ -340,6 +345,48 @@ window.addEventListener("DOMContentLoaded", () => {
   modal.show();
 });
 
+document.getElementById("themeToggle").addEventListener("click", () => {
+  document.body.classList.toggle("light-theme");
+  document.body.classList.toggle("dark-theme");
+
+  const themeIcon = document.querySelector("#themeToggle i");
+  if (document.body.classList.contains("light-theme")) {
+    themeIcon.classList.remove("bi-moon-stars-fill");
+    themeIcon.classList.add("bi-brightness-high-fill");
+    localStorage.setItem("theme", "light");
+  } else {
+    themeIcon.classList.remove("bi-brightness-high-fill");
+    themeIcon.classList.add("bi-moon-stars-fill");
+    localStorage.setItem("theme", "dark");
+  }
+
+  actualizarEstiloTabla();
+});
+
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "light") {
+  document.body.classList.remove("dark-theme");
+  document.body.classList.add("light-theme");
+  document.querySelector("#themeToggle i").classList.remove("bi-moon-stars-fill");
+  document.querySelector("#themeToggle i").classList.add("bi-brightness-high-fill");
+}
+
+function actualizarEstiloTabla() {
+  const tabla = document.querySelector("table");
+  if (tabla) {
+    if (document.body.classList.contains("light-theme")) {
+      tabla.classList.remove("table-dark");
+      tabla.classList.add("table-light");
+    } else {
+      tabla.classList.remove("table-light");
+      tabla.classList.add("table-dark");
+    }
+  }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  actualizarEstiloTabla();
+});
 
 </script>
 </body>
