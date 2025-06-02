@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="public/bootstrap-5.3.5-dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  
 
   <style>
 
@@ -674,7 +675,7 @@ function editarPerfilActivo() {
     html: `
       <div class="text-start">
         <label class="form-label">Usuario</label>
-        <input id="swal_usuario" class="form-control" value="${perfil.usuario}" disabled />
+        <input id="swal_usuario" class="form-control" value="${perfil.usuario}"  />
 
         <label class="form-label">Contraseña</label>
         <input type="password" id="swal_contrasena" class="form-control" value="${perfil.contrasena}" />
@@ -738,69 +739,112 @@ function editarPerfilActivo() {
 }
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 <script>
-document.getElementById("btnDescargarPDF").addEventListener("click", () => {
-  const nombre = document.getElementById("perfil_nombre").textContent;
-  const apellido = document.getElementById("perfil_apellido").textContent;
-  const edad = document.getElementById("perfil_edad").textContent;
-  const correo = document.getElementById("perfil_correo").textContent;
-  const departamento = document.getElementById("perfil_departamento").textContent;
-  const latitud = document.getElementById("perfil_lat").textContent;
-  const longitud = document.getElementById("perfil_lon").textContent;
-  const fotoSrc = document.getElementById("perfil_foto").src;
-  const mapa = document.getElementById("mapa");
+document.getElementById("btnDescargarPDF").addEventListener("click", async () => {
+  const { jsPDF } = window.jspdf;
 
-  // Llenar el contenido oculto
-  document.getElementById("pdf_foto").src = fotoSrc;
-  document.getElementById("pdf_nombre").textContent = "Perfil de " + nombre;
-  document.getElementById("pdf_apellido").textContent = apellido;
-  document.getElementById("pdf_edad").textContent = edad;
-  document.getElementById("pdf_correo").textContent = correo;
-  document.getElementById("pdf_departamento").textContent = departamento;
-  document.getElementById("pdf_lat").textContent = latitud;
-  document.getElementById("pdf_lon").textContent = longitud;
-
-  // Capturar el mapa
-  html2canvas(mapa).then(canvas => {
-    const mapaImg = document.getElementById("pdf_mapa");
-    mapaImg.onload = () => {
-      // Mostrar el contenedor
-      const contenedor = document.getElementById("pdfContenido");
-      contenedor.classList.remove("d-none");
-
-      // Ahora sí generar el PDF con todo ya visible y cargado
-      html2pdf().from(contenedor).set({
-        margin: 0.5,
-        filename: `Perfil_${nombre}.pdf`,
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-      }).save().then(() => {
-        contenedor.classList.add("d-none");
-      });
-    };
-
-    // Solo después de setear el `.onload`, asignamos el src
-    mapaImg.src = canvas.toDataURL("image/png");
+  // Mostrar loader
+  const swalInstance = Swal.fire({
+    title: 'Generando PDF',
+    html: 'Preparando tu perfil...',
+    allowOutsideClick: false,
+    didOpen: () => {
+      Swal.showLoading();
+    }
   });
+
+  try {
+    // Obtener datos del perfil
+    const nombre = document.getElementById("perfil_nombre").textContent;
+    const apellido = document.getElementById("perfil_apellido").textContent;
+    const edad = document.getElementById("perfil_edad").textContent;
+    const correo = document.getElementById("perfil_correo").textContent;
+    const departamento = document.getElementById("perfil_departamento").textContent;
+    const latitud = document.getElementById("perfil_lat").textContent;
+    const longitud = document.getElementById("perfil_lon").textContent;
+    const fotoPerfil = document.getElementById("perfil_foto").src;
+    const usuario = document.getElementById("perfil_usuario").textContent;
+
+    // Construye el contenido del PDF (sin mapa)
+    const pdfContent = document.createElement('div');
+    pdfContent.style.width = '800px';
+    pdfContent.style.padding = '20px';
+    pdfContent.style.background = 'white';
+    pdfContent.style.color = 'black';
+    pdfContent.style.fontFamily = 'Arial, sans-serif';
+
+    pdfContent.innerHTML = `
+      <div style="text-align: center; margin-bottom: 20px;">
+        <h1 style="color: #098860;">Perfil de ${nombre} ${apellido}</h1>
+        <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+          <img src="${fotoPerfil}" alt="Foto de perfil"
+               style="width: 150px; height: 150px; border-radius: 50%; border: 4px solid #098860; object-fit: cover;">
+        </div>
+      </div>
+      <div style="margin: 0 auto; max-width: 600px;">
+        <h2 style="color: #098860; border-bottom: 2px solid #098860; padding-bottom: 5px;">
+          Información Personal
+        </h2>
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+          <tr><td><b>Usuario:</b></td><td>${usuario}</td></tr>
+          <tr><td><b>Nombre:</b></td><td>${nombre}</td></tr>
+          <tr><td><b>Apellido:</b></td><td>${apellido}</td></tr>
+          <tr><td><b>Edad:</b></td><td>${edad}</td></tr>
+          <tr><td><b>Correo:</b></td><td>${correo}</td></tr>
+          <tr><td><b>Departamento:</b></td><td>${departamento}</td></tr>
+          <tr><td><b>Coordenadas:</b></td><td>Lat: ${latitud}, Lon: ${longitud}</td></tr>
+        </table>
+      </div>
+      <div style="text-align: center; margin-top: 30px; font-size: 12px; color: #777;">
+        <p>Generado el ${new Date().toLocaleDateString()} - FACEAPP</p>
+      </div>
+    `;
+
+    // Genera el PDF
+    document.body.appendChild(pdfContent);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const canvas = await html2canvas(pdfContent, { backgroundColor: '#FFFFFF' });
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    pdf.save(`Perfil_${nombre}_${apellido}.pdf`);
+    document.body.removeChild(pdfContent);
+
+    swalInstance.close();
+    Swal.fire(
+      '¡PDF generado!',
+      'Tu perfil se ha descargado correctamente.',
+      'success'
+    );
+  } catch (error) {
+    console.error("Error al generar PDF:", error);
+    Swal.fire(
+      'Error',
+      'Hubo un problema al generar el PDF. Intenta con otro navegador.',
+      'error'
+    );
+  }
 });
 </script>
 
-<div id="pdfContenido" class="d-none bg-white text-dark p-4" style="width: 800px; font-family: Poppins, sans-serif;">
-  <div class="text-center mb-4">
-    <img id="pdf_foto" src="" alt="Foto" style="width: 120px; border-radius: 10px;" />
-    <h2 id="pdf_nombre" class="text-success mt-3"></h2>
+<div id="pdfContenido" class="d-none">
+  <div style="text-align:center;">
+    <img id="pdf_foto" src="" alt="Foto de perfil" style="width:120px;height:120px;border-radius:50%;margin-bottom:10px;">
+    <h2 id="pdf_nombre"></h2>
+    <p><strong>Apellido:</strong> <span id="pdf_apellido"></span></p>
+    <p><strong>Edad:</strong> <span id="pdf_edad"></span></p>
+    <p><strong>Correo:</strong> <span id="pdf_correo"></span></p>
+    <p><strong>Departamento:</strong> <span id="pdf_departamento"></span></p>
+    <p><strong>Latitud:</strong> <span id="pdf_lat"></span></p>
+    <p><strong>Longitud:</strong> <span id="pdf_lon"></span></p>
+    <img id="pdf_mapa" src="" alt="Mapa" style="width:100%;margin-top:10px;">
+    <div id="mapaParaPDF" style="width:400px; height:300px; position:fixed; left:-9999px; top:0;"></div>
   </div>
-  <p><strong>Apellido:</strong> <span id="pdf_apellido"></span></p>
-  <p><strong>Edad:</strong> <span id="pdf_edad"></span></p>
-  <p><strong>Correo:</strong> <span id="pdf_correo"></span></p>
-  <p><strong>Departamento:</strong> <span id="pdf_departamento"></span></p>
-  <p><strong>Latitud:</strong> <span id="pdf_lat"></span></p>
-  <p><strong>Longitud:</strong> <span id="pdf_lon"></span></p>
-  <img id="pdf_mapa" src="" style="margin-top: 20px; width: 100%; border-radius: 10px;" />
 </div>
-
 </body>
 </html>
