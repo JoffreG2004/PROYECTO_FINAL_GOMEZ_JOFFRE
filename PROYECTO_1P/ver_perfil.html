@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="public/bootstrap-5.3.5-dist/css/bootstrap.min.css" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+
   <style>
 
    body {
@@ -365,10 +366,14 @@ body.dark-theme .perfil-detalles {
       <div id="mapa" class="rounded shadow-sm mb-4" style="height: 300px;"></div>
 
       <div class="text-center">
-        <button class="btn btn-outline-success rounded-pill px-4 shadow-sm">
-          <i class="bi bi-pencil-fill me-2"></i>Editar Datos
-        </button>
-      </div>
+    <button class="btn btn-outline-success rounded-pill px-4 shadow-sm"
+      onclick="editarPerfilActivo()">Editar Perfil</button>
+
+      <div class="text-center mt-4">
+<button id="btnDescargarPDF" class="btn btn-success">Descargar PDF</button>
+
+</div>
+  </div>
 
     </div>
   </div>
@@ -583,9 +588,15 @@ if (fotoPerfil) {
         const foto = (p.foto && p.foto.startsWith("data:image")) ? p.foto : "public/img/default.png";
         cumpleList.innerHTML += `
           <li class='list-group-item bg-dark text-white d-flex align-items-center gap-3'>
-            <img src="${foto}" alt="${p.nombre}" class="rounded-circle border border-2" width="40" height="40" style="object-fit: cover;">
-            <span>${p.nombre} - ${cumple.getDate()}/${cumple.getMonth() + 1}</span>
-          </li>
+  <img src="${foto}" alt="${p.nombre}" class="rounded-circle border border-2" width="40" height="40" style="object-fit: cover;">
+  <div class="d-flex flex-column">
+    <a href="perfil_readonly.html?usuario=${p.usuario}" class="text-decoration-none text-info fw-semibold">
+      <i class="bi bi-cake2-fill text-warning me-1"></i> ${p.nombre}
+    </a>
+    <small class="text-muted">🎂 ${cumple.getDate()} de ${cumple.toLocaleString('es-ES', { month: 'long' })}</small>
+  </div>
+</li>
+
         `;
       }
     }
@@ -644,5 +655,152 @@ if (fotoPerfil) {
 }
 
 </script>
+
+<script>
+function editarPerfilActivo() {
+  const usuarioActivo = localStorage.getItem("usuarioActivo");
+  const perfiles = JSON.parse(localStorage.getItem("perfilesUsuario") || "[]");
+  const index = perfiles.findIndex(p => p.usuario === usuarioActivo);
+
+  if (index === -1) {
+    Swal.fire('Error', 'Usuario activo no encontrado.', 'error');
+    return;
+  }
+
+  const perfil = perfiles[index];
+
+  Swal.fire({
+    title: '✏ Editar Perfil',
+    html: `
+      <div class="text-start">
+        <label class="form-label">Usuario</label>
+        <input id="swal_usuario" class="form-control" value="${perfil.usuario}" disabled />
+
+        <label class="form-label">Contraseña</label>
+        <input type="password" id="swal_contrasena" class="form-control" value="${perfil.contrasena}" />
+
+        <label class="form-label">Nombre</label>
+        <input id="swal_nombre" class="form-control" value="${perfil.nombre}" />
+
+        <label class="form-label">Apellido</label>
+        <input id="swal_apellido" class="form-control" value="${perfil.apellido}" />
+
+        <label class="form-label">Edad</label>
+        <input type="number" id="swal_edad" class="form-control" value="${perfil.edad}" />
+
+        <label class="form-label">Fecha de Nacimiento</label>
+        <input type="date" id="swal_fecha" class="form-control" value="${perfil.fechaNacimiento || ''}" />
+
+        <label class="form-label">Departamento</label>
+        <select id="swal_departamento" class="form-select">
+          <option value="DCCO" ${perfil.departamento === 'DCCO' ? 'selected' : ''}>DCCO</option>
+          <option value="CIENCIAS EXACTAS" ${perfil.departamento === 'CIENCIAS EXACTAS' ? 'selected' : ''}>CIENCIAS EXACTAS</option>
+          <option value="CIENCIAS DE LA VIDA" ${perfil.departamento === 'CIENCIAS DE LA VIDA' ? 'selected' : ''}>CIENCIAS DE LA VIDA</option>
+          <option value="CIENCIAS DE LA CONSTRUCCIÓN" ${perfil.departamento === 'CIENCIAS DE LA CONSTRUCCIÓN' ? 'selected' : ''}>CIENCIAS DE LA CONSTRUCCIÓN</option>
+          <option value="CIENCIAS HUMANAS" ${perfil.departamento === 'CIENCIAS HUMANAS' ? 'selected' : ''}>CIENCIAS HUMANAS</option>
+          <option value="DCA" ${perfil.departamento === 'DCA' ? 'selected' : ''}>DCA</option>
+        </select>
+      </div>
+    `,
+    confirmButtonText: 'Guardar cambios',
+    showCancelButton: true,
+    customClass: {
+      popup: 'bg-dark text-white'
+    },
+    preConfirm: () => {
+      const contrasena = document.getElementById('swal_contrasena').value.trim();
+      const nombre = document.getElementById('swal_nombre').value.trim();
+      const apellido = document.getElementById('swal_apellido').value.trim();
+      const edad = parseInt(document.getElementById('swal_edad').value);
+      const fecha = document.getElementById('swal_fecha').value;
+      const departamento = document.getElementById('swal_departamento').value;
+
+      if (!contrasena || !nombre || !apellido || !edad || !departamento) {
+        Swal.showValidationMessage('Todos los campos son obligatorios');
+        return false;
+      }
+
+      perfiles[index] = {
+        ...perfil,
+        contrasena,
+        nombre,
+        apellido,
+        edad,
+        fechaNacimiento: fecha,
+        departamento,
+            };
+
+      localStorage.setItem("perfilesUsuario", JSON.stringify(perfiles));
+      Swal.fire({ icon: 'success', title: 'Perfil actualizardo correctamente' });
+      location.reload(); 
+    }
+  });
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+document.getElementById("btnDescargarPDF").addEventListener("click", () => {
+  const nombre = document.getElementById("perfil_nombre").textContent;
+  const apellido = document.getElementById("perfil_apellido").textContent;
+  const edad = document.getElementById("perfil_edad").textContent;
+  const correo = document.getElementById("perfil_correo").textContent;
+  const departamento = document.getElementById("perfil_departamento").textContent;
+  const latitud = document.getElementById("perfil_lat").textContent;
+  const longitud = document.getElementById("perfil_lon").textContent;
+  const fotoSrc = document.getElementById("perfil_foto").src;
+  const mapa = document.getElementById("mapa");
+
+  // Llenar el contenido oculto
+  document.getElementById("pdf_foto").src = fotoSrc;
+  document.getElementById("pdf_nombre").textContent = "Perfil de " + nombre;
+  document.getElementById("pdf_apellido").textContent = apellido;
+  document.getElementById("pdf_edad").textContent = edad;
+  document.getElementById("pdf_correo").textContent = correo;
+  document.getElementById("pdf_departamento").textContent = departamento;
+  document.getElementById("pdf_lat").textContent = latitud;
+  document.getElementById("pdf_lon").textContent = longitud;
+
+  // Capturar el mapa
+  html2canvas(mapa).then(canvas => {
+    const mapaImg = document.getElementById("pdf_mapa");
+    mapaImg.onload = () => {
+      // Mostrar el contenedor
+      const contenedor = document.getElementById("pdfContenido");
+      contenedor.classList.remove("d-none");
+
+      // Ahora sí generar el PDF con todo ya visible y cargado
+      html2pdf().from(contenedor).set({
+        margin: 0.5,
+        filename: `Perfil_${nombre}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+      }).save().then(() => {
+        contenedor.classList.add("d-none");
+      });
+    };
+
+    // Solo después de setear el `.onload`, asignamos el src
+    mapaImg.src = canvas.toDataURL("image/png");
+  });
+});
+</script>
+
+<div id="pdfContenido" class="d-none bg-white text-dark p-4" style="width: 800px; font-family: Poppins, sans-serif;">
+  <div class="text-center mb-4">
+    <img id="pdf_foto" src="" alt="Foto" style="width: 120px; border-radius: 10px;" />
+    <h2 id="pdf_nombre" class="text-success mt-3"></h2>
+  </div>
+  <p><strong>Apellido:</strong> <span id="pdf_apellido"></span></p>
+  <p><strong>Edad:</strong> <span id="pdf_edad"></span></p>
+  <p><strong>Correo:</strong> <span id="pdf_correo"></span></p>
+  <p><strong>Departamento:</strong> <span id="pdf_departamento"></span></p>
+  <p><strong>Latitud:</strong> <span id="pdf_lat"></span></p>
+  <p><strong>Longitud:</strong> <span id="pdf_lon"></span></p>
+  <img id="pdf_mapa" src="" style="margin-top: 20px; width: 100%; border-radius: 10px;" />
+</div>
+
 </body>
 </html>
