@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Sisa Warmi-Home</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="public/images/Logo.jpg" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- =======================================================
+  * Template Name: NiceRestaurant
+  * Template URL: https://bootstrapmade.com/nice-restaurant-bootstrap-template/
+  * Updated: Jun 06 2025 with Bootstrap v5.3.6
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+
+<body class="index-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto me-xl-0">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <!-- <img src="assets/img/logo.webp" alt=""> -->
+        <image src="public/images/Logo.jpg" alt="Logo" class="logo-img">
+        <h1 class="sitename">Sisa Warmi</h1>
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="#hero" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#menu">Rooms</a></li>
+          
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero section">
+      <div class="container-fluid hero-container" data-aos="fade-up">
+        <div class="row g-0 align-items-center">
+          <div class="col-lg-6 content-col">
+            <div class="content-wrapper">
+              <div class="status-badge">Reservaciones Abiertas</div>
+              <h2>Prioriza tus Descansos </h2>
+              <p>Prioriza tu descanso en un entorno natural y acogedor. Disfruta de una estadía única con piscina, conexión WiFi, parqueadero, espacios eco-friendly y todas las comodidades pensadas para tu bienestar.</p>
+
+              <div class="opening-hours" data-aos="fade-up" data-aos-delay="500">
+                <i class="bi bi-clock"></i>
+                <span>Open Daily</span>
+              </div>
+
+              <div class="btn-group">
+                <a href="#about" class="btn btn-book">Acerca de Nosotros</a>
+                <a href="#menu" class="btn btn-menu">Explorar Habitaciones</a>
+              </div>
+
+            
+            </div>
+          </div>
+
+          <div class="col-lg-6 swiper-col">
+            <div class="swiper hero-swiper init-swiper" data-aos="zoom-out" data-aos-delay="100">
+              <script type="application/json" class="swiper-config">
+                {
+                  "loop": true,
+                  "speed": 800,
+                  "autoplay": {
+                    "delay": 5000
+                  },
+                  "effect": "fade",
+                  "slidesPerView": 1,
+                  "navigation": {
+                    "nextEl": ".swiper-button-next",
+                    "prevEl": ".swiper-button-prev"
+                  }
+                }
+              </script>
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <div class="img-container">
+                    <img src="public/images/Bar.jpg" alt="Restaurant Ambience">
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="img-container">
+                    <img src="public/images/Area bbq.jpg" alt="Signature Dish">
+                  </div>
+                </div>
+                <div class="swiper-slide">
+                  <div class="img-container">
+                    <img src="public/images/Cabaña matrimonial.jpg" alt="Expert Chefs">
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </section><!-- /Hero Section -->
+
+
+
+
+    <!-- About Section -->
+<section id="about" class="about section">
+  <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-6" data-aos="fade-up" data-aos-delay="200">
+        <div class="about-content">
+          <h3>Nuestra Historia</h3>
+          <p class="fst-italic">Sisa Warmi Lodge nace del sueño de compartir la belleza de la Amazonía ecuatoriana con el mundo, ofreciendo un espacio de conexión con la naturaleza y descanso pleno.</p>
+
+          <p><strong>Misión:</strong> Ofrecer experiencias de hospedaje únicas en un entorno natural, cálido y ecológico, donde cada visitante pueda desconectarse del estrés diario y reconectar con la tranquilidad y la biodiversidad.</p>
+
+          <p><strong>Visión:</strong> Ser reconocidos como el lodge referente en turismo sostenible del oriente ecuatoriano, promoviendo el respeto por la cultura local, el medio ambiente y el bienestar integral del huésped.</p>
+
+          <p><strong>¿Por qué elegirnos?</strong> Porque en Sisa Warmi Lodge no solo descansas: renuevas tu energía, respiras aire puro, duermes entre sonidos de la selva y despiertas con el canto de las aves. Contamos con habitaciones cómodas, piscina, áreas sociales, WIFI, parqueadero, y un equipo humano comprometido con tu comodidad.</p>
+
+          <div class="chef-signature mt-4">
+            <div class="row align-items-center">
+              <div class="col-auto">
+                <img src="public/images/Logo.jpg" class="chef-avatar rounded-circle" alt="Foto del equipo">
+              </div>
+              <div class="col">
+                <p class="chef-message mb-2">“El descanso no es un lujo, es una necesidad. Aquí lo transformamos en experiencia.”</p>
+                <p class="chef-name">Equipo Sisa Warmi Lodge</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6" data-aos="zoom-in" data-aos-delay="300">
+        <div class="about-image-wrapper">
+          <img src="public/images/Bar.jpg" class="img-fluid main-image shadow" alt="Área de descanso">
+          <img src="public/images/Cabaña matrimonial.jpg" class="img-fluid accent-image shadow" alt="Habitación del lodge">
+          <span class="establishment-year d-flex align-items-center justify-content-center text-center">Desde 2024</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-5 pt-4 features-section">
+      <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="200">
+        <div class="feature-box">
+          <div class="feature-icon">
+            <i class="bi bi-house-heart"></i>
+          </div>
+          <h4>Comodidad Natural</h4>
+          <p>Cabañas de madera diseñadas para ofrecer confort en armonía con el entorno natural amazónico.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="feature-box">
+          <div class="feature-icon">
+            <i class="bi bi-tree"></i>
+          </div>
+          <h4>Turismo Eco-friendly</h4>
+          <p>Nuestro compromiso es con el medio ambiente: reciclaje, energía responsable y materiales sostenibles.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="400">
+        <div class="feature-box">
+          <div class="feature-icon">
+            <i class="bi bi-people"></i>
+          </div>
+          <h4>Atención Personalizada</h4>
+          <p>Un equipo humano que se preocupa por ti, disponible 24/7 para hacer de tu estancia un recuerdo memorable.</p>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6 mb-4" data-aos="fade-up" data-aos-delay="500">
+        <div class="feature-box">
+          <div class="feature-icon">
+            <i class="bi bi-stars"></i>
+          </div>
+          <h4>Experiencia Inolvidable</h4>
+          <p>Desde cenas bajo las estrellas hasta caminatas en la selva, cada momento aquí se vuelve parte de ti.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
+        <div class="stats-container">
+          <div class="stat-item">
+            <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="1" class="purecounter">1</span>+</span>
+            <p class="stat-label">Años de experiencia</p>
+          </div>
+
+          <div class="stat-item">
+            <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="5" class="purecounter">5</span></span>
+            <p class="stat-label">Tipos de habitaciones</p>
+          </div>
+
+          <div class="stat-item">
+            <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="10" class="purecounter">10</span>+</span>
+            <p class="stat-label">Reservas al mes</p>
+          </div>
+
+          <div class="stat-item">
+            <span class="stat-number"><span data-purecounter-start="0" data-purecounter-end="450" class="purecounter">450</span>+</span>
+            <p class="stat-label">Clientes felices</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+    <!-- Menu Section -->
+    <section id="menu" class="menu section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>Our Best Rooms </h2>
+<p>Experience the comfort of our best rooms, designed to combine rustic charm with modern amenities—perfect for a peaceful and memorable stay.</p>
+<p>Disfruta del confort de nuestras mejores habitaciones, diseñadas para combinar el encanto rústico con comodidades modernas—perfectas para una estadía tranquila e inolvidable.</p>
+
+      </div><!-- End Section Title -->
+
+      <div class="container" data-aos="fade-up">
+
+        <div class="isotope-layout" data-default-filter="*" data-layout="masonry" data-sort="original-order">
+
+          <div class="menu-filters isotope-filters mb-5">
+            <ul>
+              <li data-filter="*" class="filter-active">All</li>
+             
+            </ul>
+          </div>
+
+          <div class="menu-container isotope-container row gy-4">
+
+            <!-- Regular Menu Items -->
+
+<!-- Habitación Múltiple -->
+<div class="col-lg-6 isotope-item filter-habitacion">
+  <div class="menu-item card shadow-sm p-3 mb-4 rounded-4 bg-dark">
+    <img src="public/images/Multiple.jpg" style="width: 100%; height: 300px; object-fit: cover;" alt="Habitación Múltiple" class="menu-img img-fluid rounded-3 mb-3">
+    <div class="menu-content text-white">
+      <h5 class="mb-1">Habitación Múltiple</h5>
+      <p class="text-light mb-2">Sisa Warmi Lodge</p>
+      <div class="d-flex align-items-center justify-content-between mb-2 text-light small">
+        <span><i class="bi bi-people"></i> 5</span>
+        <span><i class="bi bi-bed"></i> 3 Beds</span>
+        <span><i class="bi bi-aspect-ratio"></i> 15 m²</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="price fw-bold text-white">From / USD 450.00</div>
+        <a href="#" class="btn btn-outline-light btn-sm rounded-pill">Book now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Habitación Triple -->
+<div class="col-lg-6 isotope-item filter-habitacion">
+  <div class="menu-item card shadow-sm p-3 mb-4 rounded-4 bg-dark">
+    <img src="public/images/Triple.jpg" style="width: 100%; height: 300px; object-fit: cover;" alt="Habitación Triple" class="menu-img img-fluid rounded-3 mb-3">
+    <div class="menu-content text-white">
+      <h5 class="mb-1">Habitación Triple</h5>
+      <p class="text-light mb-2">Sisa Warmi Lodge</p>
+      <div class="d-flex align-items-center justify-content-between mb-2 text-light small">
+        <span><i class="bi bi-people"></i> 3</span>
+        <span><i class="bi bi-bed"></i> 2 Beds</span>
+        <span><i class="bi bi-aspect-ratio"></i> 15 m²</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="price fw-bold text-white">From / USD 450.00</div>
+        <a href="#" class="btn btn-outline-light btn-sm rounded-pill">Book now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Habitación Doble -->
+<div class="col-lg-6 isotope-item filter-habitacion">
+  <div class="menu-item card shadow-sm p-3 mb-4 rounded-4 bg-dark">
+    <img src="public/images/Doble.jpg" style="width: 100%; height: 300px; object-fit: cover;" alt="Habitación Doble" class="menu-img img-fluid rounded-3 mb-3">
+    <div class="menu-content text-white">
+      <h5 class="mb-1">Habitación Doble</h5>
+      <p class="text-light mb-2">Sisa Warmi Lodge</p>
+      <div class="d-flex align-items-center justify-content-between mb-2 text-light small">
+        <span><i class="bi bi-people"></i> 2</span>
+        <span><i class="bi bi-bed"></i> 1 Bed</span>
+        <span><i class="bi bi-aspect-ratio"></i> 15 m²</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="price fw-bold text-white">From / USD 450.00</div>
+        <a href="#" class="btn btn-outline-light btn-sm rounded-pill">Book now</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Habitación Simple -->
+<div class="col-lg-6 isotope-item filter-habitacion">
+  <div class="menu-item card shadow-sm p-3 mb-4 rounded-4 bg-dark">
+    <img src="public/images/Simple.jpg" style="width: 100%; height: 300px; object-fit: cover;" alt="Habitación Simple" class="menu-img img-fluid rounded-3 mb-3">
+    <div class="menu-content text-white">
+      <h5 class="mb-1">Habitación Simple</h5>
+      <p class="text-light mb-2">Sisa Warmi Lodge</p>
+      <div class="d-flex align-items-center justify-content-between mb-2 text-light small">
+        <span><i class="bi bi-people"></i> 1</span>
+        <span><i class="bi bi-bed"></i> 1 Bed</span>
+        <span><i class="bi bi-aspect-ratio"></i> 15 m²</span>
+      </div>
+      <div class="d-flex justify-content-between align-items-center">
+        <div class="price fw-bold text-white">From / USD 450.00</div>
+        <a href="#" class="btn btn-outline-light btn-sm rounded-pill">Book now</a>
+      </div>
+    </div>
+  </div>
+</div>    
+          </div>
+
+        </div>
+
+
+        <!-- Chef's Specials -->
+        
+          
+
+      </div>
+
+    </section><!-- /Menu Section -->
+
+    
+
+
+<!-- ======= Footer ======= -->
+<footer id="footer" class="footer bg-dark text-light py-4">
+  <div class="container text-center">
+    <p>© Copyright <strong class="px-1 sitename">Sisa Warmi Lodge</strong> - Todos los derechos reservados.</p>
+    <p>© Copyright <strong class="px-1 sitename">Joffre Gomez, estudiante de Ingeniería en Software</strong></p>
+    <div class="credits">
+      Sitio desarrollado con 💚 | Plantilla basada en <a href="https://bootstrapmade.com/" class="text-light" target="_blank">BootstrapMade</a>
+    </div>
+  </div>
+</footer>
+
+        <!-- All the links in the footer should remain intact. -->
+        <!-- You can delete the links only if you've purchased the pro version. -->
+        <!-- Licensing information: https://bootstrapmade.com/license/ -->
+        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+  <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
